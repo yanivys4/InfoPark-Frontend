@@ -94,7 +94,7 @@ public class LoginActivity extends AppCompatActivity {
                     Utils.showToast(LoginActivity.this, responseMessage.getDescription());
                     return;
                 } else {
-                    setContentView(R.layout.activity_main);
+                    startMainActivity();
                 }
             }
 
@@ -110,12 +110,21 @@ public class LoginActivity extends AppCompatActivity {
         return new Intent(ACTION_LOGIN_ACTIVITY);
     }
 
+
+    private void startMainActivity(){
+        Intent startIntent = MainActivity.makeIntent();
+        startActivity(startIntent);
+        finish();
+    }
+
     public void skipActivity(View view) {
-        setContentView(R.layout.activity_main);
+       startMainActivity();
+
     }
 
     public void registerActivity(View view) {
-        setContentView(R.layout.register);
+        Intent startIntent = RegisterActivity.makeIntent();
+        startActivity(startIntent);
     }
 
     public void finishActivity(View view) {
