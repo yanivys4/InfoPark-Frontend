@@ -101,7 +101,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ResponseMessage> call, Throwable t) {
                 progressBar.setVisibility(View.INVISIBLE);
-                loginButton.setError(t.getMessage());
+                Utils.showToast(LoginActivity.this, t.getMessage());
             }
         });
     }
