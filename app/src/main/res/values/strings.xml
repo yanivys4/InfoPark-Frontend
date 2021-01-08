@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">InfoPark</string>
+    <string name="toolbar_image">toolbar_image</string>
+    <string name="logo">logo</string>
+    <string name="back_button">back button</string>
+    <string name="email" ><font size="50">Email</font></string>
+    <string name="username"><font size="50">UserName</font></string>
+    <string name="password"><font size="50">Password</font></string>
+    <string name="confirm">CONFIRM</string>
+    <string name="done_image">done_image</string>
+    <string name="dialog_title">Congratulations!</string>
+    <string name="dialog_message">Register completed</string>
+    <string name="dialog_button">Okay</string>
+</resources>
