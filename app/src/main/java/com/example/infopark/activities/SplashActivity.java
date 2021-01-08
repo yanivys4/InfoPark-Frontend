@@ -19,7 +19,7 @@ public class SplashActivity extends Activity {
 
         handler=new Handler();
         handler.postDelayed(() -> {
-            Intent intent=LoginActivity.makeIntent();
+            Intent intent=RegisterActivity.makeIntent();
             startActivity(intent);
             finish();
         },3000);
