@@ -29,7 +29,6 @@ import com.example.infopark.RESTApi.RegisterForm;
 import com.example.infopark.RESTApi.ResponseMessage;
 import com.example.infopark.RESTApi.RestApi;
 import com.example.infopark.RESTApi.RetrofitClient;
-import com.example.infopark.Utils.Test;
 import com.example.infopark.Utils.Utils;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -109,8 +108,6 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void confirmInput(View v){
-
-        // TODO add confirm dialog
         if(!validateEmail() | !validateUserName() | !validatePassword()){
             return;
         }
