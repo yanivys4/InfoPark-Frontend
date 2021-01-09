@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
@@ -33,6 +34,8 @@ public class LoginActivity extends AppCompatActivity {
     private TextInputLayout textInputPassword;
     private Button loginButton;
     private ProgressBar progressBar;
+    private ImageButton skipButton;
+    private ImageButton backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +46,14 @@ public class LoginActivity extends AppCompatActivity {
         loginButton = findViewById(R.id.login_button);
         progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(View.INVISIBLE);
+        skipButton = findViewById(R.id.skip_button);
+        backButton = findViewById(R.id.back_button);
+
+        if (getCallingActivity() == null) {
+            backButton.setVisibility(View.INVISIBLE);
+        }else{
+            skipButton.setVisibility(View.INVISIBLE);
+        }
     }
 
     public void login(View v) {
@@ -119,7 +130,6 @@ public class LoginActivity extends AppCompatActivity {
 
     public void skipActivity(View view) {
        startMainActivity();
-
     }
 
     public void registerActivity(View view) {

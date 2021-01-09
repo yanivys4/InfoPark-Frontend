@@ -36,7 +36,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/imageButton3"
+        android:id="@+id/back_button"
         android:layout_width="83dp"
         android:layout_height="36dp"
         android:layout_marginTop="8dp"
@@ -44,6 +44,20 @@
         android:contentDescription="@string/back_button"
         android:onClick="finishActivity"
         android:src="@drawable/back_button"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView5"
+        app:layout_constraintTop_toTopOf="@+id/toolbar" />
+
+    <ImageButton
+        android:id="@+id/skip_button"
+        android:layout_width="83dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="2dp"
+        android:contentDescription="@string/back_button"
+        android:onClick="skipActivity"
+        android:src="@drawable/skip_button"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageView5"
@@ -103,32 +117,16 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="18dp"
         android:layout_marginTop="14dp"
+        android:layout_marginEnd="305dp"
         android:layout_marginBottom="40dp"
         android:background="#FFC107"
         android:onClick="registerActivity"
         android:text="Register"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
-        app:layout_constraintEnd_toStartOf="@+id/skipButton"
-        app:layout_constraintHorizontal_bias="0.018"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
         app:layout_constraintVertical_bias="0.178" />
-
-    <Button
-        android:id="@+id/skipButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="300dp"
-        android:layout_marginTop="14dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginBottom="40dp"
-        android:background="#FFC107"
-        android:onClick="skipActivity"
-        android:text="Skip"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <ProgressBar
         android:id="@+id/progressBar"
