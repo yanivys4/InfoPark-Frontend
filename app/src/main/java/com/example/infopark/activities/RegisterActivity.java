@@ -1,7 +1,6 @@
 package com.example.infopark.activities;
 
 
-
 import android.content.Intent;
 
 import android.graphics.drawable.ColorDrawable;
@@ -82,12 +81,12 @@ public class RegisterActivity extends AppCompatActivity {
         return new Intent(ACTION_REGISTER_ACTIVITY);
     }
 
-    private boolean validateEmail(){
+    private boolean validateEmail() {
         String emailInput = Objects.requireNonNull(textInputEmail.getEditText()).getText().toString().trim();
-        if(emailInput.isEmpty()){
+        if (emailInput.isEmpty()) {
             textInputEmail.setError("Field can't be empty");
             return false;
-        }else if(!InputValidator.isEmailValid((emailInput))) {
+        } else if (!InputValidator.isEmailValid((emailInput))) {
             textInputEmail.setError("Email is invalid");
             return false;
         }
@@ -95,40 +94,38 @@ public class RegisterActivity extends AppCompatActivity {
         return true;
     }
 
-    private boolean validateUserName(){
+    private boolean validateUserName() {
         String userNameInput = Objects.requireNonNull(textInputUserName.getEditText()).getText().toString().trim();
-        if(userNameInput.isEmpty()){
+        if (userNameInput.isEmpty()) {
             textInputUserName.setError("Field can't be empty");
             return false;
-        }else if(userNameInput.length() > 15){
+        } else if (userNameInput.length() > 15) {
             textInputUserName.setError("Username too long");
             return false;
-        }else{
+        } else {
             textInputUserName.setError(null);
             return true;
         }
     }
 
-    private boolean validatePassword(){
+    private boolean validatePassword() {
         String passwordInput = Objects.requireNonNull(textInputPassword.getEditText()).getText().toString().trim();
-        if(passwordInput.isEmpty()){
+        if (passwordInput.isEmpty()) {
             textInputPassword.setError("Field can't be empty");
             return false;
-        }else if(!InputValidator.isPasswordValid(passwordInput)){
+        } else if (!InputValidator.isPasswordValid(passwordInput)) {
             textInputPassword.setError(InputValidator.getPasswordMistakes(passwordInput));
             return false;
-        }
-        else{
+        } else {
             textInputPassword.setError(null);
             return true;
         }
     }
 
-    public void confirmInput(View v){
-        if(!validateEmail() | !validateUserName() | !validatePassword()){
+    public void confirmInput(View v) {
+        if (!validateEmail() | !validateUserName() | !validatePassword()) {
             return;
-        }
-        else{
+        } else {
 
             String userName = Objects.requireNonNull(textInputUserName.getEditText()).getText().toString();
             String email = Objects.requireNonNull(textInputEmail.getEditText()).getText().toString();
@@ -137,13 +134,14 @@ public class RegisterActivity extends AppCompatActivity {
             // when current location will work it will be extracted from it
             LatLng latlng = new LatLng(35.896544f, 74.52323f);
             RegisterForm registerForm = new RegisterForm(userName, email,
-                    password, latlng, 1, 1,false,false);
-            register(registerForm,false);
+                    password, latlng, 1, 1, false, false);
+            register(registerForm, false);
         }
     }
 
 
-    private void register(RegisterForm registerForm,boolean googleUser){
+    private void register(RegisterForm registerForm, boolean googleUser) {
+        //TODO add getter to googleUser and use it
         Retrofit retrofit = RetrofitClient.getInstance();
         // retrofit create rest api according to the interface
         RestApi restApi = retrofit.create(RestApi.class);
@@ -156,13 +154,13 @@ public class RegisterActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.INVISIBLE);
                 if (!response.isSuccessful()) {
 
-                    Utils.showToast(RegisterActivity.this,"Code:" + response.code());
+                    Utils.showToast(RegisterActivity.this, "Code:" + response.code());
                     return;
                 }
 
                 ResponseMessage responseMessage = response.body();
                 if (!responseMessage.getSuccess()) {
-                    Utils.showToast(RegisterActivity.this,responseMessage.getDescription());
+                    Utils.showToast(RegisterActivity.this, responseMessage.getDescription());
                 } else {
                     showDialog(googleUser);
                 }
@@ -171,23 +169,22 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<ResponseMessage> call, Throwable t) {
                 progressBar.setVisibility(View.INVISIBLE);
-                Utils.showToast(RegisterActivity.this,t.getMessage());
+                Utils.showToast(RegisterActivity.this, t.getMessage());
             }
         });
     }
 
 
-
-    private void showDialog(boolean googleUser){
+    private void showDialog(boolean googleUser) {
         AlertDialog.Builder builder = new AlertDialog.Builder
-                (RegisterActivity.this,R.style.AlertDialogTheme);
+                (RegisterActivity.this, R.style.AlertDialogTheme);
         View view = LayoutInflater.from(RegisterActivity.this).inflate(R.layout.layout_blue_dialog,
-                (ConstraintLayout)findViewById(R.id.layoutDialogContainer));
+                (ConstraintLayout) findViewById(R.id.layoutDialogContainer));
         builder.setView(view);
-        if(!googleUser){
+        if (!googleUser) {
             ((TextView) view.findViewById(R.id.textTitle)).setText(getResources().getString(R.string.dialog_title));
             ((TextView) view.findViewById(R.id.textMessage)).setText(getResources().getString(R.string.dialog_message));
-        }else{
+        } else {
             ((TextView) view.findViewById(R.id.textTitle)).setText(getResources().getString(R.string.dialog_title_google));
             ((TextView) view.findViewById(R.id.textMessage)).setText(getResources().getString(R.string.dialog_message_google));
         }
@@ -200,13 +197,13 @@ public class RegisterActivity extends AppCompatActivity {
 
         view.findViewById(R.id.buttonAction).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
+            public void onClick(View view) {
                 alertDialog.dismiss();
                 finishActivity(view);
             }
         });
 
-        if(alertDialog.getWindow() != null){
+        if (alertDialog.getWindow() != null) {
             alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
         }
 
@@ -214,20 +211,15 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    public void signInToGoogle(View view){
-        signIn();
-    }
-
-    private void signIn(){
+    public void signInToGoogle(View view) {
         googleSignInClient.revokeAccess()
-          .addOnCompleteListener(this, new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                Intent signInIntent = googleSignInClient.getSignInIntent();
-                startActivityForResult(signInIntent, RC_SIGN_IN);
-            }
-        });
-
+                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Intent signInIntent = googleSignInClient.getSignInIntent();
+                        startActivityForResult(signInIntent, RC_SIGN_IN);
+                    }
+                });
     }
 
     @Override
@@ -247,9 +239,9 @@ public class RegisterActivity extends AppCompatActivity {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
             LatLng latlng = new LatLng(35.896544f, 74.52323f);
-            RegisterForm registerForm = new RegisterForm(account.getDisplayName(),account.getEmail(),
-                    null,latlng,1,1,false,true);
-            register(registerForm,true);
+            RegisterForm registerForm = new RegisterForm(account.getDisplayName(), account.getEmail(),
+                    null, latlng, 1, 1, false, true);
+            register(registerForm, true);
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.

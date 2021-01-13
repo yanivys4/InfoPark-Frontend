@@ -1,6 +1,7 @@
 package com.example.infopark.Utils;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.view.View;
 import android.widget.TextView;
@@ -9,6 +10,8 @@ import android.widget.Toast;
 import com.example.infopark.R;
 
 public final class Utils {
+
+    
     public static void showToast(Context context, String message){
         Toast toast = Toast.makeText(context, message, Toast.LENGTH_LONG);
         View view = toast.getView();
@@ -22,4 +25,5 @@ public final class Utils {
 
         toast.show();
     }
+
 }

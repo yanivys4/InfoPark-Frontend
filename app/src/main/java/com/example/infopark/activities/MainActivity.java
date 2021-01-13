@@ -1,7 +1,12 @@
 package com.example.infopark.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+
 import com.example.infopark.R;
 import androidx.fragment.app.FragmentActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -23,6 +28,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     private static final String ACTION_MAIN_ACTIVITY =
             "android.intent.action.ACTION_MAIN_ACTIVITY";
 
+    private Button logOutButton;
 
     private MapFragment m_mapFragment;
     private GoogleMap mMap;
@@ -32,6 +38,8 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+
+        logOutButton = findViewById(R.id.logout_button);
         // Initialize the SDK
         Places.initialize(getApplicationContext(), getString(R.string.google_maps_api_key));
         PlacesClient placesClient = Places.createClient(this);
@@ -40,8 +48,21 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         if(m_mapFragment != null){
             m_mapFragment.getMapAsync(this);
         }
+    }
 
+    @Override
+    public void onResume() {
 
+        super.onResume();
+        Context context = MainActivity.this;
+        SharedPreferences sharedPref = context.getSharedPreferences(
+                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        boolean isLoggedIn = sharedPref.getBoolean(getString(R.string.loggedIn), false);
+        if(isLoggedIn){
+            logOutButton.setVisibility(View.VISIBLE);
+        }else{
+            logOutButton.setVisibility(View.INVISIBLE);
+        }
     }
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -63,5 +84,16 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 
+    public void logOut(View view) {
+        Context context = MainActivity.this;
+        SharedPreferences sharedPref = context.getSharedPreferences(
+                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putBoolean(getString(R.string.loggedIn), false);
+        editor.apply();
 
+        Intent intent = LoginActivity.makeIntent();
+        startActivity(intent);
+        finish();
+    }
 }
