@@ -8,7 +8,13 @@
     <string name="password"><font size="50">Password</font></string>
     <string name="confirm">CONFIRM</string>
     <string name="done_image">done_image</string>
-    <string name="dialog_title">Congratulations!</string>
-    <string name="dialog_message">Register completed</string>
+    <string name="dialog_title">Register completed</string>
+    <string name="dialog_message">Please verify your account via an email sent to you</string>
     <string name="dialog_button">Okay</string>
+    <string name="register_manually">Or register manually</string>
+    <string name="dialog_title_google">congratulations</string>
+    <string name="dialog_message_google">Register completed</string>
+    <string name="preference_file_key">com.example.infopark</string>
+    <string name="loggedIn">loggedIn</string>
+    <string name="log_out">log out</string>
 </resources>
