@@ -52,7 +52,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onResume() {
-
         super.onResume();
         Context context = MainActivity.this;
         SharedPreferences sharedPref = context.getSharedPreferences(
@@ -64,6 +63,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             logOutButton.setVisibility(View.INVISIBLE);
         }
     }
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -82,7 +82,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     public static Intent makeIntent(){
         return new Intent(ACTION_MAIN_ACTIVITY);
     }
-
 
     public void logOut(View view) {
         Context context = MainActivity.this;

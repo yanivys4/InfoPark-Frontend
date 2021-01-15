@@ -40,6 +40,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Objects;
+import java.util.UUID;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -57,6 +58,7 @@ public class RegisterActivity extends AppCompatActivity {
     private TextInputLayout textInputPassword;
     private ProgressBar progressBar;
     private GoogleSignInClient googleSignInClient;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,7 +136,7 @@ public class RegisterActivity extends AppCompatActivity {
             // when current location will work it will be extracted from it
             LatLng latlng = new LatLng(35.896544f, 74.52323f);
             RegisterForm registerForm = new RegisterForm(userName, email,
-                    password, latlng, 1, 1, false, false);
+                    password, latlng, 1, 1, false, false,UUID.randomUUID().toString());
             register(registerForm, false);
         }
     }
@@ -238,9 +240,10 @@ public class RegisterActivity extends AppCompatActivity {
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+
             LatLng latlng = new LatLng(35.896544f, 74.52323f);
             RegisterForm registerForm = new RegisterForm(account.getDisplayName(), account.getEmail(),
-                    null, latlng, 1, 1, false, true);
+                    null, latlng, 1, 1, false, true,null);
             register(registerForm, true);
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.

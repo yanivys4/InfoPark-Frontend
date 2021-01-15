@@ -10,6 +10,8 @@ import android.os.Handler;
 
 import com.example.infopark.R;
 
+import java.util.UUID;
+
 public class SplashActivity extends Activity {
 
     Handler handler;
@@ -30,7 +32,8 @@ public class SplashActivity extends Activity {
             editor.putBoolean(getString(R.string.loggedIn), false);
             editor.apply();
         }
-        
+
+
         handler = new Handler();
         handler.postDelayed(() -> {
             Intent intent;
