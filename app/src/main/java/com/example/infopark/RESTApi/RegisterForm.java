@@ -10,6 +10,8 @@ public class RegisterForm {
 
     private final String password;
 
+    private final String salt;
+
     private final LatLng savedLocation;
 
     private final int trustPoints;
@@ -20,11 +22,12 @@ public class RegisterForm {
 
     private final boolean googleUser;
 
-    public RegisterForm(String userName, String email, String password, LatLng savedLocation,
+    public RegisterForm(String userName, String email, String password, String salt, LatLng savedLocation,
                         int trustPoints, int creditPoints, boolean confirmed, boolean googleUser) {
         this.userName = userName;
         this.email = email;
         this.password = password;
+        this.salt = salt;
         this.savedLocation = savedLocation;
         this.trustPoints = trustPoints;
         this.creditPoints = creditPoints;
