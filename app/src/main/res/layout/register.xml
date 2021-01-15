@@ -37,7 +37,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/imageButton3"
+        android:id="@+id/back_button"
         android:layout_width="82dp"
         android:layout_height="27dp"
         android:layout_marginTop="8dp"
@@ -50,6 +50,7 @@
         app:layout_constraintStart_toEndOf="@+id/imageView5"
         app:layout_constraintTop_toTopOf="@+id/toolbar" />
 
+
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="340dp"
@@ -59,6 +60,28 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+        <ImageButton
+            android:id="@+id/sign_in_button"
+            android:layout_width="312dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="30dp"
+
+            android:baselineAligned="false"
+            android:onClick="signInToGoogle"
+            android:src="@drawable/sign_in_google" />
+
+
+        <TextView
+
+            android:id="@+id/or"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:text="@string/register_manually"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/text_input_email"
@@ -128,4 +151,8 @@
         app:layout_constraintEnd_toEndOf="@+id/linearLayout"
         app:layout_constraintStart_toStartOf="@+id/linearLayout"
         app:layout_constraintTop_toTopOf="@+id/toolbar" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
