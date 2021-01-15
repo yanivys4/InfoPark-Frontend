@@ -15,7 +15,8 @@ public interface RestApi {
     Call<com.example.infopark.RESTApi.ResponseMessage> register(@Body RegisterForm registerForm);
 
     @POST("login")
-    Call<ResponseMessage> login(@Body LoginForm loginForm);
+    Call<com.example.infopark.RESTApi.ResponseMessage> login(@Body LoginForm loginForm);
 
-
+    @POST("getSalt")
+    Call<com.example.infopark.RESTApi.ResponseMessage> getSalt(@Body LoginForm loginForm);
 }

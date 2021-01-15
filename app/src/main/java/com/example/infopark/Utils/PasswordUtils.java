@@ -1,9 +1,5 @@
 package com.example.infopark.Utils;
 
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
-
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
@@ -43,7 +39,7 @@ public class PasswordUtils {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
+
     public static String generateSecurePassword(String password, String salt) {
         String returnValue = null;
 
@@ -54,7 +50,7 @@ public class PasswordUtils {
         return returnValue;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
+
     public static boolean verifyUserPassword(String providedPassword,
                                              String securedPassword, String salt)
     {

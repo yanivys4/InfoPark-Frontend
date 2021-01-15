@@ -127,7 +127,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
+
     public void confirmInput(View v) {
         if (!validateEmail() | !validateUserName() | !validatePassword()) {
             return;
