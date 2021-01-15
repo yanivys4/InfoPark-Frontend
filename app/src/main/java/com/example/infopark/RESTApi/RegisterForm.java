@@ -1,6 +1,8 @@
 package com.example.infopark.RESTApi;
 
 
+import java.util.UUID;
+
 public class RegisterForm {
 
 
@@ -22,6 +24,10 @@ public class RegisterForm {
 
     private final boolean googleUser;
 
+    private final String confirmationUniqueID;
+
+    public RegisterForm(String userName, String email, String password, LatLng savedLocation,
+                        int trustPoints, int creditPoints, boolean confirmed, boolean googleUser,String confirmationUniqueID) {
     public RegisterForm(String userName, String email, String password, String salt, LatLng savedLocation,
                         int trustPoints, int creditPoints, boolean confirmed, boolean googleUser) {
         this.userName = userName;
@@ -33,5 +39,11 @@ public class RegisterForm {
         this.creditPoints = creditPoints;
         this.confirmed = confirmed;
         this.googleUser = googleUser;
+        this.confirmationUniqueID = confirmationUniqueID;
+
+    }
+
+    public boolean getGoogleUser(){
+        return googleUser;
     }
 }

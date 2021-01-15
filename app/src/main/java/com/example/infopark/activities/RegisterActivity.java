@@ -4,7 +4,6 @@ package com.example.infopark.activities;
 import android.content.Intent;
 
 import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,7 +17,6 @@ import android.widget.TextView;
 
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -31,7 +29,6 @@ import com.example.infopark.RESTApi.RegisterForm;
 import com.example.infopark.RESTApi.ResponseMessage;
 import com.example.infopark.RESTApi.RestApi;
 import com.example.infopark.RESTApi.RetrofitClient;
-import com.example.infopark.Utils.PasswordUtils;
 import com.example.infopark.Utils.Utils;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -43,6 +40,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Objects;
+import java.util.UUID;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -60,6 +58,7 @@ public class RegisterActivity extends AppCompatActivity {
     private TextInputLayout textInputPassword;
     private ProgressBar progressBar;
     private GoogleSignInClient googleSignInClient;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,7 +124,6 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     public void confirmInput(View v) {
         if (!validateEmail() | !validateUserName() | !validatePassword()) {
             return;
@@ -133,16 +131,12 @@ public class RegisterActivity extends AppCompatActivity {
 
             String userName = Objects.requireNonNull(textInputUserName.getEditText()).getText().toString();
             String email = Objects.requireNonNull(textInputEmail.getEditText()).getText().toString();
-            String userPassword = Objects.requireNonNull(textInputPassword.getEditText()).getText().toString();
-
-            String salt = PasswordUtils.getSalt(30);
-
-            String mySecurePassword = PasswordUtils.generateSecurePassword(userPassword, salt);
+            String password = Objects.requireNonNull(textInputPassword.getEditText()).getText().toString();
 
             // when current location will work it will be extracted from it
             LatLng latlng = new LatLng(35.896544f, 74.52323f);
             RegisterForm registerForm = new RegisterForm(userName, email,
-                    mySecurePassword, salt, latlng, 1, 1, false, false);
+                    password, latlng, 1, 1, false, false,UUID.randomUUID().toString());
             register(registerForm, false);
         }
     }
@@ -246,9 +240,10 @@ public class RegisterActivity extends AppCompatActivity {
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+
             LatLng latlng = new LatLng(35.896544f, 74.52323f);
             RegisterForm registerForm = new RegisterForm(account.getDisplayName(), account.getEmail(),
-                    null, null, latlng, 1, 1, false, true);
+                    null, latlng, 1, 1, false, true,null);
             register(registerForm, true);
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
