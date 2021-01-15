@@ -26,10 +26,8 @@ public class RegisterForm {
 
     private final String confirmationUniqueID;
 
-    public RegisterForm(String userName, String email, String password, LatLng savedLocation,
-                        int trustPoints, int creditPoints, boolean confirmed, boolean googleUser,String confirmationUniqueID) {
     public RegisterForm(String userName, String email, String password, String salt, LatLng savedLocation,
-                        int trustPoints, int creditPoints, boolean confirmed, boolean googleUser) {
+                        int trustPoints, int creditPoints, boolean confirmed, boolean googleUser, String confirmationUniqueID) {
         this.userName = userName;
         this.email = email;
         this.password = password;
