@@ -7,9 +7,12 @@ public class LoginForm {
 
     private final String password;
 
-    public LoginForm(String username, String email, String password) {
+    private final boolean googleUser;
+
+    public LoginForm(String username, String email, String password, boolean googleUser) {
         this.username = username;
         this.email = email;
         this.password = password;
+        this.googleUser = googleUser;
     }
 }
