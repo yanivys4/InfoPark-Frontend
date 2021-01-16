@@ -137,21 +137,20 @@ public class RegisterActivity extends AppCompatActivity {
             String email = Objects.requireNonNull(textInputEmail.getEditText()).getText().toString();
             String userPassword = Objects.requireNonNull(textInputPassword.getEditText()).getText().toString();
 
-            String salt = PasswordUtils.getSalt(30);
 
+            String salt = PasswordUtils.getSalt(30);
             String securedPassword = PasswordUtils.generateSecurePassword(userPassword, salt);
 
             // when current location will work it will be extracted from it
             LatLng latlng = new LatLng(35.896544f, 74.52323f);
             RegisterForm registerForm = new RegisterForm(userName, email,
-                    securedPassword, salt, latlng, 1, 1, false, false,UUID.randomUUID().toString());
-            register(registerForm, false);
+                    securedPassword, salt, latlng, 1, 1, false, false, UUID.randomUUID().toString());
+            register(registerForm);
         }
     }
 
 
-    private void register(RegisterForm registerForm, boolean googleUser) {
-        //TODO add getter to googleUser and use it
+    private void register(RegisterForm registerForm) {
         Retrofit retrofit = RetrofitClient.getInstance();
         // retrofit create rest api according to the interface
         RestApi restApi = retrofit.create(RestApi.class);
@@ -172,7 +171,7 @@ public class RegisterActivity extends AppCompatActivity {
                 if (!responseMessage.getSuccess()) {
                     Utils.showToast(RegisterActivity.this, responseMessage.getDescription());
                 } else {
-                    showDialog(googleUser);
+                    showDialog(registerForm.getGoogleUser());
                 }
             }
 
@@ -252,7 +251,7 @@ public class RegisterActivity extends AppCompatActivity {
             LatLng latlng = new LatLng(35.896544f, 74.52323f);
             RegisterForm registerForm = new RegisterForm(account.getDisplayName(), account.getEmail(),
                     null, null, latlng, 1, 1, false, true,null);
-            register(registerForm, true);
+            register(registerForm);
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
