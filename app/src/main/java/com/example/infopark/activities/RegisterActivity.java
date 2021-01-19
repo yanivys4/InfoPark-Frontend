@@ -3,9 +3,11 @@ package com.example.infopark.activities;
 
 import android.content.Intent;
 
+import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 
@@ -15,6 +17,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
@@ -59,6 +62,7 @@ public class RegisterActivity extends AppCompatActivity {
     private TextInputLayout textInputEmail;
     private TextInputLayout textInputUserName;
     private TextInputLayout textInputPassword;
+    private  ConstraintLayout register_layout;
     private ProgressBar progressBar;
     private GoogleSignInClient googleSignInClient;
 
@@ -70,6 +74,7 @@ public class RegisterActivity extends AppCompatActivity {
         textInputEmail = findViewById(R.id.text_input_email);
         textInputUserName = findViewById(R.id.text_input_userName);
         textInputPassword = findViewById(R.id.text_input_password);
+        register_layout = findViewById(R.id.register_layout);
         progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(View.INVISIBLE);
         // Configure sign-in to request the user's ID, email address, and basic
@@ -81,6 +86,8 @@ public class RegisterActivity extends AppCompatActivity {
         googleSignInClient = GoogleSignIn.getClient(this, gso);
 
     }
+
+
 
     public static Intent makeIntent() {
         return new Intent(ACTION_REGISTER_ACTIVITY);
@@ -151,6 +158,7 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     private void register(RegisterForm registerForm) {
+
         Retrofit retrofit = RetrofitClient.getInstance();
         // retrofit create rest api according to the interface
         RestApi restApi = retrofit.create(RestApi.class);
@@ -168,8 +176,11 @@ public class RegisterActivity extends AppCompatActivity {
                 }
 
                 ResponseMessage responseMessage = response.body();
+
                 if (!responseMessage.getSuccess()) {
+
                     Utils.showToast(RegisterActivity.this, responseMessage.getDescription());
+                    return;
                 } else {
                     showDialog(registerForm.getGoogleUser());
                 }
@@ -181,6 +192,7 @@ public class RegisterActivity extends AppCompatActivity {
                 Utils.showToast(RegisterActivity.this, t.getMessage());
             }
         });
+
     }
 
 
@@ -228,7 +240,9 @@ public class RegisterActivity extends AppCompatActivity {
                         Intent signInIntent = googleSignInClient.getSignInIntent();
                         startActivityForResult(signInIntent, RC_SIGN_IN);
                     }
+
                 });
+
     }
 
     @Override
@@ -239,6 +253,7 @@ public class RegisterActivity extends AppCompatActivity {
         if (requestCode == RC_SIGN_IN) {
             // The Task returned from this call is always completed, no need to attach
             // a listener.
+
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
         }
