@@ -137,8 +137,6 @@ public class LoginActivity extends AppCompatActivity {
                     LoginForm loginForm = new LoginForm(finalUsername, finalEmail, securedPassword, false);
 
                     login(loginForm);
-
-
                 }
             }
 
