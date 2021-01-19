@@ -16,5 +16,6 @@
     <string name="dialog_message_google">Register completed</string>
     <string name="preference_file_key">com.example.infopark</string>
     <string name="loggedIn">loggedIn</string>
-    <string name="log_out">log out</string>
+    <string name="log_out">Log out</string>
+    <string name="log_in">Log in</string>
 </resources>

@@ -62,9 +62,8 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/logout_button"
+        android:id="@+id/logout_login_button"
         android:layout_marginTop="72dp"
-        android:text="@string/log_out"
         android:textColor="@color/red"
         android:onClick="logOut"
         app:layout_constraintBottom_toBottomOf="parent"
