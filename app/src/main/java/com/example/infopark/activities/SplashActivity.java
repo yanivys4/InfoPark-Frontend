@@ -14,27 +14,23 @@ import java.util.UUID;
 
 public class SplashActivity extends Activity {
 
-    Handler handler;
+    private SharedPreferences sharedPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash);
-
         Context context = SplashActivity.this;
-        SharedPreferences sharedPref = context.getSharedPreferences(
+        sharedPref = context.getSharedPreferences(
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        boolean isLoggedIn = sharedPref.getBoolean(getString(R.string.loggedIn), false);
+
+        boolean isLoggedIn = getIsLoggedIn();
 
         // if loggedIn is true don't change it
         if (!isLoggedIn) {
-            SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putBoolean(getString(R.string.loggedIn), false);
-            editor.apply();
+            setIsLoggedInFalse();
         }
-
-
-        handler = new Handler();
+        Handler handler = new Handler();
         handler.postDelayed(() -> {
             Intent intent;
             // if the user is not logged in send it to login activity
@@ -48,5 +44,15 @@ public class SplashActivity extends Activity {
             finish();
         }, 3000);
 
+    }
+
+    private boolean getIsLoggedIn(){
+        return sharedPref.getBoolean(getString(R.string.loggedIn), false);
+    }
+
+    private void setIsLoggedInFalse(){
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putBoolean(getString(R.string.loggedIn), false);
+        editor.apply();
     }
 }

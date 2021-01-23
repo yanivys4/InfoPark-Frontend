@@ -1,8 +1,10 @@
 package com.example.infopark.activities;
 
 
+import android.content.Context;
 import android.content.Intent;
 
+import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -62,10 +64,9 @@ public class RegisterActivity extends AppCompatActivity {
     private TextInputLayout textInputEmail;
     private TextInputLayout textInputUserName;
     private TextInputLayout textInputPassword;
-    private  ConstraintLayout register_layout;
+    private ConstraintLayout register_layout;
     private ProgressBar progressBar;
     private GoogleSignInClient googleSignInClient;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,8 +87,6 @@ public class RegisterActivity extends AppCompatActivity {
         googleSignInClient = GoogleSignIn.getClient(this, gso);
 
     }
-
-
 
     public static Intent makeIntent() {
         return new Intent(ACTION_REGISTER_ACTIVITY);
@@ -134,7 +133,6 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-
     public void confirmInput(View v) {
         if (!validateEmail() | !validateUserName() | !validatePassword()) {
             return;
@@ -155,7 +153,6 @@ public class RegisterActivity extends AppCompatActivity {
             register(registerForm);
         }
     }
-
 
     private void register(RegisterForm registerForm) {
 
@@ -178,9 +175,7 @@ public class RegisterActivity extends AppCompatActivity {
                 ResponseMessage responseMessage = response.body();
 
                 if (!responseMessage.getSuccess()) {
-
                     Utils.showToast(RegisterActivity.this, responseMessage.getDescription());
-                    return;
                 } else {
                     showDialog(registerForm.getGoogleUser());
                 }
@@ -195,7 +190,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-
     private void showDialog(boolean googleUser) {
         AlertDialog.Builder builder = new AlertDialog.Builder
                 (RegisterActivity.this, R.style.AlertDialogTheme);
@@ -209,7 +203,6 @@ public class RegisterActivity extends AppCompatActivity {
             ((TextView) view.findViewById(R.id.textTitle)).setText(getResources().getString(R.string.dialog_title_google));
             ((TextView) view.findViewById(R.id.textMessage)).setText(getResources().getString(R.string.dialog_message_google));
         }
-
 
         ((Button) view.findViewById(R.id.buttonAction)).setText(getResources().getString(R.string.dialog_button));
         ((ImageView) view.findViewById(R.id.imageIcon)).setImageResource(R.drawable.ic_done);
@@ -240,9 +233,7 @@ public class RegisterActivity extends AppCompatActivity {
                         Intent signInIntent = googleSignInClient.getSignInIntent();
                         startActivityForResult(signInIntent, RC_SIGN_IN);
                     }
-
                 });
-
     }
 
     @Override
@@ -265,17 +256,17 @@ public class RegisterActivity extends AppCompatActivity {
 
             LatLng latlng = new LatLng(35.896544f, 74.52323f);
             RegisterForm registerForm = new RegisterForm(account.getDisplayName(), account.getEmail(),
-                    null, null, latlng, 1, 1, false, true,null);
+                    null, null, latlng, 1, 1, false, true, null);
             register(registerForm);
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
             Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
-
         }
     }
 
     public void finishActivity(View view) {
         this.finish();
     }
+
 }

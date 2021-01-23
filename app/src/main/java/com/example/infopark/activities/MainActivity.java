@@ -33,6 +33,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     private MapFragment m_mapFragment;
     private GoogleMap mMap;
 
+    private SharedPreferences sharedPref;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,9 +42,9 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         logOutInButton = findViewById(R.id.logout_login_button);
 
         Context context = MainActivity.this;
-        SharedPreferences sharedPref = context.getSharedPreferences(
+        sharedPref = context.getSharedPreferences(
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        boolean isLoggedIn = sharedPref.getBoolean(getString(R.string.loggedIn), false);
+        boolean isLoggedIn = getIsLoggedIn();
 
         if(isLoggedIn){
             logOutInButton.setTag(1); // 1 is logout button
@@ -64,8 +65,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             m_mapFragment.getMapAsync(this);
         }
     }
-
-
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -92,16 +91,20 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         System.out.println("===========" + status + "=============");
         if(status == 1) {
             // update log out status
-            Context context = MainActivity.this;
-            SharedPreferences sharedPref = context.getSharedPreferences(
-                    getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putBoolean(getString(R.string.loggedIn), false);
-            editor.apply();
+           setIsLoggedInFalse();
         }
-
         Intent intent = LoginActivity.makeIntent();
         startActivity(intent);
         finish();
+    }
+
+    private boolean getIsLoggedIn(){
+        return sharedPref.getBoolean(getString(R.string.loggedIn), false);
+    }
+
+    private void setIsLoggedInFalse(){
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putBoolean(getString(R.string.loggedIn), false);
+        editor.apply();
     }
 }

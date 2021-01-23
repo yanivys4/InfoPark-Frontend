@@ -52,6 +52,8 @@ public class LoginActivity extends AppCompatActivity {
     private ImageButton skipButton;
     private ImageButton backButton;
     private GoogleSignInClient googleSignInClient;
+    private SharedPreferences sharedPref;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,10 +66,13 @@ public class LoginActivity extends AppCompatActivity {
         progressBar.setVisibility(View.INVISIBLE);
         skipButton = findViewById(R.id.skip_button);
         backButton = findViewById(R.id.back_button);
+        Context context = LoginActivity.this;
+        sharedPref = context.getSharedPreferences(
+                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
 
         if (getCallingActivity() == null) {
             backButton.setVisibility(View.INVISIBLE);
-        }else{
+        } else {
             skipButton.setVisibility(View.INVISIBLE);
         }
 
@@ -87,16 +92,14 @@ public class LoginActivity extends AppCompatActivity {
         if (emailOrUsernameInput.isEmpty()) {
             textInputEmailOrUsername.setError("Field can't be empty");
             return;
-        }
-        else {
+        } else {
             textInputEmailOrUsername.setError(null);
         }
 
         if (passwordInput.isEmpty()) {
             textInputPassword.setError("Field can't be empty");
             return;
-        }
-        else {
+        } else {
             textInputPassword.setError(null);
         }
 
@@ -122,7 +125,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call<ResponseMessage> firstCall, @NonNull Response<ResponseMessage> response) {
                 progressBar.setVisibility(View.INVISIBLE);
                 if (!response.isSuccessful()) {
-                    Utils.showToast(LoginActivity.this,"Code:" + response.code());
+                    Utils.showToast(LoginActivity.this, "Code:" + response.code());
                     return;
                 }
 
@@ -158,21 +161,16 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call<ResponseMessage> secondCall, @NonNull Response<ResponseMessage> response) {
                 progressBar.setVisibility(View.INVISIBLE);
                 if (!response.isSuccessful()) {
-                    Utils.showToast(LoginActivity.this,"Code:" + response.code());
+                    Utils.showToast(LoginActivity.this, "Code:" + response.code());
                     return;
                 }
 
                 ResponseMessage responseMessage = response.body();
                 if (!responseMessage.getSuccess()) {
                     Utils.showToast(LoginActivity.this, responseMessage.getDescription());
-                    return;
                 } else {
                     Context context = LoginActivity.this;
-                    SharedPreferences sharedPref = context.getSharedPreferences(
-                            getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPref.edit();
-                    editor.putBoolean(getString(R.string.loggedIn),true);
-                    editor.apply();
+                    setIsLoggedInTrue();
                     startMainActivity();
                 }
             }
@@ -228,14 +226,14 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    private void startMainActivity(){
+    private void startMainActivity() {
         Intent startIntent = MainActivity.makeIntent();
         startActivity(startIntent);
         finish();
     }
 
     public void skipActivity(View view) {
-       startMainActivity();
+        startMainActivity();
     }
 
     public void registerActivity(View view) {
@@ -245,5 +243,11 @@ public class LoginActivity extends AppCompatActivity {
 
     public void finishActivity(View view) {
         this.finish();
+    }
+
+    private void setIsLoggedInTrue() {
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putBoolean(getString(R.string.loggedIn), true);
+        editor.apply();
     }
 }
