@@ -18,4 +18,6 @@
     <string name="loggedIn">loggedIn</string>
     <string name="log_out">Log out</string>
     <string name="log_in">Log in</string>
+    <string name="save_my_location">save my location</string>
+    <string name="add_new_info">add new info</string>
 </resources>
