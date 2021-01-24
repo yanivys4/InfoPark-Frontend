@@ -1,45 +1,110 @@
 package com.example.infopark.activities;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.example.infopark.R;
+
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
+
+import com.example.infopark.RESTApi.LatitudeLongitude;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.model.PlaceLikelihood;
+import com.google.android.libraries.places.api.net.FindCurrentPlaceRequest;
+import com.google.android.libraries.places.api.net.FindCurrentPlaceResponse;
 import com.google.android.libraries.places.api.net.PlacesClient;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class MainActivity extends FragmentActivity implements OnMapReadyCallback {
 
+    private static final String TAG = MainActivity.class.getSimpleName();
+    private GoogleMap map;
+
+    // The entry point to the Fused Location Provider.
+    private FusedLocationProviderClient fusedLocationProviderClient;
+
+    // A default location (Sydney, Australia) and default zoom to use when location permission is
+    // not granted.
+    private final LatLng defaultLocation = new LatLng(-33.8523341, 151.2106085);
+
+
+    private static final int DEFAULT_ZOOM = 15;
+    private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
+    private boolean locationPermissionGranted;
+
+    // The geographical location where the device is currently located. That is, the last-known
+    // location retrieved by the Fused Location Provider.
+    private Location lastKnownLocation;
+    private LatitudeLongitude currentLocation;
+    // Keys for storing activity state.
+    // [START maps_current_place_state_keys]
     private static final String KEY_CAMERA_POSITION = "camera_position";
     private static final String KEY_LOCATION = "location";
+    // [END maps_current_place_state_keys]
+
     /**
      * Name of the Intent Action that wills start this Activity.
      */
     private static final String ACTION_MAIN_ACTIVITY =
             "android.intent.action.ACTION_MAIN_ACTIVITY";
 
-    private Button logOutInButton;
-
-    private MapFragment m_mapFragment;
-    private GoogleMap mMap;
-
     private SharedPreferences sharedPref;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
+        if (savedInstanceState != null) {
+            lastKnownLocation = savedInstanceState.getParcelable(KEY_LOCATION);
+            CameraPosition cameraPosition = savedInstanceState.getParcelable(KEY_CAMERA_POSITION);
+        }
+
+        super.onCreate(savedInstanceState);
+        currentLocation = new LatitudeLongitude(30,30);
         setContentView(R.layout.activity_main);
-        logOutInButton = findViewById(R.id.logout_login_button);
+        Button logOutInButton = findViewById(R.id.logout_login_button);
+
+        // Initialize the SDK
+        Places.initialize(getApplicationContext(), getString(R.string.google_maps_api_key));
+        // The entry point to the Places API.
+        PlacesClient placesClient = Places.createClient(this);
+        // Construct a FusedLocationProviderClient.
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        MapFragment m_mapFragment = (MapFragment) getFragmentManager()
+                .findFragmentById(R.id.map);
+        if(m_mapFragment != null){
+            m_mapFragment.getMapAsync(this);
+        }
 
         Context context = MainActivity.this;
         sharedPref = context.getSharedPreferences(
@@ -55,30 +120,154 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             logOutInButton.setTextColor(getColor(R.color.green));
             logOutInButton.setText(getString(R.string.log_in));
         }
+    }
 
-        // Initialize the SDK
-        Places.initialize(getApplicationContext(), getString(R.string.google_maps_api_key));
-        PlacesClient placesClient = Places.createClient(this);
-        m_mapFragment = (MapFragment) getFragmentManager()
-                .findFragmentById(R.id.map);
-        if(m_mapFragment != null){
-            m_mapFragment.getMapAsync(this);
+    /**
+     * Saves the state of the map when the activity is paused.
+     */
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        if (map != null) {
+            outState.putParcelable(KEY_CAMERA_POSITION, map.getCameraPosition());
+            outState.putParcelable(KEY_LOCATION, lastKnownLocation);
         }
+        super.onSaveInstanceState(outState);
     }
 
     @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-        // Add a marker in Sydney, Australia,
-        // and move the map's camera to the same location.
-        float lat = 31;
-        float lng = 31;
+    public void onMapReady(GoogleMap map) {
+        this.map = map;
 
-        LatLng home = new LatLng(lat, lng);
-        googleMap.addMarker(new MarkerOptions()
-                .position(home)
-                .title("Marker in home"));
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(home));
+        // Prompt the user for permission.
+        getLocationPermission();
+        // [END_EXCLUDE]
+
+        // Turn on the My Location layer and the related control on the map.
+        updateLocationUI();
+
+        // Get the current location of the device and set the position of the map.
+        getDeviceLocation();
+
+    /**
+     * Gets the current location of the device, and positions the map's camera.
+     */
+
+    }
+
+    /**
+     * Gets the current location of the device, and positions the map's camera.
+     */
+    private void getDeviceLocation() {
+        /*
+         * Get the best and most recent location of the device, which may be null in rare
+         * cases when a location is not available.
+         */
+        try {
+            if (locationPermissionGranted) {
+                Task<Location> locationResult = fusedLocationProviderClient.getLastLocation();
+                locationResult.addOnCompleteListener(this, new OnCompleteListener<Location>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Location> task) {
+                        if (task.isSuccessful()) {
+                            // Set the map's camera position to the current location of the device.
+                            lastKnownLocation = task.getResult();
+                            if (lastKnownLocation != null) {
+                                currentLocation.setLocation(lastKnownLocation.getLatitude(),lastKnownLocation.getLongitude());
+                                //TODO add marker after fetch savedLocation from server
+                                // currently saved location is current location
+                                final LatLng savedLocation = new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude());
+                                Marker savedLocationMarker = map.addMarker(
+                                        new MarkerOptions()
+                                                .position(savedLocation)
+                                                .title("saved location")
+                                                .alpha(0.7f)
+                                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.little_car)));
+                                map.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                                        new LatLng(lastKnownLocation.getLatitude(),
+                                                lastKnownLocation.getLongitude()), DEFAULT_ZOOM));
+                            }
+                        } else {
+                            Log.d(TAG, "Current location is null. Using defaults.");
+                            Log.e(TAG, "Exception: %s", task.getException());
+                            map.moveCamera(CameraUpdateFactory
+                                    .newLatLngZoom(defaultLocation, DEFAULT_ZOOM));
+                            map.getUiSettings().setMyLocationButtonEnabled(false);
+                        }
+                    }
+                });
+            }
+        } catch (SecurityException e)  {
+            Log.e("Exception: %s", e.getMessage(), e);
+        }
+
+
+    }
+
+    /**
+     * Prompts the user for permission to use the device location.
+     */
+    private void getLocationPermission() {
+        /*
+         * Request location permission, so that we can get the location of the
+         * device. The result of the permission request is handled by a callback,
+         * onRequestPermissionsResult.
+         */
+        if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
+                android.Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            locationPermissionGranted = true;
+        } else {
+
+            ActivityCompat.requestPermissions(this,
+                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                    PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+        }
+    }
+
+    /**
+     * Handles the result of the request for location permissions.
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        locationPermissionGranted = false;
+        switch (requestCode) {
+            case PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    locationPermissionGranted = true;
+
+                }else{
+                    System.out.println("premission not granted");
+                }
+            }
+        }
+
+        updateLocationUI();
+
+    }
+    /**
+     * Updates the map's UI settings based on whether the user has granted location permission.
+     */
+    private void updateLocationUI() {
+        if (map == null) {
+            return;
+        }
+        try {
+            if (locationPermissionGranted) {
+                map.setMyLocationEnabled(true);
+                map.getUiSettings().setMyLocationButtonEnabled(true);
+            } else {
+                map.setMyLocationEnabled(false);
+                map.getUiSettings().setMyLocationButtonEnabled(false);
+                lastKnownLocation = null;
+               
+            }
+        } catch (SecurityException e)  {
+            Log.e("Exception: %s", e.getMessage());
+        }
     }
 
     public static Intent makeIntent(){
@@ -88,10 +277,9 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     public void logOut(View view) {
 
         final int status =(Integer) view.getTag();
-        System.out.println("===========" + status + "=============");
         if(status == 1) {
             // update log out status
-           setIsLoggedInFalse();
+            setIsLoggedInFalse();
         }
         Intent intent = LoginActivity.makeIntent();
         startActivity(intent);
@@ -107,4 +295,5 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         editor.putBoolean(getString(R.string.loggedIn), false);
         editor.apply();
     }
+
 }

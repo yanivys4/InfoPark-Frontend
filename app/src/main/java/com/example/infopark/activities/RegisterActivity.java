@@ -1,15 +1,10 @@
 package com.example.infopark.activities;
 
 
-import android.content.Context;
 import android.content.Intent;
 
-import android.content.SharedPreferences;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 
@@ -19,18 +14,16 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.infopark.Utils.InputValidator;
-import com.example.infopark.RESTApi.LatLng;
+import com.example.infopark.RESTApi.LatitudeLongitude;
 import com.example.infopark.R;
 import com.example.infopark.RESTApi.RegisterForm;
 import com.example.infopark.RESTApi.ResponseMessage;
@@ -142,12 +135,11 @@ public class RegisterActivity extends AppCompatActivity {
             String email = Objects.requireNonNull(textInputEmail.getEditText()).getText().toString();
             String userPassword = Objects.requireNonNull(textInputPassword.getEditText()).getText().toString();
 
-
             String salt = PasswordUtils.getSalt(30);
             String securedPassword = PasswordUtils.generateSecurePassword(userPassword, salt);
 
             // when current location will work it will be extracted from it
-            LatLng latlng = new LatLng(35.896544f, 74.52323f);
+            LatitudeLongitude latlng = new LatitudeLongitude(-1.0, -1.0);
             RegisterForm registerForm = new RegisterForm(userName, email,
                     securedPassword, salt, latlng, 1, 1, false, false, UUID.randomUUID().toString());
             register(registerForm);
@@ -220,9 +212,7 @@ public class RegisterActivity extends AppCompatActivity {
         if (alertDialog.getWindow() != null) {
             alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
         }
-
         alertDialog.show();
-
     }
 
     public void signInToGoogle(View view) {
@@ -254,7 +244,7 @@ public class RegisterActivity extends AppCompatActivity {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
 
-            LatLng latlng = new LatLng(35.896544f, 74.52323f);
+            LatitudeLongitude latlng = new LatitudeLongitude(-1.0,-1.0);
             RegisterForm registerForm = new RegisterForm(account.getDisplayName(), account.getEmail(),
                     null, null, latlng, 1, 1, false, true, null);
             register(registerForm);

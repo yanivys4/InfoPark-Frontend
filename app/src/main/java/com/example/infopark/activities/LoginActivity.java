@@ -14,9 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.infopark.R;
-import com.example.infopark.RESTApi.LatLng;
 import com.example.infopark.RESTApi.LoginForm;
-import com.example.infopark.RESTApi.RegisterForm;
 import com.example.infopark.RESTApi.ResponseMessage;
 import com.example.infopark.RESTApi.RestApi;
 import com.example.infopark.RESTApi.RetrofitClient;
@@ -32,7 +30,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 
-import java.io.IOException;
 import java.util.Objects;
 
 import retrofit2.Call;

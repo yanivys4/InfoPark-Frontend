@@ -53,8 +53,8 @@
         <fragment
             android:id="@+id/map"
             class="com.google.android.gms.maps.MapFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="389dp"
+            android:layout_height="254dp"
             tools:layout="@layout/fragment_layout" />
 
     </FrameLayout>
