@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.infopark.R;
 import com.example.infopark.RESTApi.LoginForm;
+import com.example.infopark.RESTApi.LoginResponse;
 import com.example.infopark.RESTApi.ResponseMessage;
 import com.example.infopark.RESTApi.RestApi;
 import com.example.infopark.RESTApi.RetrofitClient;
@@ -152,28 +153,29 @@ public class LoginActivity extends AppCompatActivity {
         Retrofit retrofit = RetrofitClient.getInstance();
         // retrofit create rest api according to the interface
         RestApi restApi = retrofit.create(RestApi.class);
-        Call<ResponseMessage> secondCall = restApi.login(loginForm);
-        secondCall.enqueue(new Callback<ResponseMessage>() {
+        Call<LoginResponse> secondCall = restApi.login(loginForm);
+        secondCall.enqueue(new Callback<LoginResponse>() {
             @Override
-            public void onResponse(@NonNull Call<ResponseMessage> secondCall, @NonNull Response<ResponseMessage> response) {
+            public void onResponse(@NonNull Call<LoginResponse> secondCall, @NonNull Response<LoginResponse> response) {
                 progressBar.setVisibility(View.INVISIBLE);
                 if (!response.isSuccessful()) {
                     Utils.showToast(LoginActivity.this, "Code:" + response.code());
                     return;
                 }
 
-                ResponseMessage responseMessage = response.body();
+                LoginResponse responseMessage = response.body();
                 if (!responseMessage.getSuccess()) {
                     Utils.showToast(LoginActivity.this, responseMessage.getDescription());
                 } else {
-                    Context context = LoginActivity.this;
+
                     setIsLoggedInTrue();
+                    setUserEmail(responseMessage.getEmail());
                     startMainActivity();
                 }
             }
 
             @Override
-            public void onFailure(Call<ResponseMessage> call, Throwable t) {
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
                 progressBar.setVisibility(View.INVISIBLE);
                 Utils.showToast(LoginActivity.this, t.getMessage());
             }
@@ -214,7 +216,6 @@ public class LoginActivity extends AppCompatActivity {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
             Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
-
         }
     }
 
@@ -245,6 +246,11 @@ public class LoginActivity extends AppCompatActivity {
     private void setIsLoggedInTrue() {
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putBoolean(getString(R.string.loggedIn), true);
+        editor.apply();
+    }
+    private void setUserEmail(String email){
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(getString(R.string.email), email);
         editor.apply();
     }
 }
