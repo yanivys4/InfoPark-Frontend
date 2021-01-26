@@ -8,8 +8,6 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 public interface RestApi {
-    @GET("test")
-    Call<Test> getTest();
 
     @POST("register")
     Call<ResponseMessage> register(@Body RegisterForm registerForm);
