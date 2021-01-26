@@ -291,7 +291,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
     public void saveMyLocation(View view) {
         if (!getIsLoggedIn()) {
-            Utils.showToast(MainActivity.this, "Please log in");
+            Utils.showToast(MainActivity.this, getString(R.string.login_first));
         } else {
             getDeviceLocation(true);
         }
