@@ -12,11 +12,18 @@ public interface RestApi {
     Call<Test> getTest();
 
     @POST("register")
-    Call<com.example.infopark.RESTApi.ResponseMessage> register(@Body RegisterForm registerForm);
+    Call<ResponseMessage> register(@Body RegisterForm registerForm);
 
     @POST("login")
-    Call<com.example.infopark.RESTApi.ResponseMessage> login(@Body LoginForm loginForm);
+    Call<LoginResponse> login(@Body LoginForm loginForm);
 
     @POST("getSalt")
-    Call<com.example.infopark.RESTApi.ResponseMessage> getSalt(@Body LoginForm loginForm);
+    Call<ResponseMessage> getSalt(@Body LoginForm loginForm);
+
+    @POST("getSavedLocation")
+    Call<SavedLocation> getSavedLocation(@Body RequestSavedLocation requestSavedLocation);
+
+    @POST("setSavedLocation")
+    Call<ResponseMessage> setSavedLocation(@Body RequestSavedLocation requestSavedLocation);
+
 }
