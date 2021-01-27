@@ -45,6 +45,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+
 public class MainActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -326,7 +327,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 LatitudeLongitude savedLocation = responseSavedLocation.getSavedLocation();
                 // when a user is first initialized the default values of the location is -1.
                 // therefore there is still no saved location
-                if (savedLocation.getLatitude() != -1) {
+                if (savedLocation.getLatitude() != -100) {
                     setSavedLocationMarker(savedLocation.getLatitude(), savedLocation.getLongitude());
                 }
             }
@@ -366,5 +367,11 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 Utils.showToast(MainActivity.this, t.getMessage());
             }
         });
+    }
+
+    public void reportNewInfo(View view) {
+        if (!getIsLoggedIn()) {
+            Utils.showToast(MainActivity.this, getString(R.string.login_first));
+        }
     }
 }

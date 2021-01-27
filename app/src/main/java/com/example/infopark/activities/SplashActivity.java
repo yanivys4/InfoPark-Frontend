@@ -30,6 +30,8 @@ public class SplashActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Always call super class for necessary
+        // initialization/implementation.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash);
         Context context = SplashActivity.this;

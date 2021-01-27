@@ -48,6 +48,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+/**
+ * This activity allow the user to register for the application manually or via google.
+ */
 public class RegisterActivity extends AppCompatActivity {
 
     private static final String ACTION_REGISTER_ACTIVITY =
@@ -61,16 +64,21 @@ public class RegisterActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private GoogleSignInClient googleSignInClient;
 
+    /**
+     * Hook method called when a new instance of Activity is
+     * created. One time initialization code goes here, e.g.,
+     * builds a GoogleSignInClient with the options specified by gso.
+     *
+     * @param savedInstanceState object that contains saved state information.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Always call super class for necessary
+        // initialization/implementation.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register);
-        textInputEmail = findViewById(R.id.text_input_email);
-        textInputUserName = findViewById(R.id.text_input_userName);
-        textInputPassword = findViewById(R.id.text_input_password);
-        register_layout = findViewById(R.id.register_layout);
-        progressBar = findViewById(R.id.progressBar);
-        progressBar.setVisibility(View.INVISIBLE);
+        // Initialize the views.
+        initializeViews();
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -80,11 +88,36 @@ public class RegisterActivity extends AppCompatActivity {
         googleSignInClient = GoogleSignIn.getClient(this, gso);
 
     }
+    //============================================================================================
 
+    /**
+     * Initialize the views.
+     */
+    private void initializeViews() {
+        textInputEmail = findViewById(R.id.text_input_email);
+        textInputUserName = findViewById(R.id.text_input_userName);
+        textInputPassword = findViewById(R.id.text_input_password);
+        register_layout = findViewById(R.id.register_layout);
+        progressBar = findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.INVISIBLE);
+    }
+    //============================================================================================
+
+    /**
+     * Factory method that returns an Intent for starting the RegisterActivity.
+     *
+     * @return Intent
+     */
     public static Intent makeIntent() {
         return new Intent(ACTION_REGISTER_ACTIVITY);
     }
+    //============================================================================================
 
+    /**
+     * This function validates the email entered by the user and shows the flaws of input if exist.
+     *
+     * @return boolean whether the email is valid.
+     */
     private boolean validateEmail() {
         String emailInput = Objects.requireNonNull(textInputEmail.getEditText()).getText().toString().trim();
         if (emailInput.isEmpty()) {
@@ -97,7 +130,13 @@ public class RegisterActivity extends AppCompatActivity {
         textInputEmail.setError(null);
         return true;
     }
+    //============================================================================================
 
+    /**
+     * This function validates the userName entered by the user and shows the flaws of input if exist.
+     *
+     * @return boolean whether the userName is valid.
+     */
     private boolean validateUserName() {
         String userNameInput = Objects.requireNonNull(textInputUserName.getEditText()).getText().toString().trim();
         if (userNameInput.isEmpty()) {
@@ -111,7 +150,13 @@ public class RegisterActivity extends AppCompatActivity {
             return true;
         }
     }
+    //============================================================================================
 
+    /**
+     * This function validates the password entered by the user and shows the flaws of input if exist.
+     *
+     * @return boolean whether the password is valid.
+     */
     private boolean validatePassword() {
         String passwordInput = Objects.requireNonNull(textInputPassword.getEditText()).getText().toString().trim();
         if (passwordInput.isEmpty()) {
@@ -125,7 +170,16 @@ public class RegisterActivity extends AppCompatActivity {
             return true;
         }
     }
+    //============================================================================================
 
+    /**
+     * This function is the onCLick method of the confirm button in the register form.
+     * The function run all the validate methods and if all of them returns true that means the
+     * input is valid. then, the function send the data entered to the BackEnd using the register
+     * method.
+     *
+     * @param v the View
+     */
     public void confirmInput(View v) {
         if (!validateEmail() | !validateUserName() | !validatePassword()) {
             return;
@@ -138,14 +192,20 @@ public class RegisterActivity extends AppCompatActivity {
             String salt = PasswordUtils.getSalt(30);
             String securedPassword = PasswordUtils.generateSecurePassword(userPassword, salt);
 
-            // when current location will work it will be extracted from it
-            LatitudeLongitude latlng = new LatitudeLongitude(-1.0, -1.0);
+            LatitudeLongitude latlng = new LatitudeLongitude(-100.0, -100.0);
             RegisterForm registerForm = new RegisterForm(userName, email,
                     securedPassword, salt, latlng, 1, 1, false, false, UUID.randomUUID().toString());
             register(registerForm);
         }
     }
+    //============================================================================================
 
+    /**
+     * This function using the RestApi to set the register attempt (manual or via google) to be approved
+     * by the server.
+     *
+     * @param registerForm an object that contains the register data to be sent to the server.
+     */
     private void register(RegisterForm registerForm) {
 
         Retrofit retrofit = RetrofitClient.getInstance();
@@ -159,20 +219,21 @@ public class RegisterActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call<ResponseMessage> call, @NonNull Response<ResponseMessage> response) {
                 progressBar.setVisibility(View.INVISIBLE);
                 if (!response.isSuccessful()) {
-
                     Utils.showToast(RegisterActivity.this, "Code:" + response.code());
                     return;
                 }
 
                 ResponseMessage responseMessage = response.body();
-
+                // the registration have failed.
                 if (!responseMessage.getSuccess()) {
                     Utils.showToast(RegisterActivity.this, responseMessage.getDescription());
                 } else {
+                    // registration have succeeded.
                     showDialog(registerForm.getGoogleUser());
                 }
             }
 
+            // the communication with the server have failed.
             @Override
             public void onFailure(@NonNull Call<ResponseMessage> call, Throwable t) {
                 progressBar.setVisibility(View.INVISIBLE);
@@ -181,6 +242,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
     }
+    //============================================================================================
 
     private void showDialog(boolean googleUser) {
         AlertDialog.Builder builder = new AlertDialog.Builder
@@ -188,6 +250,7 @@ public class RegisterActivity extends AppCompatActivity {
         View view = LayoutInflater.from(RegisterActivity.this).inflate(R.layout.layout_blue_dialog,
                 (ConstraintLayout) findViewById(R.id.layoutDialogContainer));
         builder.setView(view);
+
         if (!googleUser) {
             ((TextView) view.findViewById(R.id.textTitle)).setText(getResources().getString(R.string.dialog_title));
             ((TextView) view.findViewById(R.id.textMessage)).setText(getResources().getString(R.string.dialog_message));
@@ -244,7 +307,7 @@ public class RegisterActivity extends AppCompatActivity {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
 
-            LatitudeLongitude latlng = new LatitudeLongitude(-1.0,-1.0);
+            LatitudeLongitude latlng = new LatitudeLongitude(-1.0, -1.0);
             RegisterForm registerForm = new RegisterForm(account.getDisplayName(), account.getEmail(),
                     null, null, latlng, 1, 1, false, true, null);
             register(registerForm);
