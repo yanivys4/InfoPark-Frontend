@@ -44,6 +44,12 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name=".activities.ReportActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.ACTION_REPORT_ACTIVITY"/>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 
     </application>
 
