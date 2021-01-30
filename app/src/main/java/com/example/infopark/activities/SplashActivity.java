@@ -80,7 +80,7 @@ public class SplashActivity extends Activity {
                 intent = LoginActivity.makeIntent();
                 // otherwise send it directly to main activity
             } else {
-                intent = MainActivity.makeIntent();
+                intent = ReportActivity.makeIntent();
             }
             startActivity(intent);
             finish();

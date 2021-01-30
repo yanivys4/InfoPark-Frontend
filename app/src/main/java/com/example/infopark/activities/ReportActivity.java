@@ -1,12 +1,16 @@
 package com.example.infopark.activities;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -48,6 +52,72 @@ public class ReportActivity extends AppCompatActivity {
     }
 
     private void initSpinners() {
+        String[] items = getDayTimesArray();
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
+
+        fromASpinner.setAdapter(adapter);
+        toASpinner.setAdapter(adapter);
+        fromBSpinner.setAdapter(adapter);
+        toBSpinner.setAdapter(adapter);
+
+        fromASpinner.setSelection(14);
+        disableAllOptionsBeforePos(toASpinner, 14);
+        toASpinner.setSelection(34);
+        fromBSpinner.setSelection(14);
+        disableAllOptionsBeforePos(toBSpinner, 14);
+        toBSpinner.setSelection(26);
+
+        String[] maxHoursArr = {"NONE", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
+
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, maxHoursArr);
+
+        maxHoursSpinner.setAdapter(adapter2);
+    }
+
+   /* private void setOnItemSelectedListenerToSpinner(Spinner spinnerA, Spinner spinnerB) {
+        spinnerA.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+                disableAllOptionsBeforePos(spinnerB, position);
+            }
+            public void onNothingSelected(AdapterView<?> parent)
+            {
+
+            }
+        });
+    }*/
+
+    private void disableAllOptionsBeforePos(Spinner spinner, int pos) {
+        String[] items = getDayTimesArray();
+
+        ArrayAdapter<String> adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, items) {
+            @Override
+            public boolean isEnabled(int position) {
+                if (position <= pos) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+
+            @Override
+            public View getDropDownView(int position, View convertView, ViewGroup parent) {
+                View view = super.getDropDownView(position, convertView, parent);
+                TextView textview = (TextView) view;
+                if (position <= pos) {
+                    textview.setTextColor(Color.GRAY);
+                } else {
+                    textview.setTextColor(Color.BLACK);
+                }
+                return view;
+            }
+        };
+
+        spinner.setAdapter(adapter);
+    }
+
+    private String[] getDayTimesArray() {
         String[] halfHours = {"00","30",};
         List<String> times = new ArrayList<String>(); // <-- List instead of array
 
@@ -61,20 +131,7 @@ public class ReportActivity extends AppCompatActivity {
             }
         }
 
-        String[] items = times.toArray(new String[0]);
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
-
-        fromASpinner.setAdapter(adapter);
-        toASpinner.setAdapter(adapter);
-        fromBSpinner.setAdapter(adapter);
-        toBSpinner.setAdapter(adapter);
-
-        String[] maxHoursArr = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
-
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, maxHoursArr);
-
-        maxHoursSpinner.setAdapter(adapter2);
+        return times.toArray(new String[0]);
     }
 
     public static Intent makeIntent() {
