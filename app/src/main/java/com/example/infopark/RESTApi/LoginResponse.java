@@ -1,9 +1,9 @@
 package com.example.infopark.RESTApi;
 
 public class LoginResponse extends ResponseMessage {
-    private String email;
+    private String uniqueID;
 
-    public String getEmail() {
-        return email;
+    public String getUniqueID() {
+        return uniqueID;
     }
 }

@@ -22,10 +22,10 @@ public class RegisterForm {
 
     private final boolean googleUser;
 
-    private final String confirmationUniqueID;
+    private final String uniqueID;
 
     public RegisterForm(String userName, String email, String password, String salt, LatitudeLongitude savedLocation,
-                        int trustPoints, int creditPoints, boolean confirmed, boolean googleUser, String confirmationUniqueID) {
+                        int trustPoints, int creditPoints, boolean confirmed, boolean googleUser, String uniqueID) {
         this.userName = userName;
         this.email = email;
         this.password = password;
@@ -35,7 +35,7 @@ public class RegisterForm {
         this.creditPoints = creditPoints;
         this.confirmed = confirmed;
         this.googleUser = googleUser;
-        this.confirmationUniqueID = confirmationUniqueID;
+        this.uniqueID = uniqueID;
 
     }
 

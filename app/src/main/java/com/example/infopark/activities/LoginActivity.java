@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -53,6 +54,7 @@ public class LoginActivity extends AppCompatActivity {
     private SharedPreferences sharedPref;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,6 +85,11 @@ public class LoginActivity extends AppCompatActivity {
         googleSignInClient = GoogleSignIn.getClient(this, gso);
     }
 
+    @Override
+    public void onDestroy() {
+
+        super.onDestroy();
+    }
     public void loginClick(View v) {
         String emailOrUsernameInput = Objects.requireNonNull(textInputEmailOrUsername.getEditText().getText().toString().trim());
         String passwordInput = Objects.requireNonNull(textInputPassword.getEditText().getText().toString().trim());
@@ -107,6 +114,7 @@ public class LoginActivity extends AppCompatActivity {
         if (InputValidator.isEmailValid(emailOrUsernameInput))
             email = emailOrUsernameInput;
         else
+
             username = emailOrUsernameInput;
 
         LoginForm formForSalt = new LoginForm(username, email, null, false);
@@ -164,12 +172,12 @@ public class LoginActivity extends AppCompatActivity {
                 }
 
                 LoginResponse responseMessage = response.body();
+                assert responseMessage != null;
                 if (!responseMessage.getSuccess()) {
                     Utils.showToast(LoginActivity.this, responseMessage.getDescription());
                 } else {
-
                     setIsLoggedInTrue();
-                    setUserEmail(responseMessage.getEmail());
+                    setUserUniqueID(responseMessage.getUniqueID());
                     startMainActivity();
                 }
             }
@@ -248,9 +256,9 @@ public class LoginActivity extends AppCompatActivity {
         editor.putBoolean(getString(R.string.loggedIn), true);
         editor.apply();
     }
-    private void setUserEmail(String email){
+    private void setUserUniqueID(String uniqueID){
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString(getString(R.string.email), email);
+        editor.putString(getString(R.string.uniqueID), uniqueID);
         editor.apply();
     }
 }

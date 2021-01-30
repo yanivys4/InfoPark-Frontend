@@ -2,13 +2,11 @@ package com.example.infopark.RESTApi;
 
 public class SavedLocation {
 
-    private LatitudeLongitude savedLocation;
+    private LatitudeLongitude responseSavedLocation;
 
     public LatitudeLongitude getSavedLocation() {
-        return savedLocation;
+        return responseSavedLocation;
     }
 
-    public SavedLocation(LatitudeLongitude savedLocation) {
-        this.savedLocation = savedLocation;
-    }
+
 }

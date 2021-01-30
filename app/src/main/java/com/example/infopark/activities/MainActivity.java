@@ -9,12 +9,15 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.infopark.R;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import com.example.infopark.RESTApi.LatitudeLongitude;
@@ -50,6 +53,12 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private GoogleMap map;
+    private Button saveLocationButton;
+    private Button reportButton;
+    private Button logOutInButton;
+    private TextView searchButton;
+    private EditText searchInput;
+    private String emailIdentifier;
 
     // The entry point to the Fused Location Provider.
     private FusedLocationProviderClient fusedLocationProviderClient;
@@ -77,8 +86,11 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
      */
     private static final String ACTION_MAIN_ACTIVITY =
             "android.intent.action.ACTION_MAIN_ACTIVITY";
-
+    private Context context;
     private SharedPreferences sharedPref;
+
+
+    private int searchTag = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,9 +101,13 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
         super.onCreate(savedInstanceState);
-        currentLocation = new LatitudeLongitude(30, 30);
+        Intent intent = getIntent();
+       // emailIdentifier = intent.getStringExtra("emailIdentifier");
+        //System.out.println("=============" + emailIdentifier + "==============");
+        context = MainActivity.this;
+
         setContentView(R.layout.activity_main);
-        Button logOutInButton = findViewById(R.id.logout_login_button);
+        initializeViews();
 
         // Initialize the SDK
         Places.initialize(getApplicationContext(), getString(R.string.google_maps_api_key));
@@ -99,15 +115,57 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         PlacesClient placesClient = Places.createClient(this);
         // Construct a FusedLocationProviderClient.
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
         MapFragment m_mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.map);
         if (m_mapFragment != null) {
             m_mapFragment.getMapAsync(this);
         }
 
-        Context context = MainActivity.this;
         sharedPref = context.getSharedPreferences(
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+
+        handleIsLoggedIn();
+        handleSearch();
+    }
+
+
+    /**
+     * Initialize the views.
+     */
+    private void initializeViews() {
+        saveLocationButton = findViewById(R.id.save_my_location_button);
+        reportButton = findViewById(R.id.report_button);
+        searchInput = findViewById(R.id.search_input);
+        searchButton = findViewById(R.id.search_button);
+        logOutInButton = findViewById(R.id.logout_login_button);
+    }
+
+    private void handleSearch() {
+        searchInput.setVisibility(View.GONE);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int resourceId;
+                // the search button is closed
+                if (searchTag == 0) {
+                    searchInput.setVisibility(View.VISIBLE);
+                    searchTag = 1;
+                    resourceId = context.getResources().getIdentifier("ic_done", "drawable", context.getPackageName());
+                } else {
+
+                    searchInput.setVisibility(View.GONE);
+                    searchTag = 0;
+                    resourceId = context.getResources().getIdentifier("ic_search", "drawable", context.getPackageName());
+                    Utils.showToast(MainActivity.this, "search");
+                }
+                searchButton.setBackground(ResourcesCompat.getDrawable(context.getResources(), resourceId, null));
+            }
+
+        });
+    }
+
+    private void handleIsLoggedIn() {
         boolean isLoggedIn = getIsLoggedIn();
 
         if (isLoggedIn) {
@@ -118,10 +176,21 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             logOutInButton.setTag(0); // 0 is login button
             logOutInButton.setTextColor(getColor(R.color.green));
             logOutInButton.setText(getString(R.string.log_in));
+            // valid false which mean the color to change to is gray
+            changeButtonsColor(false);
         }
-
     }
 
+    private void changeButtonsColor(boolean valid){
+        int resourceId;
+        if(valid){
+            resourceId = context.getResources().getIdentifier("button_blue_background", "drawable", context.getPackageName());
+        }else{
+            resourceId = context.getResources().getIdentifier("button_gray_background", "drawable", context.getPackageName());
+        }
+        saveLocationButton.setBackground(ResourcesCompat.getDrawable(context.getResources(), resourceId, null));
+        reportButton.setBackground(ResourcesCompat.getDrawable(context.getResources(), resourceId, null));
+    }
     /**
      * Saves the state of the map when the activity is paused.
      */
@@ -137,7 +206,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap map) {
         this.map = map;
-
         // Prompt the user for permission.
         getLocationPermission();
 
@@ -171,7 +239,13 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                             // Set the map's camera position to the current location of the device.
                             lastKnownLocation = task.getResult();
                             if (lastKnownLocation != null) {
-                                currentLocation.setLocation(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
+                                // first initialized
+                                if (currentLocation == null) {
+                                    currentLocation = new LatitudeLongitude(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
+                                } else {
+                                    currentLocation.setLocation(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
+                                }
+
                                 if (saveLocation) {
                                     setSavedLocation(currentLocation.getLatitude(), currentLocation.getLongitude());
                                 }
@@ -238,6 +312,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         }
         updateLocationUI();
     }
+
     /**
      * Updates the map's UI settings based on whether the user has granted location permission.
      */
@@ -280,8 +355,8 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         return sharedPref.getBoolean(getString(R.string.loggedIn), false);
     }
 
-    private String getUserEmail() {
-        return sharedPref.getString(getString(R.string.email), null);
+    private String getUserUniqueID() {
+        return sharedPref.getString(getString(R.string.uniqueID), null);
     }
 
     private void setIsLoggedInFalse() {
@@ -315,7 +390,8 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         Retrofit retrofit = RetrofitClient.getInstance();
         // retrofit create rest api according to the interface
         RestApi restApi = retrofit.create(RestApi.class);
-        RequestSavedLocation requestSavedLocation = new RequestSavedLocation(getUserEmail(), null);
+
+        RequestSavedLocation requestSavedLocation = new RequestSavedLocation(getUserUniqueID(), null);
         Call<SavedLocation> call = restApi.getSavedLocation(requestSavedLocation);
         call.enqueue(new Callback<SavedLocation>() {
 
@@ -344,7 +420,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         Retrofit retrofit = RetrofitClient.getInstance();
         // retrofit create rest api according to the interface
         RestApi restApi = retrofit.create(RestApi.class);
-        RequestSavedLocation requestSavedLocation = new RequestSavedLocation(getUserEmail(),new LatitudeLongitude(latitude, longitude));
+        RequestSavedLocation requestSavedLocation = new RequestSavedLocation(getUserUniqueID(), new LatitudeLongitude(latitude, longitude));
         Call<ResponseMessage> call = restApi.setSavedLocation(requestSavedLocation);
         call.enqueue(new Callback<ResponseMessage>() {
 
@@ -353,10 +429,10 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 if (!response.isSuccessful()) {
                     Utils.showToast(MainActivity.this, "Code:" + response.code());
                     return;
-                }else{
+                } else {
                     ResponseMessage responseMessage = response.body();
                     Utils.showToast(MainActivity.this, responseMessage.getDescription());
-                    if(responseMessage.getSuccess()){
+                    if (responseMessage.getSuccess()) {
                         setSavedLocationMarker(currentLocation.getLatitude(), currentLocation.getLongitude());
                     }
                 }
@@ -372,6 +448,9 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     public void reportNewInfo(View view) {
         if (!getIsLoggedIn()) {
             Utils.showToast(MainActivity.this, getString(R.string.login_first));
+        } else {
+            Intent startIntent = ReportActivity.makeIntent();
+            startActivity(startIntent);
         }
     }
 }

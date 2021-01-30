@@ -191,10 +191,8 @@ public class RegisterActivity extends AppCompatActivity {
 
             String salt = PasswordUtils.getSalt(30);
             String securedPassword = PasswordUtils.generateSecurePassword(userPassword, salt);
-
-            LatitudeLongitude latlng = new LatitudeLongitude(-100.0, -100.0);
             RegisterForm registerForm = new RegisterForm(userName, email,
-                    securedPassword, salt, latlng, 1, 1, false, false, UUID.randomUUID().toString());
+                    securedPassword, salt, new LatitudeLongitude(-100.0, -100.0), 1, 1, false, false, UUID.randomUUID().toString());
             register(registerForm);
         }
     }
@@ -307,9 +305,8 @@ public class RegisterActivity extends AppCompatActivity {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
 
-            LatitudeLongitude latlng = new LatitudeLongitude(-1.0, -1.0);
             RegisterForm registerForm = new RegisterForm(account.getDisplayName(), account.getEmail(),
-                    null, null, latlng, 1, 1, false, true, null);
+                    null, null, new LatitudeLongitude(-100.0, -100.0), 1, 1, false, true, UUID.randomUUID().toString());
             register(registerForm);
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
