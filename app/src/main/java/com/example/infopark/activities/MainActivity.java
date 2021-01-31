@@ -159,7 +159,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 if (searchTag == 0) {
                     searchInput.setVisibility(View.VISIBLE);
                     searchTag = 1;
-                    resourceId = context.getResources().getIdentifier("ic_done", "drawable", context.getPackageName());
+                    resourceId = context.getResources().getIdentifier("done_button", "drawable", context.getPackageName());
                 } else {
                     searchMode = true;
                     // make buttons gray
@@ -169,7 +169,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                     geoLocate();
                     searchInput.setVisibility(View.GONE);
                     searchTag = 0;
-                    resourceId = context.getResources().getIdentifier("ic_search", "drawable", context.getPackageName());
+                    resourceId = context.getResources().getIdentifier("search_button", "drawable", context.getPackageName());
 
                 }
                 searchButton.setBackground(ResourcesCompat.getDrawable(context.getResources(), resourceId, null));
