@@ -60,7 +60,6 @@ public class RegisterActivity extends AppCompatActivity {
     private TextInputLayout textInputEmail;
     private TextInputLayout textInputUserName;
     private TextInputLayout textInputPassword;
-    private ConstraintLayout register_layout;
     private ProgressBar progressBar;
     private GoogleSignInClient googleSignInClient;
 
@@ -97,7 +96,7 @@ public class RegisterActivity extends AppCompatActivity {
         textInputEmail = findViewById(R.id.text_input_email);
         textInputUserName = findViewById(R.id.text_input_userName);
         textInputPassword = findViewById(R.id.text_input_password);
-        register_layout = findViewById(R.id.register_layout);
+        ConstraintLayout register_layout = findViewById(R.id.register_layout);
         progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(View.INVISIBLE);
     }
@@ -242,11 +241,17 @@ public class RegisterActivity extends AppCompatActivity {
     }
     //============================================================================================
 
+    /**
+     * This function shows a dialog after registration has completed. the content of the dialog
+     * depends on the googleUser parameter value.
+     * @param googleUser boolean
+     *                   indicates if the user tries to register manually or via google.
+     */
     private void showDialog(boolean googleUser) {
         AlertDialog.Builder builder = new AlertDialog.Builder
                 (RegisterActivity.this, R.style.AlertDialogTheme);
         View view = LayoutInflater.from(RegisterActivity.this).inflate(R.layout.layout_blue_dialog,
-                (ConstraintLayout) findViewById(R.id.layoutDialogContainer));
+                findViewById(R.id.layoutDialogContainer));
         builder.setView(view);
 
         if (!googleUser) {
@@ -262,12 +267,9 @@ public class RegisterActivity extends AppCompatActivity {
 
         AlertDialog alertDialog = builder.create();
 
-        view.findViewById(R.id.buttonAction).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                alertDialog.dismiss();
-                finishActivity(view);
-            }
+        view.findViewById(R.id.buttonAction).setOnClickListener(view1 -> {
+            alertDialog.dismiss();
+            finishActivity(view1);
         });
 
         if (alertDialog.getWindow() != null) {
@@ -276,6 +278,11 @@ public class RegisterActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
+    /**
+     * This function is onClick method of the sign in to google button.
+     * the function connects to google Oauth service and tries to sign in.
+     * @param view the view.
+     */
     public void signInToGoogle(View view) {
         googleSignInClient.revokeAccess()
                 .addOnCompleteListener(this, new OnCompleteListener<Void>() {
@@ -286,7 +293,11 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                 });
     }
+    //============================================================================================
 
+    /**
+     * Dispatch incoming result to the correct fragment.
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -300,7 +311,14 @@ public class RegisterActivity extends AppCompatActivity {
             handleSignInResult(task);
         }
     }
+    //============================================================================================
 
+    /**
+     * This function is called from onActivityResult method after sign in was completed successfully.
+     * The function creates a GoogleSignInAccount from the completed task of signing and according
+     * to it build a register form and use it to register with the register method.
+     * @param completedTask the getSignedInAccountFromIntent task.
+     */
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
@@ -315,8 +333,12 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * This function finish the activity.
+     * @param view the view
+     */
     public void finishActivity(View view) {
         this.finish();
     }
-
+    //============================================================================================
 }
