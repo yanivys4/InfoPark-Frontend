@@ -62,11 +62,9 @@ public class ReportActivity extends AppCompatActivity {
         toBSpinner.setAdapter(adapter);
 
         fromASpinner.setSelection(14);
-        disableAllOptionsBeforePos(toASpinner, 14);
-        toASpinner.setSelection(34);
         fromBSpinner.setSelection(14);
-        disableAllOptionsBeforePos(toBSpinner, 14);
-        toBSpinner.setSelection(26);
+
+        setOnItemSelectedListenerToSpinners();
 
         String[] maxHoursArr = {"NONE", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
 
@@ -75,18 +73,37 @@ public class ReportActivity extends AppCompatActivity {
         maxHoursSpinner.setAdapter(adapter2);
     }
 
-   /* private void setOnItemSelectedListenerToSpinner(Spinner spinnerA, Spinner spinnerB) {
-        spinnerA.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+    private void setOnItemSelectedListenerToSpinners() {
+        fromASpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
             {
-                disableAllOptionsBeforePos(spinnerB, position);
+                disableAllOptionsBeforePos(toASpinner, position);
+                if (position < toASpinner.getAdapter().getCount() - 1)
+                    toASpinner.setSelection(position + 1);
+                else
+                    toASpinner.setSelection(position);
             }
             public void onNothingSelected(AdapterView<?> parent)
             {
 
             }
         });
-    }*/
+
+        fromBSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+                disableAllOptionsBeforePos(toBSpinner, position);
+                if (position < toBSpinner.getAdapter().getCount() - 1)
+                    toBSpinner.setSelection(position + 1);
+                else
+                    toBSpinner.setSelection(position);
+            }
+            public void onNothingSelected(AdapterView<?> parent)
+            {
+
+            }
+        });
+    }
 
     private void disableAllOptionsBeforePos(Spinner spinner, int pos) {
         String[] items = getDayTimesArray();
