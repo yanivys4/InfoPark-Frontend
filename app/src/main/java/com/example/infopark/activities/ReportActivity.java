@@ -22,7 +22,7 @@ import java.util.List;
 public class ReportActivity extends AppCompatActivity {
     private static final String ACTION_REPORT_ACTIVITY =
             "android.intent.action.ACTION_REPORT_ACTIVITY";
-
+    private static final String TAG = ReportActivity.class.getSimpleName();
     private ImageButton backButton;
     private Spinner fromASpinner;
     private Spinner toASpinner;

@@ -40,18 +40,21 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class LoginActivity extends AppCompatActivity {
+
     private static final String ACTION_LOGIN_ACTIVITY =
             "android.intent.action.ACTION_LOGIN_ACTIVITY";
     private static final int RC_SIGN_IN = 9000;
-    private static final String TAG = "LoginActivity";
+    private static final String TAG = LoginActivity.class.getSimpleName();
+    private GoogleSignInClient googleSignInClient;
+    private SharedPreferences sharedPref;
+    // View members
     private TextInputLayout textInputEmailOrUsername;
     private TextInputLayout textInputPassword;
     private Button loginButton;
     private ProgressBar progressBar;
     private ImageButton skipButton;
     private ImageButton backButton;
-    private GoogleSignInClient googleSignInClient;
-    private SharedPreferences sharedPref;
+
 
 
 
@@ -92,7 +95,7 @@ public class LoginActivity extends AppCompatActivity {
     }
     public void loginClick(View v) {
         String emailOrUsernameInput = Objects.requireNonNull(textInputEmailOrUsername.getEditText().getText().toString().trim());
-        String passwordInput = Objects.requireNonNull(textInputPassword.getEditText().getText().toString().trim());
+        String passwordInput = Objects.requireNonNull(Objects.requireNonNull(textInputPassword.getEditText()).getText().toString().trim());
 
         if (emailOrUsernameInput.isEmpty()) {
             textInputEmailOrUsername.setError("Field can't be empty");
@@ -136,6 +139,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
 
                 ResponseMessage responseMessage = response.body();
+                assert responseMessage != null;
                 if (!responseMessage.getSuccess()) {
                     Utils.showToast(LoginActivity.this, responseMessage.getDescription());
                     return;
@@ -150,7 +154,7 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<ResponseMessage> call, Throwable t) {
+            public void onFailure(@NonNull Call<ResponseMessage> call, @NonNull Throwable t) {
                 progressBar.setVisibility(View.INVISIBLE);
                 Utils.showToast(LoginActivity.this, t.getMessage());
             }
@@ -183,7 +187,7 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<LoginResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<LoginResponse> call, @NonNull Throwable t) {
                 progressBar.setVisibility(View.INVISIBLE);
                 Utils.showToast(LoginActivity.this, t.getMessage());
             }

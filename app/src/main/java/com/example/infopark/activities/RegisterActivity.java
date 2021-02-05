@@ -56,12 +56,14 @@ public class RegisterActivity extends AppCompatActivity {
     private static final String ACTION_REGISTER_ACTIVITY =
             "android.intent.action.ACTION_REGISTER_ACTIVITY";
     private static final int RC_SIGN_IN = 9000;
-    private static final String TAG = "RegisterActivity";
+    private static final String TAG = RegisterActivity.class.getSimpleName();
+    private GoogleSignInClient googleSignInClient;
+    // view members
     private TextInputLayout textInputEmail;
     private TextInputLayout textInputUserName;
     private TextInputLayout textInputPassword;
     private ProgressBar progressBar;
-    private GoogleSignInClient googleSignInClient;
+
 
     /**
      * Hook method called when a new instance of Activity is

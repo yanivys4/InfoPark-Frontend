@@ -57,26 +57,33 @@ import retrofit2.Retrofit;
 
 public class MainActivity extends FragmentActivity implements OnMapReadyCallback {
 
+    /**
+     * Name of the Intent Action that wills start this Activity.
+     */
+    private static final String ACTION_MAIN_ACTIVITY =
+            "android.intent.action.ACTION_MAIN_ACTIVITY";
     private static final String TAG = MainActivity.class.getSimpleName();
-    private GoogleMap map;
+    // view members
     private Button saveLocationButton;
     private Button reportButton;
     private Button logOutInButton;
     private TextView searchButton;
     private EditText searchInput;
     private boolean searchMode;
+    private int searchTag = 0;
 
+    private Context context;
+    private SharedPreferences sharedPref;
+
+    private GoogleMap map;
     // The entry point to the Fused Location Provider.
     private FusedLocationProviderClient fusedLocationProviderClient;
-
     // A default location (Sydney, Australia) and default zoom to use when location permission is
     // not granted.
     private final LatLng defaultLocation = new LatLng(31.7586, 35.1629);
-
-    private static final int DEFAULT_ZOOM = 15;
+    private static final int DEFAULT_ZOOM = 18;
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private boolean locationPermissionGranted;
-
     // The geographical location where the device is currently located. That is, the last-known
     // location retrieved by the Fused Location Provider.
     private Location lastKnownLocation;
@@ -89,27 +96,13 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     private static final String KEY_CAMERA_POSITION = "camera_position";
     private static final String KEY_LOCATION = "location";
 
-
-    /**
-     * Name of the Intent Action that wills start this Activity.
-     */
-    private static final String ACTION_MAIN_ACTIVITY =
-            "android.intent.action.ACTION_MAIN_ACTIVITY";
-    private Context context;
-    private SharedPreferences sharedPref;
-
-    private int searchTag = 0;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        /*
         if (savedInstanceState != null) {
             lastKnownLocation = savedInstanceState.getParcelable(KEY_LOCATION);
             CameraPosition cameraPosition = savedInstanceState.getParcelable(KEY_CAMERA_POSITION);
         }
-
-         */
 
         super.onCreate(savedInstanceState);
 
@@ -149,6 +142,18 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         logOutInButton = findViewById(R.id.logout_login_button);
     }
 
+    /**
+     * Saves the state of the map when the activity is paused.
+     */
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        if (map != null) {
+            outState.putParcelable(KEY_CAMERA_POSITION, map.getCameraPosition());
+            outState.putParcelable(KEY_LOCATION, lastKnownLocation);
+        }
+        super.onSaveInstanceState(outState);
+    }
+
     private void handleSearch() {
         searchInput.setVisibility(View.GONE);
         searchButton.setOnClickListener(new View.OnClickListener() {
@@ -164,8 +169,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                     searchMode = true;
                     // make buttons gray
                     changeButtonsColor(false);
-                    // temporary
-
                     geoLocate();
                     searchInput.setVisibility(View.GONE);
                     searchTag = 0;
@@ -177,7 +180,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
         });
     }
-
 
     private void geoLocate() {
         Log.d(TAG, "geoLocate: geolocating");
@@ -235,33 +237,18 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         reportButton.setBackground(ResourcesCompat.getDrawable(context.getResources(), resourceId, null));
     }
 
-    /**
-     * Saves the state of the map when the activity is paused.
-     */
-    @Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
-        if (map != null) {
-            outState.putParcelable(KEY_CAMERA_POSITION, map.getCameraPosition());
-            outState.putParcelable(KEY_LOCATION, lastKnownLocation);
-        }
-        super.onSaveInstanceState(outState);
-    }
-
     @Override
     public void onMapReady(GoogleMap map) {
         this.map = map;
 
         //add location button click listener
-        map.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
-            @Override
-            public boolean onMyLocationButtonClick() {
-                // change to blue only if also user logged in
-                if (getIsLoggedIn()) {
-                    changeButtonsColor(true);
-                }
-                searchMode = false;
-                return false;
+        map.setOnMyLocationButtonClickListener(() -> {
+            // change to blue only if also user logged in
+            if (getIsLoggedIn()) {
+                changeButtonsColor(true);
             }
+            searchMode = false;
+            return false;
         });
         // Prompt the user for permission.
         getLocationPermission();
@@ -285,7 +272,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
          * Get the best and most recent location of the device, which may be null in rare
          * cases when a location is not available.
          */
-        System.out.println("getDeviceLocation triggered");
         try {
             if (locationPermissionGranted) {
                 Task<Location> locationResult = fusedLocationProviderClient.getLastLocation();
@@ -357,16 +343,13 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                                            @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
         locationPermissionGranted = false;
-        switch (requestCode) {
-            case PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    locationPermissionGranted = true;
+        if (requestCode == PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION) {// If request is cancelled, the result arrays are empty.
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                locationPermissionGranted = true;
 
-                } else {
-                    System.out.println("premission not granted");
-                }
+            } else {
+                System.out.println("premission not granted");
             }
         }
         updateLocationUI();
@@ -410,20 +393,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         finish();
     }
 
-    private boolean getIsLoggedIn() {
-        return sharedPref.getBoolean(getString(R.string.loggedIn), false);
-    }
-
-    private String getUserUniqueID() {
-        return sharedPref.getString(getString(R.string.uniqueID), null);
-    }
-
-    private void setIsLoggedInFalse() {
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putBoolean(getString(R.string.loggedIn), false);
-        editor.apply();
-    }
-
     public void saveMyLocation(View view) {
 
         if (searchMode) {
@@ -435,32 +404,15 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-    private void setSavedLocationMarker(double latitude, double longitude) {
-        if (savedLocationMarker != null) {
-            savedLocationMarker.remove();
+    public void reportNewInfo(View view) {
+        if (searchMode) {
+            Utils.showToast(MainActivity.this, "please go back to live location first");
+        } else if (!getIsLoggedIn()) {
+            Utils.showToast(MainActivity.this, getString(R.string.login_first));
+        } else {
+            Intent startIntent = ReportActivity.makeIntent();
+            startActivity(startIntent);
         }
-        final LatLng savedLocation = new LatLng(latitude, longitude);
-        savedLocationMarker = map.addMarker(
-                new MarkerOptions()
-                        .position(savedLocation)
-                        .title("saved location")
-                        .alpha(0.7f)
-                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.little_car)));
-
-    }
-
-    private void setSearchLocationMarker() {
-        if (searchLocationMarker != null) {
-            searchLocationMarker.remove();
-        }
-        final LatLng searchLocationLatLng = new LatLng(searchLocation.getLatitude(), searchLocation.getLongitude());
-        searchLocationMarker = map.addMarker(
-                new MarkerOptions()
-                        .position(searchLocationLatLng)
-                        .title("searched location")
-                        .alpha(0.7f));
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                searchLocationLatLng, DEFAULT_ZOOM));
     }
 
     private void getSavedLocation() {
@@ -522,14 +474,46 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         });
     }
 
-    public void reportNewInfo(View view) {
-        if (searchMode) {
-            Utils.showToast(MainActivity.this, "please go back to live location first");
-        } else if (!getIsLoggedIn()) {
-            Utils.showToast(MainActivity.this, getString(R.string.login_first));
-        } else {
-            Intent startIntent = ReportActivity.makeIntent();
-            startActivity(startIntent);
+    private void setSavedLocationMarker(double latitude, double longitude) {
+        if (savedLocationMarker != null) {
+            savedLocationMarker.remove();
         }
+        final LatLng savedLocation = new LatLng(latitude, longitude);
+        savedLocationMarker = map.addMarker(
+                new MarkerOptions()
+                        .position(savedLocation)
+                        .title("saved location")
+                        .alpha(0.7f)
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.little_car)));
+
     }
+
+    private void setSearchLocationMarker() {
+        if (searchLocationMarker != null) {
+            searchLocationMarker.remove();
+        }
+        final LatLng searchLocationLatLng = new LatLng(searchLocation.getLatitude(), searchLocation.getLongitude());
+        searchLocationMarker = map.addMarker(
+                new MarkerOptions()
+                        .position(searchLocationLatLng)
+                        .title("searched location")
+                        .alpha(0.7f));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                searchLocationLatLng, DEFAULT_ZOOM));
+    }
+
+    private boolean getIsLoggedIn() {
+        return sharedPref.getBoolean(getString(R.string.loggedIn), false);
+    }
+
+    private void setIsLoggedInFalse() {
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putBoolean(getString(R.string.loggedIn), false);
+        editor.apply();
+    }
+
+    private String getUserUniqueID() {
+        return sharedPref.getString(getString(R.string.uniqueID), null);
+    }
+
 }
