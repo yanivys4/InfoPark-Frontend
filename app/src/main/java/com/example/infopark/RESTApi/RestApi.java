@@ -21,4 +21,7 @@ public interface RestApi {
     @POST("setSavedLocation")
     Call<ResponseMessage> setSavedLocation(@Body RequestSavedLocation requestSavedLocation);
 
+    @POST("report")
+    Call<ResponseMessage> report(@Body ReportForm reportForm);
+
 }
