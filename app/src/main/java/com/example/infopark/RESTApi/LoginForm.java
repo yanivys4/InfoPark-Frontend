@@ -13,7 +13,7 @@ public class LoginForm {
     private final boolean googleUser;
 
     /**
-     * his function constructs a new login form.
+     * This function constructs a new login form.
      * @param username the user name to login with.
      * @param email the email to login with.
      * @param password the password to login with.

@@ -13,6 +13,7 @@ import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.infopark.R;
 import com.example.infopark.RESTApi.LoginForm;
@@ -39,6 +40,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+/**
+ * This activity allow the user to login for the application manually or via google.
+ */
 public class LoginActivity extends AppCompatActivity {
 
     private static final String ACTION_LOGIN_ACTIVITY =
@@ -47,6 +51,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = LoginActivity.class.getSimpleName();
     private GoogleSignInClient googleSignInClient;
     private SharedPreferences sharedPref;
+
     // View members
     private TextInputLayout textInputEmailOrUsername;
     private TextInputLayout textInputPassword;
@@ -55,13 +60,42 @@ public class LoginActivity extends AppCompatActivity {
     private ImageButton skipButton;
     private ImageButton backButton;
 
-
-
-
+    /**
+     * Hook method called when a new instance of Activity is
+     * created. One time initialization code goes here, e.g.,
+     * builds a GoogleSignInClient with the options specified by gso.
+     *
+     * @param savedInstanceState object that contains saved state information.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Always call super class for necessary
+        // initialization/implementation.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
+
+        // Initialize the views.
+        initializeViews();
+
+        // Initialize the sharedPref
+        Context context = LoginActivity.this;
+        sharedPref = context.getSharedPreferences(
+                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+
+        // Configure sign-in to request the user's ID, email address, and basic
+        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+
+        // Build a GoogleSignInClient with the options specified by gso.
+        googleSignInClient = GoogleSignIn.getClient(this, gso);
+    }
+
+    /**
+     * Initialize the views.
+     */
+    private void initializeViews() {
         textInputEmailOrUsername = findViewById(R.id.text_input_email_or_usernme);
         textInputPassword = findViewById(R.id.text_input_password);
         loginButton = findViewById(R.id.login_button);
@@ -69,46 +103,27 @@ public class LoginActivity extends AppCompatActivity {
         progressBar.setVisibility(View.INVISIBLE);
         skipButton = findViewById(R.id.skip_button);
         backButton = findViewById(R.id.back_button);
-        Context context = LoginActivity.this;
-        sharedPref = context.getSharedPreferences(
-                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
 
         if (getCallingActivity() == null) {
             backButton.setVisibility(View.INVISIBLE);
         } else {
             skipButton.setVisibility(View.INVISIBLE);
         }
-
-        // Configure sign-in to request the user's ID, email address, and basic
-        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
-        // Build a GoogleSignInClient with the options specified by gso.
-        googleSignInClient = GoogleSignIn.getClient(this, gso);
     }
 
-    @Override
-    public void onDestroy() {
-
-        super.onDestroy();
-    }
+    /**
+     * This function is the onCLick method of the login button in the login form.
+     * The function run all the validate methods and if all of them returns true that means the
+     * input is valid. then, the function send the data entered to the BackEnd using the login
+     * method.
+     * @param v the View
+     */
     public void loginClick(View v) {
         String emailOrUsernameInput = Objects.requireNonNull(textInputEmailOrUsername.getEditText().getText().toString().trim());
         String passwordInput = Objects.requireNonNull(Objects.requireNonNull(textInputPassword.getEditText()).getText().toString().trim());
 
-        if (emailOrUsernameInput.isEmpty()) {
-            textInputEmailOrUsername.setError("Field can't be empty");
+        if (!validateEmailOrUserName(emailOrUsernameInput) || !validatePassword(passwordInput)) {
             return;
-        } else {
-            textInputEmailOrUsername.setError(null);
-        }
-
-        if (passwordInput.isEmpty()) {
-            textInputPassword.setError("Field can't be empty");
-            return;
-        } else {
-            textInputPassword.setError(null);
         }
 
         String username = "";
@@ -117,7 +132,6 @@ public class LoginActivity extends AppCompatActivity {
         if (InputValidator.isEmailValid(emailOrUsernameInput))
             email = emailOrUsernameInput;
         else
-
             username = emailOrUsernameInput;
 
         LoginForm formForSalt = new LoginForm(username, email, null, false);
@@ -161,6 +175,41 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * This function validate the email or userName entered by the user and shows the flaws of input if exist.
+     * @param emailOrUsernameInput the string that the user entered
+     * @return boolean whether the email or userName is valid.
+     */
+    private boolean validateEmailOrUserName(String emailOrUsernameInput) {
+        if (emailOrUsernameInput.isEmpty()) {
+            textInputEmailOrUsername.setError(getString(R.string.field_cant_be_empty));
+            return false;
+        } else {
+            textInputEmailOrUsername.setError(null);
+            return true;
+        }
+    }
+
+    /**
+     * This function validate the password entered by the user and shows the flaws of input if exist.
+     * @param passwordInput the string that the user entered
+     * @return boolean whether the password is valid.
+     */
+    private boolean validatePassword(String passwordInput) {
+        if (passwordInput.isEmpty()) {
+            textInputPassword.setError(getString(R.string.field_cant_be_empty));
+            return false;
+        } else {
+            textInputPassword.setError(null);
+            return true;
+        }
+    }
+
+    /**
+     * This function using the RestApi to set the login attempt (manual or via google) to be
+     * approved by the user
+     * @param loginForm an object that contains the login data to be sent to the server.
+     */
     private void login(LoginForm loginForm) {
         Retrofit retrofit = RetrofitClient.getInstance();
         // retrofit create rest api according to the interface
@@ -194,6 +243,11 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * This function is onClick method of the sign in to google button.
+     * the function connects to google Oauth service and tries to sign in.
+     * @param view the view.
+     */
     public void signInToGoogle(View view) {
         googleSignInClient.revokeAccess()
                 .addOnCompleteListener(this, new OnCompleteListener<Void>() {
@@ -205,6 +259,9 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
+    /**
+     * Dispatch incoming result to the correct fragment.
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -218,6 +275,12 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * This function is called from onActivityResult method after sign in was completed successfully.
+     * The function creates a GoogleSignInAccount from the completed task of signing and according
+     * to it build a register form and use it to register with the register method.
+     * @param completedTask the getSignedInAccountFromIntent task.
+     */
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
@@ -231,35 +294,61 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Factory method that returns an Intent for starting the RegisterActivity.
+     * @return Intent
+     */
     public static Intent makeIntent() {
         return new Intent(ACTION_LOGIN_ACTIVITY);
     }
 
-
+    /**
+     * This function start the main activity.
+     */
     private void startMainActivity() {
         Intent startIntent = MainActivity.makeIntent();
         startActivity(startIntent);
         finish();
     }
 
+    /**
+     * This function skip the login activity.
+     * @param view the View
+     */
     public void skipActivity(View view) {
         startMainActivity();
     }
 
+    /**
+     * This function start the register activity.
+     * @param view the View
+     */
     public void registerActivity(View view) {
         Intent startIntent = RegisterActivity.makeIntent();
         startActivity(startIntent);
     }
 
+    /**
+     * This function finish the activity.
+     * @param view the view
+     */
     public void finishActivity(View view) {
         this.finish();
     }
 
+    /**
+     * This function set the loggedIn true in the SharedPreferences.
+     */
     private void setIsLoggedInTrue() {
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putBoolean(getString(R.string.loggedIn), true);
         editor.apply();
     }
+
+    /**
+     * This function set the user unique id in the SharedPreferences.
+     * @param uniqueID the user unique id
+     */
     private void setUserUniqueID(String uniqueID){
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(getString(R.string.uniqueID), uniqueID);
