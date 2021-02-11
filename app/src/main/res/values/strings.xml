@@ -29,5 +29,5 @@
     <string name="type_to_search">Type to Search</string>
     <string name="uniqueID">uniqueID</string>
     <string name="report_success">Report Success!</string>
-    <string name="field_cant_be_empty">Field can\'t be empty</string>
+    <string name="click_for_info">Click for info</string>
 </resources>
