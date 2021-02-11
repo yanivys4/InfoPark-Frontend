@@ -57,11 +57,31 @@ public class ReportActivity extends AppCompatActivity {
     private Context context;
     private SharedPreferences sharedPref;
 
+    /**
+     * Hook method called when a new instance of Activity is
+     * created. One time initialization code goes here, e.g.
+     * @param savedInstanceState object that contains saved state information.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.report);
 
+        // Initialize the views.
+        initializeViews();
+
+        // Initialize the sharedPref
+        context = ReportActivity.this;
+        sharedPref = context.getSharedPreferences(
+                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+
+        initSpinners();
+    }
+
+    /**
+     * Initialize the views.
+     */
+    private void initializeViews() {
         backButton = findViewById(R.id.back_button);
         fromASpinner = findViewById(R.id.fromASpinner);
         toASpinner = findViewById(R.id.toASpinner);
@@ -71,14 +91,13 @@ public class ReportActivity extends AppCompatActivity {
         reportButton = findViewById(R.id.reportButton);
         progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(View.INVISIBLE);
-
-        context = ReportActivity.this;
-        sharedPref = context.getSharedPreferences(
-                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-
-        initSpinners();
     }
 
+    /**
+     * This function is the onCLick method of the report button in the report form.
+     * The function send the data entered to the BackEnd using the report method.
+     * @param v the View
+     */
     public void reportClick(View v) {
         progressBar.setVisibility(View.VISIBLE);
         String uniqueID = getUserUniqueID();
@@ -90,6 +109,14 @@ public class ReportActivity extends AppCompatActivity {
 
         ReportForm reportForm = new ReportForm(uniqueID, fromA, toA, fromB, toB, maxHours);
 
+        report(reportForm);
+    }
+
+    /**
+     * This function using the RestApi to set the report attempt to be approved by the user.
+     * @param reportForm an object that contains the report data to be sent to the server.
+     */
+    private void report(ReportForm reportForm) {
         Retrofit retrofit = RetrofitClient.getInstance();
         // retrofit create rest api according to the interface
         RestApi restApi = retrofit.create(RestApi.class);
@@ -109,10 +136,6 @@ public class ReportActivity extends AppCompatActivity {
                     Utils.showToast(ReportActivity.this, responseMessage.getDescription());
                 } else {
                     Utils.showToast(ReportActivity.this, getString(R.string.report_success));
-
-                    //setIsLoggedInTrue();
-                    //setUserUniqueID(responseMessage.getUniqueID());
-                    //startMainActivity();
                 }
             }
 
@@ -124,10 +147,17 @@ public class ReportActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * This function return the user unique id that saved in the sharedPref.
+     * @return string that represent the user unique id
+     */
     private String getUserUniqueID() {
         return sharedPref.getString(getString(R.string.uniqueID), null);
     }
 
+    /**
+     * This function initialize the spinners
+     */
     private void initSpinners() {
         String[] items = getDayTimesArray();
 
@@ -150,6 +180,9 @@ public class ReportActivity extends AppCompatActivity {
         maxHoursSpinner.setAdapter(adapter2);
     }
 
+    /**
+     * This function set the on item selected listeners to the spinners
+     */
     private void setOnItemSelectedListenerToSpinners() {
         fromASpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
@@ -182,6 +215,11 @@ public class ReportActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * This function disable all spinner option before some position.
+     * @param spinner the spinner to disabled
+     * @param pos the position
+     */
     private void disableAllOptionsBeforePos(Spinner spinner, int pos) {
         String[] items = getDayTimesArray();
 
@@ -211,6 +249,10 @@ public class ReportActivity extends AppCompatActivity {
         spinner.setAdapter(adapter);
     }
 
+    /**
+     * This function create an string array that contain all day times in 30 minute jumps.
+     * @return string array that contain all day times
+     */
     private String[] getDayTimesArray() {
         String[] halfHours = {"00","30",};
         List<String> times = new ArrayList<String>(); // <-- List instead of array
@@ -228,10 +270,18 @@ public class ReportActivity extends AppCompatActivity {
         return times.toArray(new String[0]);
     }
 
+    /**
+     * Factory method that returns an Intent for starting the RegisterActivity.
+     * @return Intent
+     */
     public static Intent makeIntent() {
         return new Intent(ACTION_REPORT_ACTIVITY);
     }
 
+    /**
+     * This function finish the activity.
+     * @param view the view
+     */
     public void finishActivity(View view) {
         this.finish();
     }
