@@ -63,7 +63,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     private static final String ACTION_MAIN_ACTIVITY =
             "android.intent.action.ACTION_MAIN_ACTIVITY";
     private static final String TAG = MainActivity.class.getSimpleName();
-    // view members
+    // View members
     private Button saveLocationButton;
     private Button reportButton;
     private Button logOutInButton;
@@ -159,6 +159,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 int resourceId;
                 // the search button is closed
                 if (searchTag == 0) {
@@ -166,11 +167,13 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                     searchTag = 1;
                     resourceId = context.getResources().getIdentifier("done_button", "drawable", context.getPackageName());
                 } else {
-                    searchMode = true;
                     // make buttons gray
                     changeButtonsColor(false);
-                    geoLocate();
+                    if(geoLocate()){
+                        searchMode = true;
+                    }
                     searchInput.setVisibility(View.GONE);
+                    searchInput.setText("");
                     searchTag = 0;
                     resourceId = context.getResources().getIdentifier("search_button", "drawable", context.getPackageName());
 
@@ -181,7 +184,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         });
     }
 
-    private void geoLocate() {
+    private boolean geoLocate() {
         Log.d(TAG, "geoLocate: geolocating");
 
         String searchString = searchInput.getText().toString();
@@ -205,8 +208,10 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 searchLocation.setLocation(addressLatitude, addressLongitude);
             }
             setSearchLocationMarker();
+            return true;
         } else {
             Utils.showToast(MainActivity.this, "Address not exist!");
+            return false;
         }
     }
 
@@ -516,4 +521,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         return sharedPref.getString(getString(R.string.uniqueID), null);
     }
 
+    public void retrieveInfo(View view) {
+        Utils.showToast(MainActivity.this,"click");
+    }
 }
