@@ -91,12 +91,24 @@
         android:layout_width="105dp"
         android:layout_height="224dp"
         android:contentDescription="@string/back_button"
-
+        android:onClick="retrieveInfo"
         android:src="@drawable/signpost"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/report_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
+
+    <TextView
+        android:layout_width="73dp"
+        android:layout_height="76dp"
+        app:layout_constraintBottom_toBottomOf="@+id/back_button"
+        app:layout_constraintEnd_toEndOf="@+id/back_button"
+        app:layout_constraintStart_toStartOf="@+id/back_button"
+        app:layout_constraintTop_toTopOf="@+id/back_button"
+        app:layout_constraintVertical_bias="0.77"
+        android:text="@string/click_for_info"
+        android:textColor="@color/black"
+        android:textSize="22sp"/>
 
     <Button
         android:id="@+id/save_my_location_button"
