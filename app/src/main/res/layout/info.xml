@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/info_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".activities.InfoActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="417dp"
+        android:layout_height="46dp"
+        android:layout_marginEnd="197dp"
+        android:background="#0471B7"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.014"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="157dp"
+        android:layout_height="42dp"
+        android:layout_alignParentTop="false"
+        android:layout_alignParentEnd="false"
+        android:layout_centerHorizontal="false"
+        android:layout_gravity="center"
+
+        android:contentDescription="@string/toolbar_image"
+        android:orientation="vertical"
+        android:src="@drawable/infopark_logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/back_button"
+        android:layout_width="82dp"
+        android:layout_height="27dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="10dp"
+        android:contentDescription="@string/back_button"
+        android:onClick="finishActivity"
+        android:src="@drawable/back_button"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView5" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@color/signpost_yellow"
+
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        tools:layout_editor_absoluteX="26dp">
+
+        <TableLayout
+            android:id="@+id/tableLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginBottom="100dp"
+            android:background="@color/signpost_yellow"
+            android:paddingBottom="30dp"
+            android:stretchColumns="*"
+            app:layout_constraintBottom_toTopOf="@+id/reportButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TableRow
+                android:id="@+id/title_row"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="10dip"
+                    android:text="@string/parking_info"
+                    android:textAlignment="center"
+                    android:textColor="#000"
+                    android:textSize="30sp"
+                    android:textStyle="bold" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:id="@+id/sun_thu_row">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="10dip"
+                    android:text="@string/sun_thu"
+                    android:layout_marginStart="40dp"
+                    android:textColor="#000"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/sun_thu_hours"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="10dip"
+                    android:textColor="#000"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+            </TableRow>
+            <TableRow
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:id="@+id/fri_row">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="10dip"
+                    android:text="@string/fri"
+                    android:layout_marginStart="40dp"
+                    android:textColor="#000"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/fri_hours"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="10dip"
+                    android:textColor="#000"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+            </TableRow>
+            <TableRow
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:id="@+id/max_row">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="10dip"
+                    android:text="@string/max"
+                    android:layout_marginStart="40dp"
+                    android:textColor="#000"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/max_hours"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="10dip"
+                    android:textColor="#000"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+            </TableRow>
+        </TableLayout>
+
+
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
