@@ -50,6 +50,12 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name=".activities.InfoActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.ACTION_INFO_ACTIVITY"/>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 
     </application>
 

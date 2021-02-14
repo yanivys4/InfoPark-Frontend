@@ -522,6 +522,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     public void retrieveInfo(View view) {
-        Utils.showToast(MainActivity.this,"click");
+        Intent startIntent = InfoActivity.makeIntent();
+        startActivity(startIntent);
     }
 }

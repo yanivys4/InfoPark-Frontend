@@ -31,4 +31,9 @@
     <string name="report_success">Report Success!</string>
     <string name="click_for_info">Click for info</string>
     <string name="field_cant_be_empty">Field can\'t be empty</string>
+    <string name="payment">PAYMENT</string>
+    <string name="sun_thu">SUN-THU</string>
+    <string name="fri">FRI</string>
+    <string name="max">MAX</string>
+    <string name="parking_info">PARKING INFO</string>
 </resources>
