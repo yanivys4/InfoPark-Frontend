@@ -1,11 +1,14 @@
 package com.example.infopark.RESTApi;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * This class holds the simplest representation of geographical location - Latitude and Longitude.
  * (the LatLng and Location are more complex and the purpose of this class is to save the location
  * in a simple way that will fit also the backend.)
  */
-public class LatitudeLongitude {
+public class LatitudeLongitude  {
 
     private double latitude;
     private double longitude;
@@ -48,5 +51,6 @@ public class LatitudeLongitude {
         this.latitude = latitude;
         this.longitude = longitude;
     }
+
     //============================================================================================
 }

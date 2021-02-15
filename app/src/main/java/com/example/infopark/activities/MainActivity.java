@@ -24,6 +24,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import com.example.infopark.RESTApi.LatitudeLongitude;
 import com.example.infopark.RESTApi.RequestSavedLocation;
+import com.example.infopark.RESTApi.ResponseInfo;
 import com.example.infopark.RESTApi.ResponseMessage;
 import com.example.infopark.RESTApi.RestApi;
 import com.example.infopark.RESTApi.RetrofitClient;
@@ -168,9 +169,10 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                     resourceId = context.getResources().getIdentifier("done_button", "drawable", context.getPackageName());
                 } else {
                     // make buttons gray
-                    changeButtonsColor(false);
+
                     if(geoLocate()){
                         searchMode = true;
+                        changeButtonsColor(false);
                     }
                     searchInput.setVisibility(View.GONE);
                     searchInput.setText("");
@@ -296,7 +298,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                                 }
 
                                 if (saveLocation) {
-                                    setSavedLocation(currentLocation.getLatitude(), currentLocation.getLongitude());
+                                    setSavedLocation();
                                 }
                                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(
                                         new LatLng(lastKnownLocation.getLatitude(),
@@ -450,11 +452,11 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-    private void setSavedLocation(double latitude, double longitude) {
+    private void setSavedLocation() {
         Retrofit retrofit = RetrofitClient.getInstance();
         // retrofit create rest api according to the interface
         RestApi restApi = retrofit.create(RestApi.class);
-        RequestSavedLocation requestSavedLocation = new RequestSavedLocation(getUserUniqueID(), new LatitudeLongitude(latitude, longitude));
+        RequestSavedLocation requestSavedLocation = new RequestSavedLocation(getUserUniqueID(), currentLocation);
         Call<ResponseMessage> call = restApi.setSavedLocation(requestSavedLocation);
         call.enqueue(new Callback<ResponseMessage>() {
 
@@ -522,7 +524,44 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     public void retrieveInfo(View view) {
+        Retrofit retrofit = RetrofitClient.getInstance();
+        // retrofit create rest api according to the interface
+        RestApi restApi = retrofit.create(RestApi.class);
+        RequestSavedLocation requestSavedLocation;
+        if(searchMode){
+            requestSavedLocation = new RequestSavedLocation(null,searchLocation);
+        }else{
+            requestSavedLocation = new RequestSavedLocation(null,currentLocation);
+        }
+        Call<ResponseInfo> call = restApi.getInfo(requestSavedLocation);
+        call.enqueue(new Callback<ResponseInfo>() {
+
+            @Override
+            public void onResponse(@NonNull Call<ResponseInfo> call, @NonNull Response<ResponseInfo> response) {
+                if (!response.isSuccessful()) {
+                    Utils.showToast(MainActivity.this, "Code:" + response.code());
+                    return;
+                } else {
+                    ResponseInfo responseInfo = response.body();
+                    if(!responseInfo.getSuccess()){
+                        Utils.showToast(MainActivity.this,"no info to show");
+                    }else{
+                        startInfoActivity(responseInfo);
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseInfo> call, @NonNull Throwable t) {
+                Utils.showToast(MainActivity.this, t.getMessage());
+            }
+        });
+    }
+
+    private void startInfoActivity(ResponseInfo responseInfo){
         Intent startIntent = InfoActivity.makeIntent();
+        startIntent.putExtra("responseInfo",responseInfo);
         startActivity(startIntent);
     }
 }

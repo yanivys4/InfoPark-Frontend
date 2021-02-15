@@ -5,8 +5,21 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.infopark.R;
+import com.example.infopark.RESTApi.LatitudeLongitude;
+import com.example.infopark.RESTApi.RequestSavedLocation;
+import com.example.infopark.RESTApi.ResponseInfo;
+import com.example.infopark.RESTApi.RestApi;
+import com.example.infopark.RESTApi.RetrofitClient;
+import com.example.infopark.Utils.Utils;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+
 
 public class InfoActivity extends AppCompatActivity {
 
@@ -19,6 +32,7 @@ public class InfoActivity extends AppCompatActivity {
     private TextView sunThuHours;
     private TextView friHours;
     private TextView maxHours;
+    private ResponseInfo responseInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState ) {
@@ -26,7 +40,8 @@ public class InfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.info);
         initializeViews();
-
+        responseInfo = (ResponseInfo) getIntent().getExtras().getParcelable("responseInfo");
+        setInformation();
     }
 
     private void initializeViews(){
@@ -40,5 +55,11 @@ public class InfoActivity extends AppCompatActivity {
 
     public void finishActivity(View view) {
         this.finish();
+    }
+
+    private void setInformation(){
+        sunThuHours.setText(String.format("%s:%s", responseInfo.getFromSunThu(), responseInfo.getToSunThu()));
+        friHours.setText(String.format("%s:%s", responseInfo.getFromFri(), responseInfo.getToFri()));
+        maxHours.setText(responseInfo.getMaxHours());
     }
 }

@@ -24,4 +24,6 @@ public interface RestApi {
     @POST("report")
     Call<ResponseMessage> report(@Body ReportForm reportForm);
 
+    @POST("getInfo")
+    Call<ResponseInfo> getInfo(@Body RequestSavedLocation requestSavedLocation);
 }
