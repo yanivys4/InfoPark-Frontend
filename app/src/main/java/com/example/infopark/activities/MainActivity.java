@@ -88,9 +88,10 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     // The geographical location where the device is currently located. That is, the last-known
     // location retrieved by the Fused Location Provider.
     private Location lastKnownLocation;
-    // The simple representation of the last known location location via Latitude and Longitude
+    // The simple representation of the last known  location via Latitude and Longitude
     private LatitudeLongitude currentLocation;
     private LatitudeLongitude searchLocation;
+    private LatitudeLongitude savedLocation;
     Marker savedLocationMarker;
     Marker searchLocationMarker;
     // Keys for storing activity state.
@@ -416,7 +417,11 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             Utils.showToast(MainActivity.this, "please go back to live location first");
         } else if (!getIsLoggedIn()) {
             Utils.showToast(MainActivity.this, getString(R.string.login_first));
-        } else {
+
+        } else if (savedLocation.getLatitude() == -100) {
+            Utils.showToast(MainActivity.this, "please save your car location first");
+        }
+        else{
             Intent startIntent = ReportActivity.makeIntent();
             startActivity(startIntent);
         }
@@ -436,7 +441,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 SavedLocation responseSavedLocation = response.body();
 
                 assert responseSavedLocation != null;
-                LatitudeLongitude savedLocation = responseSavedLocation.getSavedLocation();
+                savedLocation = responseSavedLocation.getSavedLocation();
                 // when a user is first initialized the default values of the location is -1.
                 // therefore there is still no saved location
                 if (savedLocation.getLatitude() != -100) {
@@ -470,6 +475,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                     Utils.showToast(MainActivity.this, responseMessage.getDescription());
                     if (responseMessage.getSuccess()) {
                         setSavedLocationMarker(currentLocation.getLatitude(), currentLocation.getLongitude());
+                        savedLocation.setLocation(currentLocation.getLatitude(),currentLocation.getLongitude());
                     }
                 }
             }

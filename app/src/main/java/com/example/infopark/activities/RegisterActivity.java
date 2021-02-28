@@ -77,6 +77,7 @@ public class RegisterActivity extends AppCompatActivity {
         // Always call super class for necessary
         // initialization/implementation.
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.register);
         // Initialize the views.
         initializeViews();

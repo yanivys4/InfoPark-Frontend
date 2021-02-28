@@ -326,7 +326,10 @@ public class LoginActivity extends AppCompatActivity {
     public void registerActivity(View view) {
         Intent startIntent = RegisterActivity.makeIntent();
         startActivity(startIntent);
+
     }
+
+
 
     /**
      * This function finish the activity.
