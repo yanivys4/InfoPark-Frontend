@@ -6,31 +6,31 @@ package com.example.infopark.RESTApi;
 public class ReportForm {
     private final String uniqueID;
 
-    private final String fromA;
+    private final String fromSunThu;
 
-    private final String toA;
+    private final String toSunThu;
 
-    private final String fromB;
+    private final String fromFri;
 
-    private final String toB;
+    private final String toFri;
 
     private final String maxHours;
 
     /**
      * This function constructs a new report form.
      * @param uniqueID the user unique id
-     * @param fromA indicate the FROM time for SUN-THU days
-     * @param toA indicate the TO time for SUN-THU days
-     * @param fromB indicate the FROM time for FRI day
-     * @param toB indicate the TO time for FRI day
+     * @param fromSunThu indicate the FROM time for SUN-THU days
+     * @param toSunThu indicate the TO time for SUN-THU days
+     * @param fromFri indicate the FROM time for FRI day
+     * @param toFri indicate the TO time for FRI day
      * @param maxHours indicate the maximum parking hours
      */
-    public ReportForm(String uniqueID, String fromA, String toA, String fromB, String toB, String maxHours) {
+    public ReportForm(String uniqueID, String fromSunThu, String toSunThu, String fromFri, String toFri, String maxHours) {
         this.uniqueID = uniqueID;
-        this.fromA = fromA;
-        this.toA = toA;
-        this.fromB = fromB;
-        this.toB = toB;
+        this.fromSunThu = fromSunThu;
+        this.toSunThu = toSunThu;
+        this.fromFri = fromFri;
+        this.toFri = toFri;
         this.maxHours = maxHours;
     }
 }

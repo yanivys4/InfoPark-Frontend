@@ -19,19 +19,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.infopark.R;
-import com.example.infopark.RESTApi.LatitudeLongitude;
-import com.example.infopark.RESTApi.LoginResponse;
 import com.example.infopark.RESTApi.ReportForm;
-import com.example.infopark.RESTApi.RequestSavedLocation;
 import com.example.infopark.RESTApi.ResponseMessage;
 import com.example.infopark.RESTApi.RestApi;
 import com.example.infopark.RESTApi.RetrofitClient;
-import com.example.infopark.RESTApi.SavedLocation;
 import com.example.infopark.Utils.Utils;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,10 +38,10 @@ public class ReportActivity extends AppCompatActivity {
             "android.intent.action.ACTION_REPORT_ACTIVITY";
     private static final String TAG = ReportActivity.class.getSimpleName();
     private ImageButton backButton;
-    private Spinner fromASpinner;
-    private Spinner toASpinner;
-    private Spinner fromBSpinner;
-    private Spinner toBSpinner;
+    private Spinner fromSunThuSpinner;
+    private Spinner toSunThuSpinner;
+    private Spinner fromFriSpinner;
+    private Spinner toFriSpinner;
     private Spinner maxHoursSpinner;
     private Button reportButton;
     private ProgressBar progressBar;
@@ -83,10 +75,10 @@ public class ReportActivity extends AppCompatActivity {
      */
     private void initializeViews() {
         backButton = findViewById(R.id.back_button);
-        fromASpinner = findViewById(R.id.fromASpinner);
-        toASpinner = findViewById(R.id.toASpinner);
-        fromBSpinner = findViewById(R.id.fromBSpinner);
-        toBSpinner = findViewById(R.id.toBSpinner);
+        fromSunThuSpinner = findViewById(R.id.fromSunThuSpinner);
+        toSunThuSpinner = findViewById(R.id.toSunThuSpinner);
+        fromFriSpinner = findViewById(R.id.fromFriSpinner);
+        toFriSpinner = findViewById(R.id.toFriSpinner);
         maxHoursSpinner = findViewById(R.id.maxHoursSpinner);
         reportButton = findViewById(R.id.reportButton);
         progressBar = findViewById(R.id.progressBar);
@@ -101,13 +93,13 @@ public class ReportActivity extends AppCompatActivity {
     public void reportClick(View v) {
         progressBar.setVisibility(View.VISIBLE);
         String uniqueID = getUserUniqueID();
-        String fromA = fromASpinner.getSelectedItem().toString();
-        String toA = toASpinner.getSelectedItem().toString();
-        String fromB = fromBSpinner.getSelectedItem().toString();
-        String toB = toBSpinner.getSelectedItem().toString();
+        String fromSunThu = fromSunThuSpinner.getSelectedItem().toString();
+        String toSunThu = toSunThuSpinner.getSelectedItem().toString();
+        String fromFri = fromFriSpinner.getSelectedItem().toString();
+        String toFri = toFriSpinner.getSelectedItem().toString();
         String maxHours = maxHoursSpinner.getSelectedItem().toString();
 
-        ReportForm reportForm = new ReportForm(uniqueID, fromA, toA, fromB, toB, maxHours);
+        ReportForm reportForm = new ReportForm(uniqueID, fromSunThu, toSunThu, fromFri, toFri, maxHours);
 
         report(reportForm);
     }
@@ -163,13 +155,13 @@ public class ReportActivity extends AppCompatActivity {
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
 
-        fromASpinner.setAdapter(adapter);
-        toASpinner.setAdapter(adapter);
-        fromBSpinner.setAdapter(adapter);
-        toBSpinner.setAdapter(adapter);
+        fromSunThuSpinner.setAdapter(adapter);
+        toSunThuSpinner.setAdapter(adapter);
+        fromFriSpinner.setAdapter(adapter);
+        toFriSpinner.setAdapter(adapter);
 
-        fromASpinner.setSelection(14);
-        fromBSpinner.setSelection(14);
+        fromSunThuSpinner.setSelection(14);
+        fromFriSpinner.setSelection(14);
 
         setOnItemSelectedListenerToSpinners();
 
@@ -184,14 +176,14 @@ public class ReportActivity extends AppCompatActivity {
      * This function set the on item selected listeners to the spinners
      */
     private void setOnItemSelectedListenerToSpinners() {
-        fromASpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        fromSunThuSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
             {
-                disableAllOptionsBeforePos(toASpinner, position);
-                if (position < toASpinner.getAdapter().getCount() - 1)
-                    toASpinner.setSelection(position + 1);
+                disableAllOptionsBeforePos(toSunThuSpinner, position);
+                if (position < toSunThuSpinner.getAdapter().getCount() - 1)
+                    toSunThuSpinner.setSelection(position + 1);
                 else
-                    toASpinner.setSelection(position);
+                    toSunThuSpinner.setSelection(position);
             }
             public void onNothingSelected(AdapterView<?> parent)
             {
@@ -199,14 +191,14 @@ public class ReportActivity extends AppCompatActivity {
             }
         });
 
-        fromBSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        fromFriSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
             {
-                disableAllOptionsBeforePos(toBSpinner, position);
-                if (position < toBSpinner.getAdapter().getCount() - 1)
-                    toBSpinner.setSelection(position + 1);
+                disableAllOptionsBeforePos(toFriSpinner, position);
+                if (position < toFriSpinner.getAdapter().getCount() - 1)
+                    toFriSpinner.setSelection(position + 1);
                 else
-                    toBSpinner.setSelection(position);
+                    toFriSpinner.setSelection(position);
             }
             public void onNothingSelected(AdapterView<?> parent)
             {
