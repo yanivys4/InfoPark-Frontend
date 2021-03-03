@@ -142,7 +142,7 @@
                     android:textSize="20dp" />
 
                 <Spinner
-                    android:id="@+id/fromASpinner"
+                    android:id="@+id/fromSunThuSpinner"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@android:drawable/btn_dropdown"
@@ -164,7 +164,7 @@
                     android:textSize="20dp" />
 
                 <Spinner
-                    android:id="@+id/toASpinner"
+                    android:id="@+id/toSunThuSpinner"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@android:drawable/btn_dropdown"
@@ -203,7 +203,7 @@
                     android:textSize="20dp" />
 
                 <Spinner
-                    android:id="@+id/fromBSpinner"
+                    android:id="@+id/fromFriSpinner"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@android:drawable/btn_dropdown"
@@ -225,7 +225,7 @@
                     android:textSize="20dp" />
 
                 <Spinner
-                    android:id="@+id/toBSpinner"
+                    android:id="@+id/toFriSpinner"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@android:drawable/btn_dropdown"
