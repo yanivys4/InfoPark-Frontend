@@ -58,8 +58,8 @@ public class InfoActivity extends AppCompatActivity {
     }
 
     private void setInformation(){
-        sunThuHours.setText(String.format("%s:%s", responseInfo.getFromSunThu(), responseInfo.getToSunThu()));
-        friHours.setText(String.format("%s:%s", responseInfo.getFromFri(), responseInfo.getToFri()));
+        sunThuHours.setText(String.format("%s->%s", responseInfo.getFromSunThu(), responseInfo.getToSunThu()));
+        friHours.setText(String.format("%s->%s", responseInfo.getFromFri(), responseInfo.getToFri()));
         maxHours.setText(responseInfo.getMaxHours());
     }
 }
