@@ -3,6 +3,10 @@ package com.example.infopark.RESTApi;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+
+/**
+ * This class holds the information retrieved from the server in the getInfo via retrofit RESTApi.
+ */
 public class ResponseInfo implements Parcelable {
 
     private final String fromSunThu;
@@ -12,6 +16,10 @@ public class ResponseInfo implements Parcelable {
     private final String maxHours;
     private final boolean success;
 
+    /**
+     * Constructor for ResponseInfo instance.
+     * @param in
+     */
     protected ResponseInfo(Parcel in) {
         fromSunThu = in.readString();
         toSunThu = in.readString();

@@ -4,6 +4,9 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 
+/**
+ * This interface is the base of the retrofit implementation.
+ */
 public interface RestApi {
 
     @POST("register")
