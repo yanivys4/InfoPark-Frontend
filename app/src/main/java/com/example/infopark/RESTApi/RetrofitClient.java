@@ -9,10 +9,11 @@ public class RetrofitClient {
     public static Retrofit getInstance(){
         if(m_instance == null){
             m_instance= new Retrofit.Builder()
-                    .baseUrl("http://10.0.2.2:3000/")
+                    .baseUrl("http://2ccfd1732182.ngrok.io/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
         return m_instance;
     }
 }
+
