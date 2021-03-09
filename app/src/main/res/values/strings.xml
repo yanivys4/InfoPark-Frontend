@@ -36,4 +36,5 @@
     <string name="fri">FRI</string>
     <string name="max">MAX</string>
     <string name="parking_info">PARKING INFO</string>
+    <string name="permission_not_granted">location permission not granted</string>
 </resources>
