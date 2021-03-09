@@ -47,6 +47,7 @@ public class SplashActivity extends Activity {
        startNextActivity(isLoggedIn);
     }
     //============================================================================================
+
     /**
      * This function get the isLoggedIn shared pref variable
      * @return boolean
@@ -56,6 +57,7 @@ public class SplashActivity extends Activity {
         return sharedPref.getBoolean(getString(R.string.loggedIn), false);
     }
     //============================================================================================
+
     /**
      * This function set the isLoggedIn shared pref variable to false
      */
@@ -65,6 +67,7 @@ public class SplashActivity extends Activity {
         editor.apply();
     }
     //============================================================================================
+
     /**
      * This function is wrapped by a handler that make sure it will execute after 3000 m/s.
      * the function gets the status of isLoggedIn and accordingly starts the right next activity.

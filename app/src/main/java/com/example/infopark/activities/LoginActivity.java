@@ -91,6 +91,7 @@ public class LoginActivity extends AppCompatActivity {
         // Build a GoogleSignInClient with the options specified by gso.
         googleSignInClient = GoogleSignIn.getClient(this, gso);
     }
+    //============================================================================================
 
     /**
      * Initialize the views.
@@ -110,6 +111,7 @@ public class LoginActivity extends AppCompatActivity {
             skipButton.setVisibility(View.INVISIBLE);
         }
     }
+    //============================================================================================
 
     /**
      * This function is the onCLick method of the login button in the login form.
@@ -174,6 +176,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+    //============================================================================================
 
     /**
      * This function validate the email or userName entered by the user and shows the flaws of input if exist.
@@ -189,6 +192,7 @@ public class LoginActivity extends AppCompatActivity {
             return true;
         }
     }
+    //============================================================================================
 
     /**
      * This function validate the password entered by the user and shows the flaws of input if exist.
@@ -204,6 +208,7 @@ public class LoginActivity extends AppCompatActivity {
             return true;
         }
     }
+    //============================================================================================
 
     /**
      * This function using the RestApi to set the login attempt (manual or via google) to be
@@ -242,6 +247,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+    //============================================================================================
 
     /**
      * This function is onClick method of the sign in to google button.
@@ -258,6 +264,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
     }
+    //============================================================================================
 
     /**
      * Dispatch incoming result to the correct fragment.
@@ -274,6 +281,7 @@ public class LoginActivity extends AppCompatActivity {
             handleSignInResult(task);
         }
     }
+    //============================================================================================
 
     /**
      * This function is called from onActivityResult method after sign in was completed successfully.
@@ -293,6 +301,7 @@ public class LoginActivity extends AppCompatActivity {
             Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
         }
     }
+    //============================================================================================
 
     /**
      * Factory method that returns an Intent for starting the RegisterActivity.
@@ -301,6 +310,7 @@ public class LoginActivity extends AppCompatActivity {
     public static Intent makeIntent() {
         return new Intent(ACTION_LOGIN_ACTIVITY);
     }
+    //============================================================================================
 
     /**
      * This function start the main activity.
@@ -310,6 +320,7 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(startIntent);
         finish();
     }
+    //============================================================================================
 
     /**
      * This function skip the login activity.
@@ -318,6 +329,7 @@ public class LoginActivity extends AppCompatActivity {
     public void skipActivity(View view) {
         startMainActivity();
     }
+    //============================================================================================
 
     /**
      * This function start the register activity.
@@ -328,8 +340,7 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(startIntent);
 
     }
-
-
+    //============================================================================================
 
     /**
      * This function finish the activity.
@@ -338,6 +349,7 @@ public class LoginActivity extends AppCompatActivity {
     public void finishActivity(View view) {
         this.finish();
     }
+    //============================================================================================
 
     /**
      * This function set the loggedIn true in the SharedPreferences.
@@ -347,6 +359,7 @@ public class LoginActivity extends AppCompatActivity {
         editor.putBoolean(getString(R.string.loggedIn), true);
         editor.apply();
     }
+    //============================================================================================
 
     /**
      * This function set the user unique id in the SharedPreferences.

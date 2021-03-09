@@ -55,7 +55,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-
+/**
+ * This activity is the main activity of the app.
+ */
 public class MainActivity extends FragmentActivity implements OnMapReadyCallback {
 
     /**
@@ -98,6 +100,14 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     private static final String KEY_CAMERA_POSITION = "camera_position";
     private static final String KEY_LOCATION = "location";
 
+    /**
+     * Hook method called when a new instance of Activity is
+     * created. One time initialization code goes here, e.g.,
+     * the function initialize the location services, the map component and the
+     * sign in status.
+     *
+     * @param savedInstanceState object that contains saved state information.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -132,6 +142,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         handleIsLoggedIn();
         handleSearch();
     }
+    //============================================================================================
 
     /**
      * Initialize the views.
@@ -143,6 +154,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         searchButton = findViewById(R.id.search_button);
         logOutInButton = findViewById(R.id.logout_login_button);
     }
+    //============================================================================================
 
     /**
      * Saves the state of the map when the activity is paused.
@@ -155,22 +167,26 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         }
         super.onSaveInstanceState(outState);
     }
+    //============================================================================================
 
+    /**
+     * this function sets the basic visualization of the search input and  initialize the on click
+     * method for search.
+     */
     private void handleSearch() {
         searchInput.setVisibility(View.GONE);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 int resourceId;
                 // the search button is closed
                 if (searchTag == 0) {
                     searchInput.setVisibility(View.VISIBLE);
                     searchTag = 1;
-                    resourceId = context.getResources().getIdentifier("done_button", "drawable", context.getPackageName());
+                    resourceId = context.getResources().getIdentifier("done_button",
+                            "drawable", context.getPackageName());
                 } else {
                     // make buttons gray
-
                     if(geoLocate()){
                         searchMode = true;
                         changeButtonsColor(false);
@@ -178,16 +194,25 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                     searchInput.setVisibility(View.GONE);
                     searchInput.setText("");
                     searchTag = 0;
-                    resourceId = context.getResources().getIdentifier("search_button", "drawable", context.getPackageName());
+                    resourceId = context.getResources().getIdentifier("search_button",
+                            "drawable", context.getPackageName());
 
                 }
-                searchButton.setBackground(ResourcesCompat.getDrawable(context.getResources(), resourceId, null));
+                searchButton.setBackground(ResourcesCompat.getDrawable(context.getResources(),
+                        resourceId, null));
             }
-
         });
     }
+    //============================================================================================
 
+    /**
+     * this function search a location (LatitudeLongitude) according to the string
+     * in the searchInput. if a location was found the searchLocation is updated.
+     * @return boolean
+     *      return true if a location was found.
+     */
     private boolean geoLocate() {
+
         Log.d(TAG, "geoLocate: geolocating");
 
         String searchString = searchInput.getText().toString();
@@ -200,6 +225,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             Log.e(TAG, "geoLocate: IOException: " + e.getMessage());
         }
 
+        // there is at least one search match
         if (list.size() > 0) {
             Address address = list.get(0);
             double addressLatitude = address.getLatitude();
@@ -217,36 +243,63 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             return false;
         }
     }
+    //============================================================================================
 
+    /**
+     * This function handles the logged in status when the activity is first created. the function
+     * changes the log in/out button and accordingly the tag of the button.
+     */
     private void handleIsLoggedIn() {
         boolean isLoggedIn = getIsLoggedIn();
 
         if (isLoggedIn) {
-            logOutInButton.setTag(1); // 1 is logout button
+            logOutInButton.setTag(1); // 1 means logout button appears
             logOutInButton.setText(getString(R.string.log_out));
 
         } else {
-            logOutInButton.setTag(0); // 0 is login button
+            logOutInButton.setTag(0); // 0 means login buttons appears
             logOutInButton.setTextColor(getColor(R.color.green));
             logOutInButton.setText(getString(R.string.log_in));
-            // valid false which mean the color to change to is gray
+            // valid false means the color to change to is gray
             changeButtonsColor(false);
         }
     }
+    //============================================================================================
 
+    /**
+     * this function changes the buttons in the page according to the param given.
+     * @param valid boolean
+     *              true for blue when the buttons are valid and false for gray.
+     *
+     */
     private void changeButtonsColor(boolean valid) {
         int resourceId;
         if (valid) {
-            resourceId = context.getResources().getIdentifier("button_blue_background", "drawable", context.getPackageName());
+            resourceId = context.getResources().getIdentifier("button_blue_background",
+                    "drawable", context.getPackageName());
         } else {
-            resourceId = context.getResources().getIdentifier("button_gray_background", "drawable", context.getPackageName());
+            resourceId = context.getResources().getIdentifier("button_gray_background",
+                    "drawable", context.getPackageName());
         }
-        saveLocationButton.setBackground(ResourcesCompat.getDrawable(context.getResources(), resourceId, null));
-        reportButton.setBackground(ResourcesCompat.getDrawable(context.getResources(), resourceId, null));
+        saveLocationButton.setBackground(ResourcesCompat.getDrawable(context.getResources(),
+                resourceId, null));
+        reportButton.setBackground(ResourcesCompat.getDrawable(context.getResources(),
+                resourceId, null));
     }
+    //============================================================================================
 
+    /**
+     * Manipulates the map once available.
+     * This callback is triggered when the map is ready to be used.
+     * If Google Play services is not installed on the device, the user will be prompted to install
+     * it inside the SupportMapFragment. This method will only be triggered once the user has
+     * installed Google Play services and returned to the app.
+     *
+     * @param map the google map that should be worked with.
+     */
     @Override
     public void onMapReady(GoogleMap map) {
+
         this.map = map;
 
         //add location button click listener
@@ -271,9 +324,14 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         // Get the current location of the device and set the position of the map.
         getDeviceLocation(false);
     }
+    //============================================================================================
 
     /**
      * Gets the current location of the device, and positions the map's camera.
+     * @param saveLocation boolean
+     *                     if true that means the get device location is used to as a service
+     *                     before save the current location of the device.
+     *
      */
     private void getDeviceLocation(boolean saveLocation) {
         /*
@@ -283,35 +341,32 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         try {
             if (locationPermissionGranted) {
                 Task<Location> locationResult = fusedLocationProviderClient.getLastLocation();
-                locationResult.addOnCompleteListener(this, new OnCompleteListener<Location>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Location> task) {
-                        if (task.isSuccessful()) {
-                            // Set the map's camera position to the current location of the device.
-                            lastKnownLocation = task.getResult();
-                            if (lastKnownLocation != null) {
+                locationResult.addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        // Set the map's camera position to the current location of the device.
+                        lastKnownLocation = task.getResult();
+                        if (lastKnownLocation != null) {
 
-                                if (currentLocation == null) {
-                                    // first initialized
-                                    currentLocation = new LatitudeLongitude(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
-                                } else {
-                                    currentLocation.setLocation(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
-                                }
-
-                                if (saveLocation) {
-                                    setSavedLocation();
-                                }
-                                map.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                                        new LatLng(lastKnownLocation.getLatitude(),
-                                                lastKnownLocation.getLongitude()), DEFAULT_ZOOM));
+                            if (currentLocation == null) {
+                                // first initialized
+                                currentLocation = new LatitudeLongitude(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
+                            } else {
+                                currentLocation.setLocation(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
                             }
-                        } else {
-                            Log.d(TAG, "Current location is null. Using defaults.");
-                            Log.e(TAG, "Exception: %s", task.getException());
-                            map.moveCamera(CameraUpdateFactory
-                                    .newLatLngZoom(defaultLocation, DEFAULT_ZOOM));
-                            map.getUiSettings().setMyLocationButtonEnabled(false);
+
+                            if (saveLocation) {
+                                setSavedLocation();
+                            }
+                            map.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                                    new LatLng(lastKnownLocation.getLatitude(),
+                                            lastKnownLocation.getLongitude()), DEFAULT_ZOOM));
                         }
+                    } else {
+                        Log.d(TAG, "Current location is null. Using defaults.");
+                        Log.e(TAG, "Exception: %s", task.getException());
+                        map.moveCamera(CameraUpdateFactory
+                                .newLatLngZoom(defaultLocation, DEFAULT_ZOOM));
+                        map.getUiSettings().setMyLocationButtonEnabled(false);
                     }
                 });
 
@@ -321,6 +376,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
     }
+    //============================================================================================
 
     /**
      * Prompts the user for permission to use the device location.
@@ -342,6 +398,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                     PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
         }
     }
+    //============================================================================================
 
     /**
      * Handles the result of the request for location permissions.
@@ -362,6 +419,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         }
         updateLocationUI();
     }
+    //============================================================================================
 
     /**
      * Updates the map's UI settings based on whether the user has granted location permission.
@@ -374,25 +432,38 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             if (locationPermissionGranted) {
                 map.setMyLocationEnabled(true);
                 map.getUiSettings().setMyLocationButtonEnabled(true);
+                changeButtonsColor(true);
             } else {
                 map.setMyLocationEnabled(false);
                 map.getUiSettings().setMyLocationButtonEnabled(false);
                 lastKnownLocation = null;
+                changeButtonsColor(false);
 
             }
         } catch (SecurityException e) {
             Log.e("Exception: %s", e.getMessage());
         }
     }
+    //============================================================================================
 
+    /**
+     * Factory method that returns an Intent for starting the MainActivity.
+     * @return Intent
+     */
     public static Intent makeIntent() {
         return new Intent(ACTION_MAIN_ACTIVITY);
     }
+    //============================================================================================
 
-    public void logOut(View view) {
-
-        final int status = (Integer) view.getTag();
-        if (status == 1) {
+    /**
+     * on click function that sets the is logged in status of the user to false if the button is
+     * on "log out" mode, start the login activity and finish this activity.
+     * @param view
+     *          the view
+     */
+    public void logOutIn(View view) {
+        // the button is in log out mode
+        if ((Integer) logOutInButton.getTag() == 1) {
             // update log out status
             setIsLoggedInFalse();
         }
@@ -400,18 +471,34 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         startActivity(intent);
         finish();
     }
+    //============================================================================================
 
+    /**
+     * on click function of the save my location button.
+     * @param view
+     *      the view.
+     */
     public void saveMyLocation(View view) {
 
         if (searchMode) {
             Utils.showToast(MainActivity.this, "can't save searched location");
         } else if (!getIsLoggedIn()) {
             Utils.showToast(MainActivity.this, getString(R.string.login_first));
-        } else {
+        }else if(!locationPermissionGranted){
+            Utils.showToast(MainActivity.this, getString(R.string.permission_not_granted));
+        }
+        else {
+            // get the device location with savLocation parameter true so the setSavedLocation method
+            // will trigger.
             getDeviceLocation(true);
         }
     }
+    //============================================================================================
 
+    /**
+     * on click function of the add new info(report) button.
+     * @param view
+     */
     public void reportNewInfo(View view) {
         if (searchMode) {
             Utils.showToast(MainActivity.this, "please go back to live location first");
@@ -421,12 +508,21 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         } else if (savedLocation.getLatitude() == -100) {
             Utils.showToast(MainActivity.this, "please save your car location first");
         }
+        else if(!locationPermissionGranted){
+            Utils.showToast(MainActivity.this, getString(R.string.permission_not_granted));
+        }
         else{
             Intent startIntent = ReportActivity.makeIntent();
             startActivity(startIntent);
         }
     }
+    //============================================================================================
 
+    /**
+     * This function request a saved location from the backend with the user unique id.
+     * if the saved location is not the default value (-100) the function updated the map with
+     * the blue car sign.
+     */
     private void getSavedLocation() {
         Retrofit retrofit = RetrofitClient.getInstance();
         // retrofit create rest api according to the interface
@@ -445,7 +541,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 // when a user is first initialized the default values of the location is -1.
                 // therefore there is still no saved location
                 if (savedLocation.getLatitude() != -100) {
-                    setSavedLocationMarker(savedLocation.getLatitude(), savedLocation.getLongitude());
+                    setSavedLocationMarker();
                 }
             }
 
@@ -457,6 +553,12 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
+    //============================================================================================
+
+    /**
+     * This function sets the current saved location on the backend and the saved location marker
+     * as well.
+     */
     private void setSavedLocation() {
         Retrofit retrofit = RetrofitClient.getInstance();
         // retrofit create rest api according to the interface
@@ -472,10 +574,11 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                     return;
                 } else {
                     ResponseMessage responseMessage = response.body();
+                    assert responseMessage != null;
                     Utils.showToast(MainActivity.this, responseMessage.getDescription());
                     if (responseMessage.getSuccess()) {
-                        setSavedLocationMarker(currentLocation.getLatitude(), currentLocation.getLongitude());
                         savedLocation.setLocation(currentLocation.getLatitude(),currentLocation.getLongitude());
+                        setSavedLocationMarker();
                     }
                 }
             }
@@ -486,21 +589,30 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
     }
+    //============================================================================================
 
-    private void setSavedLocationMarker(double latitude, double longitude) {
+    /**
+     * This function sets the marker of the saved location.
+     */
+    private void setSavedLocationMarker() {
         if (savedLocationMarker != null) {
             savedLocationMarker.remove();
         }
-        final LatLng savedLocation = new LatLng(latitude, longitude);
+
         savedLocationMarker = map.addMarker(
                 new MarkerOptions()
-                        .position(savedLocation)
+                        .position(new LatLng(savedLocation.getLatitude(),
+                                savedLocation.getLongitude()))
                         .title("saved location")
                         .alpha(0.7f)
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.little_car)));
 
     }
+    //============================================================================================
 
+    /**
+     * This function sets the marker of the saved location.
+     */
     private void setSearchLocationMarker() {
         if (searchLocationMarker != null) {
             searchLocationMarker.remove();
@@ -514,21 +626,44 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(
                 searchLocationLatLng, DEFAULT_ZOOM));
     }
+    //============================================================================================
 
+    /**
+     * This function returns the boolean value of isLoggedIn flag.
+     * @return boolean
+     *      the is logged in value.
+     */
     private boolean getIsLoggedIn() {
         return sharedPref.getBoolean(getString(R.string.loggedIn), false);
     }
+    //============================================================================================
 
+    /**
+     * This function sets the isLoggedIn flag to false.
+     */
     private void setIsLoggedInFalse() {
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putBoolean(getString(R.string.loggedIn), false);
         editor.apply();
     }
+    //============================================================================================
 
+    /**
+     * This function gets the userUniqueId value.
+     * @return string
+     *      the userUniqueId.
+     */
     private String getUserUniqueID() {
         return sharedPref.getString(getString(R.string.uniqueID), null);
     }
+    //============================================================================================
 
+    /**
+     * on click function of the get info button.
+     * the function retrieve the relevant info from the backend according to the current location
+     * or the searched location if in search mode.
+     * @param view
+     */
     public void retrieveInfo(View view) {
         Retrofit retrofit = RetrofitClient.getInstance();
         // retrofit create rest api according to the interface
@@ -552,6 +687,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                     if(!responseInfo.getSuccess()){
                         Utils.showToast(MainActivity.this,"no info to show");
                     }else{
+                        // start the info activity with the results got from the backend
                         startInfoActivity(responseInfo);
                     }
 
@@ -564,7 +700,13 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
     }
+    //============================================================================================
 
+    /**
+     * This function starts the info activity after it  encapsulates the responseInfo parameter.
+     * @param responseInfo
+     *      the responseInfo given that has the info got after communication with the backend.
+     */
     private void startInfoActivity(ResponseInfo responseInfo){
         Intent startIntent = InfoActivity.makeIntent();
         startIntent.putExtra("responseInfo",responseInfo);

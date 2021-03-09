@@ -1,6 +1,5 @@
 package com.example.infopark.activities;
 
-
 import android.content.Intent;
 
 import android.graphics.drawable.ColorDrawable;
@@ -107,7 +106,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     /**
      * Factory method that returns an Intent for starting the RegisterActivity.
-     *
      * @return Intent
      */
     public static Intent makeIntent() {
@@ -280,6 +278,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
         alertDialog.show();
     }
+    //============================================================================================
 
     /**
      * This function is onClick method of the sign in to google button.
@@ -335,9 +334,10 @@ public class RegisterActivity extends AppCompatActivity {
             Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
         }
     }
+    //============================================================================================
 
     /**
-     * This function finish the activity.
+     * on click function that is related to the back button and finish the activity.
      * @param view the view
      */
     public void finishActivity(View view) {

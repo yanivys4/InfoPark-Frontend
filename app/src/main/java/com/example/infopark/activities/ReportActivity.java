@@ -69,6 +69,7 @@ public class ReportActivity extends AppCompatActivity {
 
         initSpinners();
     }
+    //============================================================================================
 
     /**
      * Initialize the views.
@@ -84,6 +85,7 @@ public class ReportActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(View.INVISIBLE);
     }
+    //============================================================================================
 
     /**
      * This function is the onCLick method of the report button in the report form.
@@ -103,6 +105,7 @@ public class ReportActivity extends AppCompatActivity {
 
         report(reportForm);
     }
+    //============================================================================================
 
     /**
      * This function using the RestApi to set the report attempt to be approved by the user.
@@ -138,6 +141,7 @@ public class ReportActivity extends AppCompatActivity {
             }
         });
     }
+    //============================================================================================
 
     /**
      * This function return the user unique id that saved in the sharedPref.
@@ -146,6 +150,7 @@ public class ReportActivity extends AppCompatActivity {
     private String getUserUniqueID() {
         return sharedPref.getString(getString(R.string.uniqueID), null);
     }
+    //============================================================================================
 
     /**
      * This function initialize the spinners
@@ -171,6 +176,7 @@ public class ReportActivity extends AppCompatActivity {
 
         maxHoursSpinner.setAdapter(adapter2);
     }
+    //============================================================================================
 
     /**
      * This function set the on item selected listeners to the spinners
@@ -206,6 +212,7 @@ public class ReportActivity extends AppCompatActivity {
             }
         });
     }
+    //============================================================================================
 
     /**
      * This function disable all spinner option before some position.
@@ -240,6 +247,7 @@ public class ReportActivity extends AppCompatActivity {
 
         spinner.setAdapter(adapter);
     }
+    //============================================================================================
 
     /**
      * This function create an string array that contain all day times in 30 minute jumps.
@@ -261,6 +269,7 @@ public class ReportActivity extends AppCompatActivity {
 
         return times.toArray(new String[0]);
     }
+    //============================================================================================
 
     /**
      * Factory method that returns an Intent for starting the RegisterActivity.
@@ -269,6 +278,7 @@ public class ReportActivity extends AppCompatActivity {
     public static Intent makeIntent() {
         return new Intent(ACTION_REPORT_ACTIVITY);
     }
+    //============================================================================================
 
     /**
      * This function finish the activity.
