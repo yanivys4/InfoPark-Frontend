@@ -217,7 +217,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call<ResponseMessage> call, @NonNull Response<ResponseMessage> response) {
                 progressBar.setVisibility(View.INVISIBLE);
                 if (!response.isSuccessful()) {
-                    Utils.showToast(RegisterActivity.this, "Code:" + response.code());
+                    Utils.showToast(RegisterActivity.this, getString(R.string.network_error));
                     return;
                 }
 

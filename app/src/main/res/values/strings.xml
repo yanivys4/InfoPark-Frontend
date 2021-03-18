@@ -37,4 +37,8 @@
     <string name="max">MAX</string>
     <string name="parking_info">PARKING INFO</string>
     <string name="permission_not_granted">location permission not granted</string>
+    <string name="network_error">Network Error</string>
+    <string name="no_info">no info to show</string>
+    <string name="go_back_to_live">please go back to live location first</string>
+    <string name="save_location_first">please save your car location first</string>
 </resources>

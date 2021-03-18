@@ -220,12 +220,13 @@ public class LoginActivity extends AppCompatActivity {
         // retrofit create rest api according to the interface
         RestApi restApi = retrofit.create(RestApi.class);
         Call<LoginResponse> secondCall = restApi.login(loginForm);
+        progressBar.setVisibility(View.VISIBLE);
         secondCall.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(@NonNull Call<LoginResponse> secondCall, @NonNull Response<LoginResponse> response) {
                 progressBar.setVisibility(View.INVISIBLE);
                 if (!response.isSuccessful()) {
-                    Utils.showToast(LoginActivity.this, "Code:" + response.code());
+                    Utils.showToast(LoginActivity.this, getString(R.string.network_error));
                     return;
                 }
 

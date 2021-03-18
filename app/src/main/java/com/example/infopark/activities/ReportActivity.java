@@ -116,12 +116,13 @@ public class ReportActivity extends AppCompatActivity {
         // retrofit create rest api according to the interface
         RestApi restApi = retrofit.create(RestApi.class);
         Call<ResponseMessage> call = restApi.report(reportForm);
+        progressBar.setVisibility(View.VISIBLE);
         call.enqueue(new Callback<ResponseMessage>() {
             @Override
             public void onResponse(@NonNull Call<ResponseMessage> secondCall, @NonNull Response<ResponseMessage> response) {
                 progressBar.setVisibility(View.INVISIBLE);
                 if (!response.isSuccessful()) {
-                    Utils.showToast(ReportActivity.this, "Code:" + response.code());
+                    Utils.showToast(ReportActivity.this, getString(R.string.network_error));
                     return;
                 }
 

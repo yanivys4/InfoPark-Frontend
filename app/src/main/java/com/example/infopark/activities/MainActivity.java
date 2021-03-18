@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.infopark.R;
@@ -74,6 +75,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     private EditText searchInput;
     private boolean searchMode;
     private int searchTag = 0;
+    private ProgressBar progressBar;
 
     private Context context;
     private SharedPreferences sharedPref;
@@ -153,6 +155,8 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         searchInput = findViewById(R.id.search_input);
         searchButton = findViewById(R.id.search_button);
         logOutInButton = findViewById(R.id.logout_login_button);
+        progressBar = findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.INVISIBLE);
     }
     //============================================================================================
 
@@ -321,7 +325,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         if (getIsLoggedIn()) {
             getSavedLocation();
         }
-        // Get the current location of the device and set the position of the map.
+        // Get the current location of the device and set the position on the map.
         getDeviceLocation(false);
     }
     //============================================================================================
@@ -432,6 +436,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             if (locationPermissionGranted) {
                 map.setMyLocationEnabled(true);
                 map.getUiSettings().setMyLocationButtonEnabled(true);
+                if(!searchMode && getIsLoggedIn())
                 changeButtonsColor(true);
             } else {
                 map.setMyLocationEnabled(false);
@@ -501,12 +506,12 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
      */
     public void reportNewInfo(View view) {
         if (searchMode) {
-            Utils.showToast(MainActivity.this, "please go back to live location first");
+            Utils.showToast(MainActivity.this, getString(R.string.go_back_to_live));
         } else if (!getIsLoggedIn()) {
             Utils.showToast(MainActivity.this, getString(R.string.login_first));
 
         } else if (savedLocation.getLatitude() == -100) {
-            Utils.showToast(MainActivity.this, "please save your car location first");
+            Utils.showToast(MainActivity.this, getString(R.string.save_location_first));
         }
         else if(!locationPermissionGranted){
             Utils.showToast(MainActivity.this, getString(R.string.permission_not_granted));
@@ -530,23 +535,28 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
         RequestSavedLocation requestSavedLocation = new RequestSavedLocation(getUserUniqueID(), null);
         Call<SavedLocation> call = restApi.getSavedLocation(requestSavedLocation);
+        progressBar.setVisibility(View.VISIBLE);
         call.enqueue(new Callback<SavedLocation>() {
 
             @Override
             public void onResponse(@NonNull Call<SavedLocation> call, @NonNull Response<SavedLocation> response) {
+                progressBar.setVisibility(View.INVISIBLE);
                 SavedLocation responseSavedLocation = response.body();
 
-                assert responseSavedLocation != null;
-                savedLocation = responseSavedLocation.getSavedLocation();
-                // when a user is first initialized the default values of the location is -1.
-                // therefore there is still no saved location
-                if (savedLocation.getLatitude() != -100) {
-                    setSavedLocationMarker();
+                if(responseSavedLocation != null){
+                    savedLocation = responseSavedLocation.getSavedLocation();
+                    // when a user is first initialized the default values of the location is -1.
+                    // therefore there is still no saved location
+                    if (savedLocation.getLatitude() != -100) {
+                        setSavedLocationMarker();
+                    }
                 }
+
             }
 
             @Override
             public void onFailure(@NonNull Call<SavedLocation> call, Throwable t) {
+                progressBar.setVisibility(View.INVISIBLE);
                 Utils.showToast(MainActivity.this, t.getMessage());
             }
         });
@@ -565,12 +575,14 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         RestApi restApi = retrofit.create(RestApi.class);
         RequestSavedLocation requestSavedLocation = new RequestSavedLocation(getUserUniqueID(), currentLocation);
         Call<ResponseMessage> call = restApi.setSavedLocation(requestSavedLocation);
+        progressBar.setVisibility(View.VISIBLE);
         call.enqueue(new Callback<ResponseMessage>() {
 
             @Override
             public void onResponse(@NonNull Call<ResponseMessage> call, @NonNull Response<ResponseMessage> response) {
+                progressBar.setVisibility(View.INVISIBLE);
                 if (!response.isSuccessful()) {
-                    Utils.showToast(MainActivity.this, "Code:" + response.code());
+                    Utils.showToast(MainActivity.this, getString(R.string.network_error));
                     return;
                 } else {
                     ResponseMessage responseMessage = response.body();
@@ -585,6 +597,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
             @Override
             public void onFailure(@NonNull Call<ResponseMessage> call, Throwable t) {
+                progressBar.setVisibility(View.INVISIBLE);
                 Utils.showToast(MainActivity.this, t.getMessage());
             }
         });
@@ -675,17 +688,19 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             requestSavedLocation = new RequestSavedLocation(null,currentLocation);
         }
         Call<ResponseInfo> call = restApi.getInfo(requestSavedLocation);
+        progressBar.setVisibility(View.VISIBLE);
         call.enqueue(new Callback<ResponseInfo>() {
 
             @Override
             public void onResponse(@NonNull Call<ResponseInfo> call, @NonNull Response<ResponseInfo> response) {
+                progressBar.setVisibility(View.INVISIBLE);
                 if (!response.isSuccessful()) {
-                    Utils.showToast(MainActivity.this, "Code:" + response.code());
+                    Utils.showToast(MainActivity.this, getString(R.string.network_error));
                     return;
                 } else {
                     ResponseInfo responseInfo = response.body();
                     if(!responseInfo.getSuccess()){
-                        Utils.showToast(MainActivity.this,"no info to show");
+                        Utils.showToast(MainActivity.this,getString(R.string.no_info));
                     }else{
                         // start the info activity with the results got from the backend
                         startInfoActivity(responseInfo);
@@ -696,6 +711,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
             @Override
             public void onFailure(@NonNull Call<ResponseInfo> call, @NonNull Throwable t) {
+                progressBar.setVisibility(View.INVISIBLE);
                 Utils.showToast(MainActivity.this, t.getMessage());
             }
         });
