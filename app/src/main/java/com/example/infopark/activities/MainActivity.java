@@ -326,18 +326,20 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             getSavedLocation();
         }
         // Get the current location of the device and set the position on the map.
-        getDeviceLocation(false);
+        getDeviceLocation(false,false);
     }
     //============================================================================================
 
     /**
      * Gets the current location of the device, and positions the map's camera.
      * @param saveLocation boolean
-     *                     if true that means the get device location is used to as a service
+     *                     if true that means the get device location is used  as a service
      *                     before save the current location of the device.
-     *
+     *@param retrieveInfo boolean
+     *                     if true that means the get device location is used as a service
+     *                     before retrieve info according to current location.
      */
-    private void getDeviceLocation(boolean saveLocation) {
+    private void getDeviceLocation(boolean saveLocation, boolean retrieveInfo) {
         /*
          * Get the best and most recent location of the device, which may be null in rare
          * cases when a location is not available.
@@ -360,6 +362,10 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
                             if (saveLocation) {
                                 setSavedLocation();
+                            }
+
+                            if(retrieveInfo){
+                                retrieveInfo(currentLocation);
                             }
                             map.moveCamera(CameraUpdateFactory.newLatLngZoom(
                                     new LatLng(lastKnownLocation.getLatitude(),
@@ -495,7 +501,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         else {
             // get the device location with savLocation parameter true so the setSavedLocation method
             // will trigger.
-            getDeviceLocation(true);
+            getDeviceLocation(true,false);
         }
     }
     //============================================================================================
@@ -670,23 +676,12 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         return sharedPref.getString(getString(R.string.uniqueID), null);
     }
     //============================================================================================
+    private void retrieveInfo(LatitudeLongitude location){
 
-    /**
-     * on click function of the get info button.
-     * the function retrieve the relevant info from the backend according to the current location
-     * or the searched location if in search mode.
-     * @param view
-     */
-    public void retrieveInfo(View view) {
         Retrofit retrofit = RetrofitClient.getInstance();
         // retrofit create rest api according to the interface
         RestApi restApi = retrofit.create(RestApi.class);
-        RequestSavedLocation requestSavedLocation;
-        if(searchMode){
-            requestSavedLocation = new RequestSavedLocation(null,searchLocation);
-        }else{
-            requestSavedLocation = new RequestSavedLocation(null,currentLocation);
-        }
+        RequestSavedLocation requestSavedLocation = new RequestSavedLocation(null,location);
         Call<ResponseInfo> call = restApi.getInfo(requestSavedLocation);
         progressBar.setVisibility(View.VISIBLE);
         call.enqueue(new Callback<ResponseInfo>() {
@@ -715,6 +710,21 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 Utils.showToast(MainActivity.this, t.getMessage());
             }
         });
+    }
+    /**
+     * on click function of the get info button.
+     * the function retrieve the relevant info from the backend according to the current location
+     * or the searched location if in search mode.
+     * @param view
+     */
+    public void retrieveInfoOnClick(View view) {
+
+        if(searchMode){
+            retrieveInfo(searchLocation);
+        }else{
+            getDeviceLocation(false,true);
+        }
+
     }
     //============================================================================================
 
