@@ -91,7 +91,7 @@
         android:layout_width="105dp"
         android:layout_height="224dp"
         android:contentDescription="@string/back_button"
-        android:onClick="retrieveInfo"
+        android:onClick="retrieveInfoOnClick"
         android:src="@drawable/signpost"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/report_button"
