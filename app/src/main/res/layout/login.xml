@@ -97,7 +97,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Email or Username"
+                android:hint="@string/email_or_username"
                 android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -111,7 +111,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Password"
+                android:hint="@string/password"
                 android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -121,7 +121,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/button_blue_background"
             android:onClick="loginClick"
-            android:text="Login"
+            android:text="@string/log_in"
             android:textColor="@color/white" />
         <Button
             android:id="@+id/registerButton"
@@ -130,7 +130,7 @@
             android:layout_marginTop="16dp"
             android:background="@drawable/button_yellow_background"
             android:onClick="registerActivity"
-            android:text="Register"
+            android:text="@string/register"
             android:textColor="@color/white"
             />
     </LinearLayout>

@@ -99,7 +99,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="10dip"
-                    android:text="SUN"
+                    android:text="@string/sunday"
                     android:textAlignment="viewEnd"
                     android:textColor="#000"
                     android:textSize="20dp"
@@ -121,7 +121,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="10dip"
-                    android:text="THU"
+                    android:text="@string/thursday"
                     android:textColor="#000"
                     android:textSize="20dp"
                     android:textStyle="bold" />
@@ -136,7 +136,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="10dip"
-                    android:text="From:"
+                    android:text="@string/from"
                     android:textAlignment="center"
                     android:textColor="#000"
                     android:textSize="20dp" />
@@ -158,7 +158,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:padding="10dip"
-                    android:text="To:"
+                    android:text="@string/to"
                     android:textAlignment="center"
                     android:textColor="#000"
                     android:textSize="20dp" />
@@ -181,7 +181,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="10dip"
-                    android:text="FRI"
+                    android:text="@string/fri"
                     android:textAlignment="center"
                     android:textColor="#000"
                     android:textSize="20dp"
@@ -197,7 +197,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:padding="10dip"
-                    android:text="From:"
+                    android:text="@string/from"
                     android:textAlignment="center"
                     android:textColor="#000"
                     android:textSize="20dp" />
@@ -219,7 +219,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:padding="10dip"
-                    android:text="To:"
+                    android:text="@string/to"
                     android:textAlignment="center"
                     android:textColor="#000"
                     android:textSize="20dp" />
@@ -244,7 +244,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="10dip"
-                    android:text="MAX"
+                    android:text="@string/max"
                     android:textAlignment="viewEnd"
                     android:textColor="#000"
                     android:textSize="20dp" />
@@ -261,7 +261,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="10dip"
-                    android:text="HOURS"
+                    android:text="@string/hours"
                     android:textColor="#000"
                     android:textSize="20dp" />
 
@@ -292,7 +292,7 @@
         android:layout_marginEnd="301dp"
         android:background="#3C3F41"
         android:onClick="reportClick"
-        android:text="SEND"
+        android:text="@string/send"
         android:textColor="#F4F0F0"
         android:textSize="18sp"
         android:textStyle="bold"

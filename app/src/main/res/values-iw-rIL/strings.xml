@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">InfoPark</string>
+    <string name="toolbar_image">toolbar_image</string>
+    <string name="logo">logo</string>
+    <string name="back_button">back button</string>
+    <string name="email" ><font size="50">מייל</font></string>
+    <string name="username"><font size="50">שם משתמש</font></string>
+    <string name="email_or_username"><font size="50">מייל/שם משתמש</font></string>
+    <string name="password"><font size="50">סיסמה</font></string>
+    <string name="confirm">אישור</string>
+    <string name="done_image">done_image</string>
+    <string name="dialog_title">ההרשמה הושלמה</string>
+    <string name="dialog_message">נא השלם את תהליך ההרשמה באמצעות המייל שנשלח אליך</string>
+    <string name="dialog_button">אוקיי</string>
+    <string name="register_manually">או הירשם ידנית</string>
+    <string name="dialog_title_google">ברכות</string>
+    <string name="dialog_message_google">ההרשמה הושלמה</string>
+    <string name="preference_file_key">com.example.infopark</string>
+    <string name="loggedIn">מחובר</string>
+    <string name="log_out">התנתק</string>
+    <string name="log_in">התחבר</string>
+    <string name="register">הרשמה</string>
+    <string name="save_my_location">שמור מיקום</string>
+    <string name="add_new_info">הוסף מידע חדש</string>
+    <string name="title_activity_maps">פרטי מיקום נוכחי</string>
+    <string name="default_info_title">מיקום ברירת מחדל</string>
+    <string name="default_info_snippet">לא נמצאו מקומות מכיוון שהרשאות המיקום מכובות</string>
+    <string name="option_get_place">קבל מיקום</string>
+    <string name="pick_place">בחר מיקום</string>
+    <string name="login_first">נא התחבר</string>
+    <string name="type_to_search">הקלד לחיפוש</string>
+    <string name="uniqueID">uniqueID</string>
+    <string name="report_success">הדיווח בוצע בהצלחה!</string>
+    <string name="click_for_info">הקש לפרטים</string>
+    <string name="field_cant_be_empty">שדה לא יכול להיות ריק</string>
+    <string name="payment">בתשלום</string>
+    <string name="sunday">ראשון</string>
+    <string name="thursday">חמישי</string>
+    <string name="sun_thu">א - ה</string>
+    <string name="fri">שישי</string>
+    <string name="from">מ:</string>
+    <string name="to">עד:</string>
+    <string name="max">מקסימום</string>
+    <string name="hours">שעות</string>
+    <string name="send">שלח</string>
+    <string name="parking_info">מידע על החניה</string>
+    <string name="permission_not_granted">יש להעניק הרשאות מיקום</string>
+    <string name="network_error">בעיה ברשת</string>
+    <string name="no_info">אין מידע זמין כרגע</string>
+    <string name="go_back_to_live">יש לחזור למיקום הנוכחי</string>
+    <string name="save_location_first">יש לשמור את מיקום הרכב</string>
+    <string name="choose_language">בחר שפה...</string>
+</resources>

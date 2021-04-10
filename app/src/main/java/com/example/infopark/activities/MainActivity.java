@@ -1,17 +1,24 @@
 package com.example.infopark.activities;
 
+import android.app.ActionBar;
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.media.VolumeShaper;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -42,7 +49,6 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.net.PlacesClient;
@@ -50,6 +56,7 @@ import com.google.android.libraries.places.api.net.PlacesClient;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -120,6 +127,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
         super.onCreate(savedInstanceState);
 
+        //loadLocale();
         context = MainActivity.this;
 
         setContentView(R.layout.activity_main);
