@@ -58,7 +58,6 @@ public class LoginActivity extends AppCompatActivity {
     private Button loginButton;
     private ProgressBar progressBar;
     private ImageButton skipButton;
-    private ImageButton backButton;
 
     /**
      * Hook method called when a new instance of Activity is
@@ -103,13 +102,6 @@ public class LoginActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(View.INVISIBLE);
         skipButton = findViewById(R.id.skip_button);
-        backButton = findViewById(R.id.back_button);
-
-        if (getCallingActivity() == null) {
-            backButton.setVisibility(View.INVISIBLE);
-        } else {
-            skipButton.setVisibility(View.INVISIBLE);
-        }
     }
     //============================================================================================
 
@@ -157,7 +149,20 @@ public class LoginActivity extends AppCompatActivity {
                 ResponseMessage responseMessage = response.body();
                 assert responseMessage != null;
                 if (!responseMessage.getSuccess()) {
-                    Utils.showToast(LoginActivity.this, responseMessage.getDescription());
+                    String message = "";
+                    switch (responseMessage.getDescription()){
+                        case "something_went_wrong":
+                            message = getString(R.string.something_went_wrong);
+                            break;
+                        case "invalid_email_username_or_password":
+                            message = getString(R.string.invalid_email_username_or_password);
+                            break;
+                        case "unverified_user":
+                            message = getString(R.string.unverified_user);
+                            break;
+                    }
+                    Utils.showToast(LoginActivity.this, message);
+
                     return;
                 } else {
                     String salt = responseMessage.getDescription();
@@ -233,7 +238,21 @@ public class LoginActivity extends AppCompatActivity {
                 LoginResponse responseMessage = response.body();
                 assert responseMessage != null;
                 if (!responseMessage.getSuccess()) {
-                    Utils.showToast(LoginActivity.this, responseMessage.getDescription());
+                    String message = "";
+                    switch (responseMessage.getDescription()){
+                        case "something_went_wrong":
+                            message = getString(R.string.something_went_wrong);
+                            break;
+                        case "invalid_email_username_or_password":
+                            message = getString(R.string.invalid_email_username_or_password);
+                            break;
+                        case "unverified_user":
+                            message = getString(R.string.unverified_user);
+                            break;
+                        case "user_not_found":
+                            message = getString(R.string.user_not_found);
+                    }
+                    Utils.showToast(LoginActivity.this, message);
                 } else {
                     setIsLoggedInTrue();
                     setUserUniqueID(responseMessage.getUniqueID());

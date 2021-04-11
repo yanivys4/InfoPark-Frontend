@@ -44,10 +44,19 @@
     <string name="hours">HOURS</string>
     <string name="send">Send</string>
     <string name="parking_info">PARKING INFO</string>
-    <string name="permission_not_granted">location permission not granted</string>
+    <string name="permission_not_granted">Location permission not granted</string>
     <string name="network_error">Network Error</string>
-    <string name="no_info">no info to show</string>
-    <string name="go_back_to_live">please go back to live location first</string>
-    <string name="save_location_first">please save your car location first</string>
+    <string name="no_info">No info to show</string>
+    <string name="go_back_to_live">Please go back to live location first</string>
+    <string name="save_location_first">Please save your car location first</string>
+    <string name="cant_save_searched_location">Can\'t save searched location</string>
+    <string name="location_saved">Location saved</string>
+    <string name="something_went_wrong">Something went wrong!</string>
+    <string name="invalid_email_username_or_password">Invalid email/username or password</string>
+    <string name="unverified_user">Unverified user</string>
+    <string name="username_already_exist">Username already exist!</string>
+    <string name="email_already_exist">Email already exist!</string>
+    <string name="user_not_found">User not found</string>
+    <string name="address_not_exist">Address not exist</string>
     <string name="choose_language">Choose Language...</string>
 </resources>

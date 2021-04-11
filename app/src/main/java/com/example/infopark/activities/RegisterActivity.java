@@ -224,7 +224,19 @@ public class RegisterActivity extends AppCompatActivity {
                 ResponseMessage responseMessage = response.body();
                 // the registration have failed.
                 if (!responseMessage.getSuccess()) {
-                    Utils.showToast(RegisterActivity.this, responseMessage.getDescription());
+                    String message = "";
+                    switch (responseMessage.getDescription()){
+                        case "something_went_wrong":
+                            message = getString(R.string.something_went_wrong);
+                            break;
+                        case "username_already_exist":
+                            message = getString(R.string.username_already_exist);
+                            break;
+                        case "email_already_exist":
+                            message = getString(R.string.email_already_exist);
+                            break;
+                    }
+                    Utils.showToast(RegisterActivity.this, message);
                 } else {
                     // registration have succeeded.
                     showDialog(registerForm.getGoogleUser());

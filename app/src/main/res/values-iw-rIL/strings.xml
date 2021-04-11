@@ -50,5 +50,14 @@
     <string name="no_info">אין מידע זמין כרגע</string>
     <string name="go_back_to_live">יש לחזור למיקום הנוכחי</string>
     <string name="save_location_first">יש לשמור את מיקום הרכב</string>
+    <string name="cant_save_searched_location">לא ניתן לשמור מיקום מחיפוש</string>
+    <string name="location_saved">מיקום הרכב נשמר</string>
+    <string name="something_went_wrong">משהו השתבש!</string>
+    <string name="invalid_email_username_or_password">שם משתמש/אימייל או סיסמא לא קיימים</string>
+    <string name="unverified_user">משתמש לא מאושר ע"י אימייל</string>
+    <string name="username_already_exist">שם משתמש כבר קיים!</string>
+    <string name="email_already_exist">אימייל כבר קיים!</string>
+    <string name="user_not_found">לא נמצא משתמש במערכת</string>
+    <string name="address_not_exist">כתובת לא קיימת</string>
     <string name="choose_language">בחר שפה...</string>
 </resources>

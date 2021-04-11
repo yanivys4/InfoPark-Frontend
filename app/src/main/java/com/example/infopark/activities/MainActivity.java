@@ -251,7 +251,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             setSearchLocationMarker();
             return true;
         } else {
-            Utils.showToast(MainActivity.this, "Address not exist!");
+            Utils.showToast(MainActivity.this, getString(R.string.address_not_exist));
             return false;
         }
     }
@@ -432,7 +432,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 locationPermissionGranted = true;
 
             } else {
-                System.out.println("premission not granted");
+                System.out.println("permission not granted");
             }
         }
         updateLocationUI();
@@ -500,7 +500,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     public void saveMyLocation(View view) {
 
         if (searchMode) {
-            Utils.showToast(MainActivity.this, "can't save searched location");
+            Utils.showToast(MainActivity.this,getString(R.string.cant_save_searched_location));
         } else if (!getIsLoggedIn()) {
             Utils.showToast(MainActivity.this, getString(R.string.login_first));
         }else if(!locationPermissionGranted){
@@ -601,7 +601,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 } else {
                     ResponseMessage responseMessage = response.body();
                     assert responseMessage != null;
-                    Utils.showToast(MainActivity.this, responseMessage.getDescription());
+                    Utils.showToast(MainActivity.this, getString(R.string.location_saved));
                     if (responseMessage.getSuccess()) {
                         savedLocation.setLocation(currentLocation.getLatitude(),currentLocation.getLongitude());
                         setSavedLocationMarker();
