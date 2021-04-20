@@ -1,5 +1,6 @@
 package com.example.infopark.activities;
 
+import android.content.Context;
 import android.content.Intent;
 
 import android.graphics.drawable.ColorDrawable;
@@ -38,7 +39,12 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.gson.Gson;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -62,6 +68,7 @@ public class RegisterActivity extends AppCompatActivity {
     private TextInputLayout textInputUserName;
     private TextInputLayout textInputPassword;
     private ProgressBar progressBar;
+    private Context context;
 
 
     /**
@@ -80,6 +87,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.register);
         // Initialize the views.
         initializeViews();
+        context = RegisterActivity.this;
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -106,6 +114,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     /**
      * Factory method that returns an Intent for starting the RegisterActivity.
+     *
      * @return Intent
      */
     public static Intent makeIntent() {
@@ -121,10 +130,10 @@ public class RegisterActivity extends AppCompatActivity {
     private boolean validateEmail() {
         String emailInput = Objects.requireNonNull(textInputEmail.getEditText()).getText().toString().trim();
         if (emailInput.isEmpty()) {
-            textInputEmail.setError("Field can't be empty");
+            textInputEmail.setError(getString(R.string.field_cant_be_empty));
             return false;
         } else if (!InputValidator.isEmailValid((emailInput))) {
-            textInputEmail.setError("Email is invalid");
+            textInputEmail.setError(getString(R.string.email_invalid));
             return false;
         }
         textInputEmail.setError(null);
@@ -140,10 +149,10 @@ public class RegisterActivity extends AppCompatActivity {
     private boolean validateUserName() {
         String userNameInput = Objects.requireNonNull(textInputUserName.getEditText()).getText().toString().trim();
         if (userNameInput.isEmpty()) {
-            textInputUserName.setError("Field can't be empty");
+            textInputUserName.setError(getString(R.string.field_cant_be_empty));
             return false;
         } else if (userNameInput.length() > 15) {
-            textInputUserName.setError("Username too long");
+            textInputUserName.setError(getString(R.string.username_too_long));
             return false;
         } else {
             textInputUserName.setError(null);
@@ -160,10 +169,10 @@ public class RegisterActivity extends AppCompatActivity {
     private boolean validatePassword() {
         String passwordInput = Objects.requireNonNull(textInputPassword.getEditText()).getText().toString().trim();
         if (passwordInput.isEmpty()) {
-            textInputPassword.setError("Field can't be empty");
+            textInputPassword.setError(getString(R.string.field_cant_be_empty));
             return false;
         } else if (!InputValidator.isPasswordValid(passwordInput)) {
-            textInputPassword.setError(InputValidator.getPasswordMistakes(passwordInput));
+            textInputPassword.setError(InputValidator.getPasswordMistakes(passwordInput, RegisterActivity.this));
             return false;
         } else {
             textInputPassword.setError(null);
@@ -192,7 +201,7 @@ public class RegisterActivity extends AppCompatActivity {
             String salt = PasswordUtils.getSalt(30);
             String securedPassword = PasswordUtils.generateSecurePassword(userPassword, salt);
             RegisterForm registerForm = new RegisterForm(userName, email,
-                    securedPassword, salt, new LatitudeLongitude(-100.0, -100.0), 1, 1, false, false, UUID.randomUUID().toString());
+                    securedPassword, salt, new LatitudeLongitude(-100.0, -100.0), false, false, UUID.randomUUID().toString());
             register(registerForm);
         }
     }
@@ -215,17 +224,19 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(@NonNull Call<ResponseMessage> call, @NonNull Response<ResponseMessage> response) {
-                progressBar.setVisibility(View.INVISIBLE);
-                if (!response.isSuccessful()) {
-                    Utils.showToast(RegisterActivity.this, getString(R.string.network_error));
-                    return;
-                }
 
-                ResponseMessage responseMessage = response.body();
-                // the registration have failed.
-                if (!responseMessage.getSuccess()) {
+                if (!response.isSuccessful()) {
+                    if (response.code() != 409) {
+                        Utils.showToast(context, getString(R.string.network_error));
+                        progressBar.setVisibility(View.INVISIBLE);
+                        return;
+                    }
+                    assert response.errorBody() != null;
+                    ResponseMessage responseMessage = Utils.convertJsonToResponseObject(response.errorBody(),
+                            ResponseMessage.class);
                     String message = "";
-                    switch (responseMessage.getDescription()){
+
+                    switch (Objects.requireNonNull(responseMessage).getDescription()) {
                         case "something_went_wrong":
                             message = getString(R.string.something_went_wrong);
                             break;
@@ -236,7 +247,8 @@ public class RegisterActivity extends AppCompatActivity {
                             message = getString(R.string.email_already_exist);
                             break;
                     }
-                    Utils.showToast(RegisterActivity.this, message);
+                    Utils.showToast(context, message);
+                    progressBar.setVisibility(View.INVISIBLE);
                 } else {
                     // registration have succeeded.
                     showDialog(registerForm.getGoogleUser());
@@ -246,8 +258,9 @@ public class RegisterActivity extends AppCompatActivity {
             // the communication with the server have failed.
             @Override
             public void onFailure(@NonNull Call<ResponseMessage> call, Throwable t) {
+
                 progressBar.setVisibility(View.INVISIBLE);
-                Utils.showToast(RegisterActivity.this, t.getMessage());
+                Utils.showToast(context, t.getMessage());
             }
         });
 
@@ -257,6 +270,7 @@ public class RegisterActivity extends AppCompatActivity {
     /**
      * This function shows a dialog after registration has completed. the content of the dialog
      * depends on the googleUser parameter value.
+     *
      * @param googleUser boolean
      *                   indicates if the user tries to register manually or via google.
      */
@@ -295,6 +309,7 @@ public class RegisterActivity extends AppCompatActivity {
     /**
      * This function is onClick method of the sign in to google button.
      * the function connects to google Oauth service and tries to sign in.
+     *
      * @param view the view.
      */
     public void signInToGoogle(View view) {
@@ -331,6 +346,7 @@ public class RegisterActivity extends AppCompatActivity {
      * This function is called from onActivityResult method after sign in was completed successfully.
      * The function creates a GoogleSignInAccount from the completed task of signing and according
      * to it build a register form and use it to register with the register method.
+     *
      * @param completedTask the getSignedInAccountFromIntent task.
      */
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
@@ -338,7 +354,7 @@ public class RegisterActivity extends AppCompatActivity {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
 
             RegisterForm registerForm = new RegisterForm(account.getDisplayName(), account.getEmail(),
-                    null, null, new LatitudeLongitude(-100.0, -100.0), 1, 1, false, true, UUID.randomUUID().toString());
+                    null, null, new LatitudeLongitude(-100.0, -100.0), false, true, UUID.randomUUID().toString());
             register(registerForm);
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
@@ -350,6 +366,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     /**
      * on click function that is related to the back button and finish the activity.
+     *
      * @param view the view
      */
     public void finishActivity(View view) {

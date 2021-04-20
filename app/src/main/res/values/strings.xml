@@ -3,6 +3,8 @@
     <string name="toolbar_image">toolbar_image</string>
     <string name="logo">logo</string>
     <string name="back_button">back button</string>
+    <string name="back">Back</string>
+    <string name="skip">Skip</string>
     <string name="email" ><font size="50">Email</font></string>
     <string name="username"><font size="50">UserName</font></string>
     <string name="email_or_username"><font size="50">Email/Username</font></string>
@@ -33,6 +35,13 @@
     <string name="report_success">Report Success!</string>
     <string name="click_for_info">Click for info</string>
     <string name="field_cant_be_empty">Field can\'t be empty</string>
+    <string name="email_invalid">Email is invalid</string>
+    <string name="username_too_long">Username is too long</string>
+    <string name="password_length">Password must be less than 15 and more than 8 characters in length</string>
+    <string name="password_uppercase">Password must have at least one uppercase character</string>
+    <string name="password_lowercase">Password must have at least one lowercase character</string>
+    <string name="password_number">Password must have at least one number</string>
+    <string name="password_special">Password must have at least one special character among @#$%</string>
     <string name="payment">PAYMENT</string>
     <string name="sunday">SUN</string>
     <string name="thursday">THU</string>
@@ -58,5 +67,7 @@
     <string name="email_already_exist">Email already exist!</string>
     <string name="user_not_found">User not found</string>
     <string name="address_not_exist">Address not exist</string>
+    <string name="already_report">You already report to this location!</string>
+    <string name="cant_get_saved_location">Can\'t get saved location</string>
     <string name="choose_language">Choose Language...</string>
 </resources>

@@ -15,10 +15,6 @@ public class RegisterForm {
 
     private final LatitudeLongitude savedLocation;
 
-    private final int trustPoints;
-
-    private final int creditPoints;
-
     private final boolean confirmed;
 
     private final boolean googleUser;
@@ -32,21 +28,17 @@ public class RegisterForm {
      * @param password the password to register with
      * @param salt the salt to parse the password
      * @param savedLocation the saved location of the user
-     * @param trustPoints the trust points of the user
-     * @param creditPoints the credit points of the user
      * @param confirmed indicate if the user is confirmed user
      * @param googleUser indicates if the user is trying to register as a google user.
      * @param uniqueID the user unique id
      */
-    public RegisterForm(String userName, String email, String password, String salt, LatitudeLongitude savedLocation,
-                        int trustPoints, int creditPoints, boolean confirmed, boolean googleUser, String uniqueID) {
+    public RegisterForm(String userName, String email, String password, String salt, LatitudeLongitude savedLocation
+            , boolean confirmed, boolean googleUser, String uniqueID) {
         this.userName = userName;
         this.email = email;
         this.password = password;
         this.salt = salt;
         this.savedLocation = savedLocation;
-        this.trustPoints = trustPoints;
-        this.creditPoints = creditPoints;
         this.confirmed = confirmed;
         this.googleUser = googleUser;
         this.uniqueID = uniqueID;

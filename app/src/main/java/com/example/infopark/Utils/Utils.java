@@ -6,6 +6,16 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.infopark.R;
+import com.example.infopark.RESTApi.ResponseMessage;
+import com.google.gson.Gson;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.lang.reflect.Type;
+
+import okhttp3.ResponseBody;
 
 /**
  * This class is utils class that serves all the other project classes.
@@ -28,6 +38,21 @@ public final class Utils {
         text.setTextColor(context.getResources().getColor(R.color.white));
 
         toast.show();
+    }
+
+    public static <T> T convertJsonToResponseObject(ResponseBody responseBody,Type type){
+        Gson gson = new Gson();
+        T t = null;
+        try {
+            assert responseBody != null;
+            JSONObject jObjError = new JSONObject(responseBody.string());
+            t = gson.fromJson(String.valueOf(jObjError), type);
+        } catch (JSONException | IOException e) {
+
+            return null;
+        }
+
+        return t;
     }
 
 }

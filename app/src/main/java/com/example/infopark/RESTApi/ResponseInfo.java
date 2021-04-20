@@ -7,14 +7,14 @@ import android.os.Parcelable;
 /**
  * This class holds the information retrieved from the server in the getInfo via retrofit RESTApi.
  */
-public class ResponseInfo implements Parcelable {
+public class ResponseInfo extends ResponseMessage implements Parcelable {
 
     private final String fromSunThu;
     private final String toSunThu;
     private final String fromFri;
     private final String toFri;
     private final String maxHours;
-    private final boolean success;
+
 
     /**
      * Constructor for ResponseInfo instance.
@@ -26,7 +26,7 @@ public class ResponseInfo implements Parcelable {
         fromFri = in.readString();
         toFri = in.readString();
         maxHours = in.readString();
-        success = in.readByte() != 0;
+
     }
 
     public static final Creator<ResponseInfo> CREATOR = new Creator<ResponseInfo>() {
@@ -61,9 +61,6 @@ public class ResponseInfo implements Parcelable {
         return maxHours;
     }
 
-    public boolean getSuccess() {
-        return success;
-    }
 
     @Override
     public int describeContents() {
@@ -77,6 +74,6 @@ public class ResponseInfo implements Parcelable {
         dest.writeString(fromFri);
         dest.writeString(toFri);
         dest.writeString(maxHours);
-        dest.writeByte((byte) (success ? 1 : 0));
+
     }
 }

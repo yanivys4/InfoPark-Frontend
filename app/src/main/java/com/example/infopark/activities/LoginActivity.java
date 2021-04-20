@@ -51,13 +51,14 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = LoginActivity.class.getSimpleName();
     private GoogleSignInClient googleSignInClient;
     private SharedPreferences sharedPref;
+    private Context context;
 
     // View members
     private TextInputLayout textInputEmailOrUsername;
     private TextInputLayout textInputPassword;
     private Button loginButton;
     private ProgressBar progressBar;
-    private ImageButton skipButton;
+    private Button skipButton;
 
     /**
      * Hook method called when a new instance of Activity is
@@ -77,7 +78,7 @@ public class LoginActivity extends AppCompatActivity {
         initializeViews();
 
         // Initialize the sharedPref
-        Context context = LoginActivity.this;
+        context = LoginActivity.this;
         sharedPref = context.getSharedPreferences(
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
 
@@ -140,15 +141,17 @@ public class LoginActivity extends AppCompatActivity {
         firstCall.enqueue(new Callback<ResponseMessage>() {
             @Override
             public void onResponse(@NonNull Call<ResponseMessage> firstCall, @NonNull Response<ResponseMessage> response) {
-                progressBar.setVisibility(View.INVISIBLE);
-                if (!response.isSuccessful()) {
-                    Utils.showToast(LoginActivity.this, "Code:" + response.code());
-                    return;
-                }
 
-                ResponseMessage responseMessage = response.body();
-                assert responseMessage != null;
-                if (!responseMessage.getSuccess()) {
+                if (!response.isSuccessful()) {
+                    if (response.code() != 409) {
+                        Utils.showToast(context, getString(R.string.network_error));
+                        progressBar.setVisibility(View.INVISIBLE);
+                        return;
+                    }
+                    assert response.errorBody() != null;
+                    ResponseMessage responseMessage = Utils.convertJsonToResponseObject(response.errorBody(),
+                            ResponseMessage.class);
+
                     String message = "";
                     switch (responseMessage.getDescription()){
                         case "something_went_wrong":
@@ -160,11 +163,13 @@ public class LoginActivity extends AppCompatActivity {
                         case "unverified_user":
                             message = getString(R.string.unverified_user);
                             break;
+
                     }
                     Utils.showToast(LoginActivity.this, message);
-
-                    return;
+                    progressBar.setVisibility(View.INVISIBLE);
                 } else {
+                    ResponseMessage responseMessage = response.body();
+                    assert responseMessage != null;
                     String salt = responseMessage.getDescription();
                     String securedPassword = PasswordUtils.generateSecurePassword(passwordInput, salt);
 
@@ -177,7 +182,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<ResponseMessage> call, @NonNull Throwable t) {
                 progressBar.setVisibility(View.INVISIBLE);
-                Utils.showToast(LoginActivity.this, t.getMessage());
+                Utils.showToast(context, t.getMessage());
             }
         });
     }
@@ -229,15 +234,17 @@ public class LoginActivity extends AppCompatActivity {
         secondCall.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(@NonNull Call<LoginResponse> secondCall, @NonNull Response<LoginResponse> response) {
-                progressBar.setVisibility(View.INVISIBLE);
-                if (!response.isSuccessful()) {
-                    Utils.showToast(LoginActivity.this, getString(R.string.network_error));
-                    return;
-                }
 
-                LoginResponse responseMessage = response.body();
-                assert responseMessage != null;
-                if (!responseMessage.getSuccess()) {
+                if (!response.isSuccessful()) {
+                    if (response.code() != 409) {
+                        Utils.showToast(context, getString(R.string.network_error));
+                        progressBar.setVisibility(View.INVISIBLE);
+                        return;
+                    }
+                    assert response.errorBody() != null;
+                    LoginResponse responseMessage = Utils.convertJsonToResponseObject(response.errorBody(),
+                            LoginResponse.class);
+                    assert responseMessage != null;
                     String message = "";
                     switch (responseMessage.getDescription()){
                         case "something_went_wrong":
@@ -253,8 +260,12 @@ public class LoginActivity extends AppCompatActivity {
                             message = getString(R.string.user_not_found);
                     }
                     Utils.showToast(LoginActivity.this, message);
-                } else {
+                    progressBar.setVisibility(View.INVISIBLE);
+                }
+                else {
+                    LoginResponse responseMessage = response.body();
                     setIsLoggedInTrue();
+                    assert responseMessage != null;
                     setUserUniqueID(responseMessage.getUniqueID());
                     startMainActivity();
                 }
@@ -263,7 +274,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<LoginResponse> call, @NonNull Throwable t) {
                 progressBar.setVisibility(View.INVISIBLE);
-                Utils.showToast(LoginActivity.this, t.getMessage());
+                Utils.showToast(context, t.getMessage());
             }
         });
     }

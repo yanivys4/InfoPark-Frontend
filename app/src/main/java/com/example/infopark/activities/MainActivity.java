@@ -31,6 +31,7 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import com.example.infopark.RESTApi.LatitudeLongitude;
+import com.example.infopark.RESTApi.LoginResponse;
 import com.example.infopark.RESTApi.RequestSavedLocation;
 import com.example.infopark.RESTApi.ResponseInfo;
 import com.example.infopark.RESTApi.ResponseMessage;
@@ -57,6 +58,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -199,7 +201,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                             "drawable", context.getPackageName());
                 } else {
                     // make buttons gray
-                    if(geoLocate()){
+                    if (geoLocate()) {
                         searchMode = true;
                         changeButtonsColor(false);
                     }
@@ -220,8 +222,9 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     /**
      * this function search a location (LatitudeLongitude) according to the string
      * in the searchInput. if a location was found the searchLocation is updated.
+     *
      * @return boolean
-     *      return true if a location was found.
+     * return true if a location was found.
      */
     private boolean geoLocate() {
 
@@ -280,9 +283,9 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
     /**
      * this function changes the buttons in the page according to the param given.
+     *
      * @param valid boolean
      *              true for blue when the buttons are valid and false for gray.
-     *
      */
     private void changeButtonsColor(boolean valid) {
         int resourceId;
@@ -334,16 +337,17 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             getSavedLocation();
         }
         // Get the current location of the device and set the position on the map.
-        getDeviceLocation(false,false);
+        getDeviceLocation(false, false);
     }
     //============================================================================================
 
     /**
      * Gets the current location of the device, and positions the map's camera.
+     *
      * @param saveLocation boolean
      *                     if true that means the get device location is used  as a service
      *                     before save the current location of the device.
-     *@param retrieveInfo boolean
+     * @param retrieveInfo boolean
      *                     if true that means the get device location is used as a service
      *                     before retrieve info according to current location.
      */
@@ -369,10 +373,13 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                             }
 
                             if (saveLocation) {
+                                if (savedLocation == null) {
+                                    savedLocation = new LatitudeLongitude(-100, -100);
+                                }
                                 setSavedLocation();
                             }
 
-                            if(retrieveInfo){
+                            if (retrieveInfo) {
                                 retrieveInfo(currentLocation);
                             }
                             map.moveCamera(CameraUpdateFactory.newLatLngZoom(
@@ -450,8 +457,8 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             if (locationPermissionGranted) {
                 map.setMyLocationEnabled(true);
                 map.getUiSettings().setMyLocationButtonEnabled(true);
-                if(!searchMode && getIsLoggedIn())
-                changeButtonsColor(true);
+                if (!searchMode && getIsLoggedIn())
+                    changeButtonsColor(true);
             } else {
                 map.setMyLocationEnabled(false);
                 map.getUiSettings().setMyLocationButtonEnabled(false);
@@ -467,6 +474,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
     /**
      * Factory method that returns an Intent for starting the MainActivity.
+     *
      * @return Intent
      */
     public static Intent makeIntent() {
@@ -477,8 +485,8 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     /**
      * on click function that sets the is logged in status of the user to false if the button is
      * on "log out" mode, start the login activity and finish this activity.
-     * @param view
-     *          the view
+     *
+     * @param view the view
      */
     public void logOutIn(View view) {
         // the button is in log out mode
@@ -494,28 +502,28 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
     /**
      * on click function of the save my location button.
-     * @param view
-     *      the view.
+     *
+     * @param view the view.
      */
     public void saveMyLocation(View view) {
 
         if (searchMode) {
-            Utils.showToast(MainActivity.this,getString(R.string.cant_save_searched_location));
+            Utils.showToast(MainActivity.this, getString(R.string.cant_save_searched_location));
         } else if (!getIsLoggedIn()) {
             Utils.showToast(MainActivity.this, getString(R.string.login_first));
-        }else if(!locationPermissionGranted){
+        } else if (!locationPermissionGranted) {
             Utils.showToast(MainActivity.this, getString(R.string.permission_not_granted));
-        }
-        else {
+        } else {
             // get the device location with savLocation parameter true so the setSavedLocation method
             // will trigger.
-            getDeviceLocation(true,false);
+            getDeviceLocation(true, false);
         }
     }
     //============================================================================================
 
     /**
      * on click function of the add new info(report) button.
+     *
      * @param view
      */
     public void reportNewInfo(View view) {
@@ -524,13 +532,11 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         } else if (!getIsLoggedIn()) {
             Utils.showToast(MainActivity.this, getString(R.string.login_first));
 
-        } else if (savedLocation.getLatitude() == -100) {
+        } else if (savedLocation != null && savedLocation.getLatitude() == -100) {
             Utils.showToast(MainActivity.this, getString(R.string.save_location_first));
-        }
-        else if(!locationPermissionGranted){
+        } else if (!locationPermissionGranted) {
             Utils.showToast(MainActivity.this, getString(R.string.permission_not_granted));
-        }
-        else{
+        } else {
             Intent startIntent = ReportActivity.makeIntent();
             startActivity(startIntent);
         }
@@ -554,18 +560,25 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
             @Override
             public void onResponse(@NonNull Call<SavedLocation> call, @NonNull Response<SavedLocation> response) {
-                progressBar.setVisibility(View.INVISIBLE);
-                SavedLocation responseSavedLocation = response.body();
 
-                if(responseSavedLocation != null){
+                SavedLocation responseSavedLocation = response.body();
+                if (!response.isSuccessful()) {
+                    if (response.code() != 409) {
+                        Utils.showToast(context, getString(R.string.network_error));
+                        progressBar.setVisibility(View.INVISIBLE);
+                        return;
+                    }
+                }
+                if (responseSavedLocation != null) {
                     savedLocation = responseSavedLocation.getSavedLocation();
-                    // when a user is first initialized the default values of the location is -1.
+                    // when a user is first initialized the default values of the location is -100
+                    // which is a latitude value that out of range.
                     // therefore there is still no saved location
                     if (savedLocation.getLatitude() != -100) {
                         setSavedLocationMarker();
                     }
                 }
-
+                progressBar.setVisibility(View.INVISIBLE);
             }
 
             @Override
@@ -594,23 +607,34 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
             @Override
             public void onResponse(@NonNull Call<ResponseMessage> call, @NonNull Response<ResponseMessage> response) {
-                progressBar.setVisibility(View.INVISIBLE);
                 if (!response.isSuccessful()) {
-                    Utils.showToast(MainActivity.this, getString(R.string.network_error));
-                    return;
+                    if (response.code() != 409) {
+                        Utils.showToast(context, getString(R.string.network_error));
+                        progressBar.setVisibility(View.INVISIBLE);
+                        return;
+                    }
+                    assert response.errorBody() != null;
+                    ResponseMessage responseMessage = Utils.convertJsonToResponseObject(response.errorBody(),
+                            ResponseMessage.class);
+                    String message = "";
+                    if ("something_went_wrong".equals(Objects.requireNonNull(responseMessage).getDescription())) {
+                        message = getString(R.string.something_went_wrong);
+                    }
+                    Utils.showToast(context, message);
                 } else {
                     ResponseMessage responseMessage = response.body();
                     assert responseMessage != null;
                     Utils.showToast(MainActivity.this, getString(R.string.location_saved));
-                    if (responseMessage.getSuccess()) {
-                        savedLocation.setLocation(currentLocation.getLatitude(),currentLocation.getLongitude());
-                        setSavedLocationMarker();
-                    }
+                    savedLocation.setLocation(currentLocation.getLatitude(), currentLocation.getLongitude());
+                    setSavedLocationMarker();
                 }
+                progressBar.setVisibility(View.INVISIBLE);
+
             }
 
             @Override
             public void onFailure(@NonNull Call<ResponseMessage> call, Throwable t) {
+
                 progressBar.setVisibility(View.INVISIBLE);
                 Utils.showToast(MainActivity.this, t.getMessage());
             }
@@ -657,8 +681,9 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
     /**
      * This function returns the boolean value of isLoggedIn flag.
+     *
      * @return boolean
-     *      the is logged in value.
+     * the is logged in value.
      */
     private boolean getIsLoggedIn() {
         return sharedPref.getBoolean(getString(R.string.loggedIn), false);
@@ -677,39 +702,53 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
     /**
      * This function gets the userUniqueId value.
+     *
      * @return string
-     *      the userUniqueId.
+     * the userUniqueId.
      */
     private String getUserUniqueID() {
         return sharedPref.getString(getString(R.string.uniqueID), null);
     }
+
     //============================================================================================
-    private void retrieveInfo(LatitudeLongitude location){
+    private void retrieveInfo(LatitudeLongitude location) {
 
         Retrofit retrofit = RetrofitClient.getInstance();
         // retrofit create rest api according to the interface
         RestApi restApi = retrofit.create(RestApi.class);
-        RequestSavedLocation requestSavedLocation = new RequestSavedLocation(null,location);
+        RequestSavedLocation requestSavedLocation = new RequestSavedLocation(null, location);
         Call<ResponseInfo> call = restApi.getInfo(requestSavedLocation);
         progressBar.setVisibility(View.VISIBLE);
         call.enqueue(new Callback<ResponseInfo>() {
 
             @Override
             public void onResponse(@NonNull Call<ResponseInfo> call, @NonNull Response<ResponseInfo> response) {
-                progressBar.setVisibility(View.INVISIBLE);
-                if (!response.isSuccessful()) {
-                    Utils.showToast(MainActivity.this, getString(R.string.network_error));
-                    return;
-                } else {
-                    ResponseInfo responseInfo = response.body();
-                    if(!responseInfo.getSuccess()){
-                        Utils.showToast(MainActivity.this,getString(R.string.no_info));
-                    }else{
-                        // start the info activity with the results got from the backend
-                        startInfoActivity(responseInfo);
-                    }
 
+                if (!response.isSuccessful()) {
+                    if (response.code() != 409) {
+                        Utils.showToast(context, getString(R.string.network_error));
+                        progressBar.setVisibility(View.INVISIBLE);
+                        return;
+                    }
+                    assert response.errorBody() != null;
+                    ResponseInfo responseMessage = Utils.convertJsonToResponseObject(response.errorBody(),
+                            LoginResponse.class);
+                    assert responseMessage != null;
+                    String message = "";
+                    if ("something_went_wrong".equals(responseMessage.getDescription())) {
+                        message = getString(R.string.something_went_wrong);
+                    } else {
+                        message = getString(R.string.no_info);
+                    }
+                    Utils.showToast(context, message);
                 }
+
+                else {
+                    ResponseInfo responseInfo = response.body();
+                    // start the info activity with the results got from the backend
+                    startInfoActivity(responseInfo);
+                }
+                progressBar.setVisibility(View.INVISIBLE);
             }
 
             @Override
@@ -719,18 +758,20 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
     }
+
     /**
      * on click function of the get info button.
      * the function retrieve the relevant info from the backend according to the current location
      * or the searched location if in search mode.
+     *
      * @param view
      */
     public void retrieveInfoOnClick(View view) {
 
-        if(searchMode){
+        if (searchMode) {
             retrieveInfo(searchLocation);
-        }else{
-            getDeviceLocation(false,true);
+        } else {
+            getDeviceLocation(false, true);
         }
 
     }
@@ -738,12 +779,12 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
     /**
      * This function starts the info activity after it  encapsulates the responseInfo parameter.
-     * @param responseInfo
-     *      the responseInfo given that has the info got after communication with the backend.
+     *
+     * @param responseInfo the responseInfo given that has the info got after communication with the backend.
      */
-    private void startInfoActivity(ResponseInfo responseInfo){
+    private void startInfoActivity(ResponseInfo responseInfo) {
         Intent startIntent = InfoActivity.makeIntent();
-        startIntent.putExtra("responseInfo",responseInfo);
+        startIntent.putExtra("responseInfo", responseInfo);
         startActivity(startIntent);
     }
 }

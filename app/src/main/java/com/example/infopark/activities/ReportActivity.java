@@ -27,6 +27,7 @@ import com.example.infopark.Utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,7 +38,7 @@ public class ReportActivity extends AppCompatActivity {
     private static final String ACTION_REPORT_ACTIVITY =
             "android.intent.action.ACTION_REPORT_ACTIVITY";
     private static final String TAG = ReportActivity.class.getSimpleName();
-    private ImageButton backButton;
+    private Button backButton;
     private Spinner fromSunThuSpinner;
     private Spinner toSunThuSpinner;
     private Spinner fromFriSpinner;
@@ -120,25 +121,37 @@ public class ReportActivity extends AppCompatActivity {
         call.enqueue(new Callback<ResponseMessage>() {
             @Override
             public void onResponse(@NonNull Call<ResponseMessage> secondCall, @NonNull Response<ResponseMessage> response) {
-                progressBar.setVisibility(View.INVISIBLE);
                 if (!response.isSuccessful()) {
-                    Utils.showToast(ReportActivity.this, getString(R.string.network_error));
-                    return;
-                }
+                    if (response.code() != 409) {
+                        Utils.showToast(context, getString(R.string.network_error));
+                        progressBar.setVisibility(View.INVISIBLE);
+                        return;
+                    }
+                    assert response.errorBody() != null;
+                    ResponseMessage responseMessage = Utils.convertJsonToResponseObject(response.errorBody(),
+                            ResponseMessage.class);
+                    String message = "";
+                    switch (Objects.requireNonNull(responseMessage).getDescription()){
+                        case "something_went_wrong":
+                            message = getString(R.string.something_went_wrong);
+                            break;
+                        case "already_report":
+                            message = getString(R.string.already_report);
+                            break;
+                    }
+                    Utils.showToast(context, message);
+                    progressBar.setVisibility(View.INVISIBLE);
 
-                ResponseMessage responseMessage = response.body();
-                assert responseMessage != null;
-                if (!responseMessage.getSuccess()) {
-                    Utils.showToast(ReportActivity.this, responseMessage.getDescription());
-                } else {
-                    Utils.showToast(ReportActivity.this, getString(R.string.report_success));
+                }else{
+                    Utils.showToast(context, getString(R.string.report_success));
+                    progressBar.setVisibility(View.INVISIBLE);
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<ResponseMessage> call, @NonNull Throwable t) {
                 progressBar.setVisibility(View.INVISIBLE);
-                Utils.showToast(ReportActivity.this, t.getMessage());
+                Utils.showToast(context,getString(R.string.network_error));
             }
         });
     }

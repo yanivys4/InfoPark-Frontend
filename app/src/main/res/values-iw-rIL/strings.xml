@@ -4,6 +4,8 @@
     <string name="toolbar_image">toolbar_image</string>
     <string name="logo">logo</string>
     <string name="back_button">back button</string>
+    <string name="back">חזור</string>
+    <string name="skip">דלג</string>
     <string name="email" ><font size="50">מייל</font></string>
     <string name="username"><font size="50">שם משתמש</font></string>
     <string name="email_or_username"><font size="50">מייל/שם משתמש</font></string>
@@ -34,6 +36,13 @@
     <string name="report_success">הדיווח בוצע בהצלחה!</string>
     <string name="click_for_info">הקש לפרטים</string>
     <string name="field_cant_be_empty">שדה לא יכול להיות ריק</string>
+    <string name="email_invalid">כתובת אימייל לא תקנית</string>
+    <string name="username_too_long">שם משתמש ארוך מדי</string>
+    <string name="password_length">סיסמא חייבת להיות באורך של 8 עד 15 תווים</string>
+    <string name="password_uppercase">סיסמא חייבת להכיל לפחות אות אחת גדולה באנגלית</string>
+    <string name="password_lowercase">סיסמא חייבת להכיל לפחות אות אחת קטנה באנגלית</string>
+    <string name="password_number">סיסמא חייבת להכיל לפחות ספרה אחת</string>
+    <string name="password_special">סיסמא חייבת להכיל לפחות תו מיוחד אחד מבין @#$%</string>
     <string name="payment">בתשלום</string>
     <string name="sunday">ראשון</string>
     <string name="thursday">חמישי</string>
@@ -59,5 +68,7 @@
     <string name="email_already_exist">אימייל כבר קיים!</string>
     <string name="user_not_found">לא נמצא משתמש במערכת</string>
     <string name="address_not_exist">כתובת לא קיימת</string>
+    <string name="already_report">כבר דיווחת למיקום זה!</string>
+    <string name="cant_get_saved_location">לא ניתן לחלץ מיקום שמור</string>
     <string name="choose_language">בחר שפה...</string>
 </resources>
