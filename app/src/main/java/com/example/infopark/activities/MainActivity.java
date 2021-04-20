@@ -662,7 +662,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     //============================================================================================
 
     /**
-     * This function sets the marker of the saved location.
+     * This function sets the marker of the searched location.
      */
     private void setSearchLocationMarker() {
         if (searchLocationMarker != null) {
@@ -732,7 +732,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                     }
                     assert response.errorBody() != null;
                     ResponseInfo responseMessage = Utils.convertJsonToResponseObject(response.errorBody(),
-                            LoginResponse.class);
+                            ResponseInfo.class);
                     assert responseMessage != null;
                     String message = "";
                     if ("something_went_wrong".equals(responseMessage.getDescription())) {
