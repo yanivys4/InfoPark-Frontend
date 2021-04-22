@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <network-security-config>
     <domain-config cleartextTrafficPermitted="true">
-        <domain includeSubdomains="true">d00a115efb20.ngrok.io</domain>
+        <domain includeSubdomains="true">Infoparkbackend-env.eba-avqkxmrt.us-east-2.elasticbeanstalk.com</domain>
         <domain includeSubdomains="true">localhost</domain>
     </domain-config>
 </network-security-config>
