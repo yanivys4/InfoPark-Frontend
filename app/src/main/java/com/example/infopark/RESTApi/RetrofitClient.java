@@ -13,7 +13,7 @@ public class RetrofitClient {
     public static Retrofit getInstance(){
         if(m_instance == null){
             m_instance= new Retrofit.Builder()
-                    .baseUrl("http://Infoparkbackend-env.eba-avqkxmrt.us-east-2.elasticbeanstalk.com/")
+                    .baseUrl("http://infoparknow.com/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
