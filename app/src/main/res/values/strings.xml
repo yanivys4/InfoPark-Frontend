@@ -70,4 +70,20 @@
     <string name="already_report">You already report to this location!</string>
     <string name="cant_get_saved_location">Can\'t get saved location</string>
     <string name="choose_language">Choose Language...</string>
+    <string name="add_fields">Add fields</string>
+    <string name="regular_sign">Regular sign</string>
+    <string name="max_hours">Max hours</string>
+    <string name="free_parking_for_regional_parking_sign">Free parking for regional parking sign</string>
+    <string name="unloading_and_charging_parking_only">Unloading and charging parking only</string>
+    <string name="vehicle_weight_limit">Vehicle weight limit</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="clear_all">Clear all</string>
+    <string name="regional_sign">REGIONAL PARKING SIGN</string>
+    <string name="parking_sign_number">Parking sign No.</string>
+    <string name="hours_limit">HOURS LIMIT</string>
+    <string name="unloading_charging">UNLOADING CHARGING</string>
+    <string name="weight_limit">WEIGHT LIMIT</string>
+    <string name="ton">ton</string>
+    <string name="empty_report_error">Can not send empty report!</string>
 </resources>

@@ -71,4 +71,20 @@
     <string name="already_report">כבר דיווחת למיקום זה!</string>
     <string name="cant_get_saved_location">לא ניתן לחלץ מיקום שמור</string>
     <string name="choose_language">בחר שפה...</string>
+    <string name="add_fields">הוסף שדות</string>
+    <string name="regular_sign">שלט רגיל</string>
+    <string name="max_hours">מקסימום שעות</string>
+    <string name="free_parking_for_regional_parking_sign">חניה חינם לרכב עם תו אזורי</string>
+    <string name="unloading_and_charging_parking_only">חניה לפריקה וטעינה בלבד</string>
+    <string name="vehicle_weight_limit">הגבלת משקל רכב</string>
+    <string name="ok">אישור</string>
+    <string name="cancel">ביטול</string>
+    <string name="clear_all">נקה הכל</string>
+    <string name="regional_sign">תו חניה אזורי</string>
+    <string name="parking_sign_number">תו חניה מספר</string>
+    <string name="hours_limit">הגבלת שעות</string>
+    <string name="unloading_charging">פריקה וטעינה</string>
+    <string name="weight_limit">הגבלת משקל</string>
+    <string name="ton">טון</string>
+    <string name="empty_report_error">לא ניתן לשלוח דיווח ריק!</string>
 </resources>

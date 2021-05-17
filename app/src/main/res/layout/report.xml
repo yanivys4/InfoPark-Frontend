@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,9 +8,8 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        android:layout_width="417dp"
-        android:layout_height="46dp"
-        android:layout_marginEnd="197dp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
         android:background="#0471B7"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
@@ -23,11 +22,13 @@
         android:id="@+id/imageView5"
         android:layout_width="157dp"
         android:layout_height="42dp"
+        android:layout_alignBottom="@+id/toolbar"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="false"
         android:layout_alignParentEnd="false"
-        android:layout_centerHorizontal="false"
         android:layout_gravity="center"
-
+        android:layout_marginStart="123dp"
+        android:layout_marginBottom="2dp"
         android:contentDescription="@string/toolbar_image"
         android:orientation="vertical"
         android:src="@drawable/infopark_logo"
@@ -39,24 +40,32 @@
         android:id="@+id/back_button"
         android:layout_width="85dp"
         android:layout_height="34dp"
-        android:layout_marginBottom="4dp"
+        android:layout_alignBottom="@+id/toolbar"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="316dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="3dp"
+        android:background="@drawable/button_yellow_background"
         android:contentDescription="@string/back_button"
         android:onClick="finishActivity"
         android:text="@string/back"
-        android:background="@drawable/button_yellow_background"
         android:textColor="@color/blue"
-        android:textStyle="bold"
-
-        app:layout_constraintBottom_toBottomOf="@+id/toolbar"
-        app:layout_constraintEnd_toStartOf="@+id/imageView5"
-        app:layout_constraintHorizontal_bias="0.409"
-        app:layout_constraintStart_toStartOf="@+id/toolbar" />
+        android:textStyle="bold" />
 
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_marginTop="45dp"
-        android:layout_marginBottom="100dp"
+        android:layout_above="@+id/reportButton"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginBottom="11dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -67,14 +76,25 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="46dp"
-            android:layout_marginBottom="100dp"
+            android:layout_marginBottom="10dp"
             android:background="@color/signpost_yellow"
             android:stretchColumns="*"
-            app:layout_constraintBottom_toTopOf="@+id/reportButton"
+            app:layout_constraintBottom_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:paddingBottom="30dp">
+            app:layout_constraintTop_toTopOf="parent">
+
+        <TableLayout
+            android:id="@+id/regularFormTable"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:background="@color/signpost_yellow"
+            android:stretchColumns="*"
+            app:layout_constraintBottom_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <TableRow
                 android:layout_width="0dp"
@@ -84,7 +104,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:padding="10dip"
+                    android:padding="10dp"
                     android:text="@string/payment"
                     android:textAlignment="center"
                     android:textColor="#000"
@@ -101,7 +121,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:padding="10dip"
+                    android:padding="10dp"
                     android:text="@string/sunday"
                     android:textAlignment="viewEnd"
                     android:textColor="#000"
@@ -112,7 +132,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:padding="10dip"
+                    android:padding="10dp"
                     android:text="-"
                     android:textAlignment="center"
                     android:textColor="#000"
@@ -123,7 +143,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:padding="10dip"
+                    android:padding="10dp"
                     android:text="@string/thursday"
                     android:textColor="#000"
                     android:textSize="20dp"
@@ -133,12 +153,14 @@
 
             <TableRow
                 android:layout_width="0dp"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:stretchColumns="*">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:padding="10dip"
+                    android:layout_weight="1"
+                    android:padding="10dp"
                     android:text="@string/from"
                     android:textAlignment="center"
                     android:textColor="#000"
@@ -146,8 +168,9 @@
 
                 <Spinner
                     android:id="@+id/fromSunThuSpinner"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:background="@android:drawable/btn_dropdown"
                     android:spinnerMode="dropdown" />
 
@@ -155,12 +178,14 @@
 
             <TableRow
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:stretchColumns="*">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:padding="10dip"
+                    android:layout_weight="1"
+                    android:padding="10dp"
                     android:text="@string/to"
                     android:textAlignment="center"
                     android:textColor="#000"
@@ -168,8 +193,9 @@
 
                 <Spinner
                     android:id="@+id/toSunThuSpinner"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:background="@android:drawable/btn_dropdown"
                     android:spinnerMode="dropdown" />
 
@@ -177,7 +203,8 @@
 
             <TableRow
                 android:layout_width="0dp"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:stretchColumns="*">
 
                 <TextView
                     android:layout_width="0dp"
@@ -194,12 +221,14 @@
 
             <TableRow
                 android:layout_width="0dp"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:stretchColumns="*">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:padding="10dip"
+                    android:layout_weight="1"
+                    android:padding="10dp"
                     android:text="@string/from"
                     android:textAlignment="center"
                     android:textColor="#000"
@@ -207,30 +236,9 @@
 
                 <Spinner
                     android:id="@+id/fromFriSpinner"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@android:drawable/btn_dropdown"
-                    android:spinnerMode="dropdown" />
-
-            </TableRow>
-
-            <TableRow
-                android:layout_width="0dp"
-                android:layout_height="match_parent">
-
-                <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:padding="10dip"
-                    android:text="@string/to"
-                    android:textAlignment="center"
-                    android:textColor="#000"
-                    android:textSize="20dp" />
-
-                <Spinner
-                    android:id="@+id/toFriSpinner"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:background="@android:drawable/btn_dropdown"
                     android:spinnerMode="dropdown" />
 
@@ -239,14 +247,71 @@
             <TableRow
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:paddingTop="20dp"
-                android:paddingBottom="20dp">
+                android:stretchColumns="*">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:padding="10dip"
+                    android:padding="10dp"
+                    android:text="@string/to"
+                    android:textAlignment="center"
+                    android:textColor="#000"
+                    android:textSize="20dp" />
+
+                <Spinner
+                    android:id="@+id/toFriSpinner"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:drawable/btn_dropdown"
+                    android:spinnerMode="dropdown" />
+
+            </TableRow>
+
+        </TableLayout>
+
+        <TableLayout
+            android:id="@+id/maxHoursTable"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/signpost_yellow"
+            android:stretchColumns="*"
+            app:layout_constraintBottom_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TableRow
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="10dp"
+                    android:text="@string/hours_limit"
+                    android:textAlignment="center"
+                    android:textColor="#000"
+                    android:textSize="30dp"
+                    android:textStyle="bold" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:stretchColumns="*"
+                android:paddingTop="15dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="10dp"
                     android:text="@string/max"
                     android:textAlignment="viewEnd"
                     android:textColor="#000"
@@ -256,6 +321,7 @@
                     android:id="@+id/maxHoursSpinner"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:background="@android:drawable/btn_dropdown"
                     android:spinnerMode="dropdown" />
 
@@ -263,12 +329,306 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:padding="10dip"
+                    android:padding="10dp"
                     android:text="@string/hours"
                     android:textColor="#000"
                     android:textSize="20dp" />
 
             </TableRow>
+
+        </TableLayout>
+
+        <TableLayout
+            android:id="@+id/regionalSignTable"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/signpost_yellow"
+            android:stretchColumns="*"
+            app:layout_constraintBottom_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TableRow
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="10dp"
+                    android:text="@string/regional_sign"
+                    android:textAlignment="center"
+                    android:textColor="#000"
+                    android:textSize="30dp"
+                    android:textStyle="bold" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:stretchColumns="*">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="10dp"
+                    android:text="@string/from"
+                    android:textAlignment="center"
+                    android:textColor="#000"
+                    android:textSize="20dp" />
+
+                <Spinner
+                    android:id="@+id/fromRegionalSignSpinner"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:drawable/btn_dropdown"
+                    android:spinnerMode="dropdown" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:stretchColumns="*">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="10dp"
+                    android:text="@string/to"
+                    android:textAlignment="center"
+                    android:textColor="#000"
+                    android:textSize="20dp" />
+
+                <Spinner
+                    android:id="@+id/toRegionalSignSpinner"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:drawable/btn_dropdown"
+                    android:spinnerMode="dropdown" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:stretchColumns="*">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="10dp"
+                    android:text="@string/parking_sign_number"
+                    android:textAlignment="center"
+                    android:textColor="#000"
+                    android:textSize="20dp" />
+
+                <Spinner
+                    android:id="@+id/parkingSignNumberSpinner"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:drawable/btn_dropdown"
+                    android:spinnerMode="dropdown" />
+
+            </TableRow>
+
+        </TableLayout>
+
+        <TableLayout
+            android:id="@+id/unloadingChargingTable"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/signpost_yellow"
+            android:stretchColumns="*"
+            app:layout_constraintBottom_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TableRow
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="10dp"
+                    android:text="@string/unloading_charging"
+                    android:textAlignment="center"
+                    android:textColor="#000"
+                    android:textSize="30dp"
+                    android:textStyle="bold" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:stretchColumns="*">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="10dp"
+                    android:text="@string/from"
+                    android:textAlignment="center"
+                    android:textColor="#000"
+                    android:textSize="20dp" />
+
+                <Spinner
+                    android:id="@+id/fromUnloadingChargingSpinner"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:drawable/btn_dropdown"
+                    android:spinnerMode="dropdown" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:stretchColumns="*">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="10dp"
+                    android:text="@string/to"
+                    android:textAlignment="center"
+                    android:textColor="#000"
+                    android:textSize="20dp" />
+
+                <Spinner
+                    android:id="@+id/toUnloadingChargingSpinner"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:drawable/btn_dropdown"
+                    android:spinnerMode="dropdown" />
+
+            </TableRow>
+
+        </TableLayout>
+
+        <TableLayout
+            android:id="@+id/weightLimitTable"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/signpost_yellow"
+            android:stretchColumns="*"
+            app:layout_constraintBottom_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TableRow
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="10dp"
+                    android:text="@string/weight_limit"
+                    android:textAlignment="center"
+                    android:textColor="#000"
+                    android:textSize="30dp"
+                    android:textStyle="bold" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:stretchColumns="*"
+                android:paddingTop="15dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="10dp"
+                    android:text="@string/max"
+                    android:textAlignment="viewEnd"
+                    android:textColor="#000"
+                    android:textSize="20dp" />
+
+                <Spinner
+                    android:id="@+id/maxWeightSpinner"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:drawable/btn_dropdown"
+                    android:spinnerMode="dropdown" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="10dp"
+                    android:text="@string/ton"
+                    android:textColor="#000"
+                    android:textSize="20dp" />
+
+            </TableRow>
+
+        </TableLayout>
+
+        <TableLayout
+            android:id="@+id/addFieldsTable"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="30dp"
+            android:background="@color/signpost_yellow"
+            android:stretchColumns="*"
+            app:layout_constraintBottom_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TableRow
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:stretchColumns="*"
+                android:paddingTop="15dp"
+                android:paddingBottom="30dp">
+
+                <Button
+                    android:id="@+id/add_fields_button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_white_background"
+                    android:contentDescription="@string/back_button"
+                    android:onClick="finishActivity"
+                    android:text="@string/add_fields"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+            </TableRow>
+
+        </TableLayout>
 
         </TableLayout>
 
@@ -278,21 +638,22 @@
         android:id="@+id/progressBar"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginStart="78dp"
-        android:layout_marginEnd="84dp"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="1dp"
         android:foregroundTint="#2B2B2B"
-        android:progressTint="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:progressTint="#FFFFFF" />
 
     <Button
         android:id="@+id/reportButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
         android:layout_marginStart="22dp"
         android:layout_marginEnd="301dp"
+        android:layout_marginBottom="42dp"
         android:background="@color/blue"
         android:onClick="reportClick"
         android:text="@string/send"
@@ -306,4 +667,4 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
         app:layout_constraintVertical_bias="0.956" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

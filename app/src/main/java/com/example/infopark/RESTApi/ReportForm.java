@@ -1,36 +1,39 @@
 package com.example.infopark.RESTApi;
 
+import com.example.infopark.Utils.HoursLimitInfo;
+import com.example.infopark.Utils.RegionalParkingSignInfo;
+import com.example.infopark.Utils.RegularSignInfo;
+import com.example.infopark.Utils.UnloadingChargingInfo;
+import com.example.infopark.Utils.WeightLimitInfo;
+
 /**
  * This class holds the report data used to send as a request to the server via retrofit RESTApi.
  */
 public class ReportForm {
     private final String uniqueID;
-
-    private final String fromSunThu;
-
-    private final String toSunThu;
-
-    private final String fromFri;
-
-    private final String toFri;
-
-    private final String maxHours;
+    private final RegularSignInfo regularSignInfo;
+    private final HoursLimitInfo hoursLimitInfo;
+    private final RegionalParkingSignInfo regionalParkingSignInfo;
+    private final UnloadingChargingInfo unloadingChargingInfo;
+    private final WeightLimitInfo weightLimitInfo;
 
     /**
-     * This function constructs a new report form.
-     * @param uniqueID the user unique id
-     * @param fromSunThu indicate the FROM time for SUN-THU days
-     * @param toSunThu indicate the TO time for SUN-THU days
-     * @param fromFri indicate the FROM time for FRI day
-     * @param toFri indicate the TO time for FRI day
-     * @param maxHours indicate the maximum parking hours
+     *
+     * @param uniqueID
+     * @param regularSignInfo
+     * @param hoursLimitInfo
+     * @param regionalParkingSignInfo
+     * @param unloadingChargingInfo
+     * @param weightLimitInfo
      */
-    public ReportForm(String uniqueID, String fromSunThu, String toSunThu, String fromFri, String toFri, String maxHours) {
+    public ReportForm(String uniqueID, RegularSignInfo regularSignInfo, HoursLimitInfo hoursLimitInfo,
+                      RegionalParkingSignInfo regionalParkingSignInfo, UnloadingChargingInfo unloadingChargingInfo,
+                      WeightLimitInfo weightLimitInfo) {
         this.uniqueID = uniqueID;
-        this.fromSunThu = fromSunThu;
-        this.toSunThu = toSunThu;
-        this.fromFri = fromFri;
-        this.toFri = toFri;
-        this.maxHours = maxHours;
+        this.regularSignInfo = regularSignInfo;
+        this.hoursLimitInfo = hoursLimitInfo;
+        this. regionalParkingSignInfo = regionalParkingSignInfo;
+        this.unloadingChargingInfo = unloadingChargingInfo;
+        this.weightLimitInfo = weightLimitInfo;
     }
 }
