@@ -54,6 +54,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.net.PlacesClient;
 
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -744,6 +746,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
                 else {
                     ResponseInfo responseInfo = response.body();
+
                     // start the info activity with the results got from the backend
                     startInfoActivity(responseInfo);
                 }
@@ -783,6 +786,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
      */
     private void startInfoActivity(ResponseInfo responseInfo) {
         Intent startIntent = InfoActivity.makeIntent();
+
         startIntent.putExtra("responseInfo", responseInfo);
         startActivity(startIntent);
     }

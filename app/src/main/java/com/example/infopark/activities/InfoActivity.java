@@ -3,6 +3,7 @@ package com.example.infopark.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -31,10 +32,18 @@ public class InfoActivity extends AppCompatActivity {
     private static final String TAG = InfoActivity.class.getSimpleName();
 
     // Views members
-
+    private TableLayout regularSignTable;
     private TextView sunThuHours;
     private TextView friHours;
+    private TableLayout maxHoursTable;
     private TextView maxHours;
+    private TableLayout regionalSignTable;
+    private TextView fromToRegional;
+    private TextView parkingSignNumber;
+    private TableLayout unloadingChargingTable;
+    private TextView fromToUnloadingCharging;
+    private TableLayout weightLimitTable;
+    private TextView weightLimit;
     private ResponseInfo responseInfo;
 
     /**
@@ -50,7 +59,8 @@ public class InfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.info);
         initializeViews();
-        responseInfo = getIntent().getExtras().getParcelable("responseInfo");
+        hideAllInfoFields();
+        responseInfo = (ResponseInfo) getIntent().getSerializableExtra("responseInfo");
         showInformation();
     }
     //============================================================================================
@@ -59,9 +69,18 @@ public class InfoActivity extends AppCompatActivity {
      * Initialize the views.
      */
     private void initializeViews(){
+        regularSignTable = findViewById(R.id.regularTableLayout);
+        maxHoursTable = findViewById(R.id.maxHoursTable);
+        regionalSignTable = findViewById(R.id.regionalSignTable);
+        unloadingChargingTable = findViewById(R.id.unloadingChargingTable);
+        weightLimitTable = findViewById(R.id.weightLimitTable);
         sunThuHours = findViewById(R.id.sun_thu_hours);
         friHours = findViewById(R.id.fri_hours);
         maxHours = findViewById(R.id.max_hours);
+        fromToRegional = findViewById(R.id.from_to_regional);
+        parkingSignNumber = findViewById(R.id.parking_sign_number);
+        fromToUnloadingCharging = findViewById(R.id.from_to_unloading_charging);
+        weightLimit = findViewById(R.id.weight_limit);
     }
     //============================================================================================
     /**
@@ -86,8 +105,41 @@ public class InfoActivity extends AppCompatActivity {
      * This function stores the information in the layout text containers.
      */
     private void showInformation(){
-        sunThuHours.setText(String.format("%s->%s", responseInfo.getFromSunThu(), responseInfo.getToSunThu()));
-        friHours.setText(String.format("%s->%s", responseInfo.getFromFri(), responseInfo.getToFri()));
-        maxHours.setText(responseInfo.getMaxHours());
+        if(responseInfo.getRegularSignInfo()!=null){
+            regularSignTable.setVisibility(View.VISIBLE);
+            sunThuHours.setText(String.format("%s --> %s", responseInfo.getRegularSignInfo()
+                    .getFromSunThu(), responseInfo.getRegularSignInfo().getToSunThu()));
+            friHours.setText(String.format("%s --> %s", responseInfo.getRegularSignInfo().
+                    getFromFri(), responseInfo.getRegularSignInfo().getToFri()));
+        }
+        if(responseInfo.getHoursLimitInfo()!=null){
+            maxHoursTable.setVisibility(View.VISIBLE);
+            maxHours.setText(responseInfo.getHoursLimitInfo().getMaxHours());
+        }
+        if(responseInfo.getRegionalParkingSignInfo() != null){
+            regionalSignTable.setVisibility(View.VISIBLE);
+            fromToRegional.setText(String.format("%s --> %s", responseInfo.getRegionalParkingSignInfo()
+                    .getFromRegionalSign(), responseInfo.getRegionalParkingSignInfo().getToRegionalSign()));
+            parkingSignNumber.setText(responseInfo.getRegionalParkingSignInfo().getParkingSignNumber());
+
+        }
+        if(responseInfo.getUnloadingChargingInfo()!=null){
+            unloadingChargingTable.setVisibility(View.VISIBLE);
+            fromToUnloadingCharging.setText(String.format("%s --> %s", responseInfo.getUnloadingChargingInfo()
+                    .getFromUnloadingCharging(), responseInfo.getUnloadingChargingInfo().getToUnloadingCharging()));
+        }
+        if(responseInfo.getWeightLimitInfo()!=null){
+            weightLimitTable.setVisibility(View.VISIBLE);
+            weightLimit.setText(responseInfo.getWeightLimitInfo().getMaxWeight());
+        }
+
+    }
+
+    private void hideAllInfoFields() {
+        regularSignTable.setVisibility(View.GONE);
+        maxHoursTable.setVisibility(View.GONE);
+        regionalSignTable.setVisibility(View.GONE);
+        unloadingChargingTable.setVisibility(View.GONE);
+        weightLimitTable.setVisibility(View.GONE);
     }
 }

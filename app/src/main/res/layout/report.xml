@@ -74,7 +74,7 @@
         <TableLayout
             android:id="@+id/tableLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="46dp"
             android:layout_marginBottom="10dp"
             android:background="@color/signpost_yellow"
@@ -189,7 +189,7 @@
                     android:text="@string/to"
                     android:textAlignment="center"
                     android:textColor="#000"
-                    android:textSize="20dp" />
+                    android:textSize="20sp" />
 
                 <Spinner
                     android:id="@+id/toSunThuSpinner"
@@ -214,7 +214,7 @@
                     android:text="@string/fri"
                     android:textAlignment="center"
                     android:textColor="#000"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
             </TableRow>
@@ -232,7 +232,7 @@
                     android:text="@string/from"
                     android:textAlignment="center"
                     android:textColor="#000"
-                    android:textSize="20dp" />
+                    android:textSize="20sp" />
 
                 <Spinner
                     android:id="@+id/fromFriSpinner"
@@ -257,7 +257,7 @@
                     android:text="@string/to"
                     android:textAlignment="center"
                     android:textColor="#000"
-                    android:textSize="20dp" />
+                    android:textSize="20sp" />
 
                 <Spinner
                     android:id="@+id/toFriSpinner"
@@ -406,7 +406,7 @@
                     android:text="@string/to"
                     android:textAlignment="center"
                     android:textColor="#000"
-                    android:textSize="20dp" />
+                    android:textSize="20sp" />
 
                 <Spinner
                     android:id="@+id/toRegionalSignSpinner"
@@ -470,7 +470,7 @@
                     android:text="@string/unloading_charging"
                     android:textAlignment="center"
                     android:textColor="#000"
-                    android:textSize="30dp"
+                    android:textSize="30sp"
                     android:textStyle="bold" />
 
             </TableRow>
@@ -488,7 +488,7 @@
                     android:text="@string/from"
                     android:textAlignment="center"
                     android:textColor="#000"
-                    android:textSize="20dp" />
+                    android:textSize="20sp" />
 
                 <Spinner
                     android:id="@+id/fromUnloadingChargingSpinner"

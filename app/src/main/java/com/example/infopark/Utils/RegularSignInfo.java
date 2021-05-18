@@ -1,6 +1,8 @@
 package com.example.infopark.Utils;
 
-public class RegularSignInfo {
+import java.io.Serializable;
+
+public class RegularSignInfo implements Serializable {
     private final String fromSunThu;
     private final String toSunThu;
     private final String fromFri;
@@ -11,5 +13,21 @@ public class RegularSignInfo {
         this.toSunThu = toSunThu;
         this.fromFri = fromFri;
         this.toFri = toFri;
+    }
+
+    public String getFromSunThu() {
+        return fromSunThu;
+    }
+
+    public String getToSunThu() {
+        return toSunThu;
+    }
+
+    public String getFromFri() {
+        return fromFri;
+    }
+
+    public String getToFri() {
+        return toFri;
     }
 }

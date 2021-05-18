@@ -1,79 +1,51 @@
 package com.example.infopark.RESTApi;
 
-import android.os.Parcel;
-import android.os.Parcelable;
+import com.example.infopark.Utils.HoursLimitInfo;
+import com.example.infopark.Utils.RegionalParkingSignInfo;
+import com.example.infopark.Utils.RegularSignInfo;
+import com.example.infopark.Utils.UnloadingChargingInfo;
+import com.example.infopark.Utils.WeightLimitInfo;
+
+import java.io.Serializable;
 
 
 /**
  * This class holds the information retrieved from the server in the getInfo via retrofit RESTApi.
  */
-public class ResponseInfo extends ResponseMessage implements Parcelable {
+public class ResponseInfo extends ResponseMessage implements Serializable {
 
-    private final String fromSunThu;
-    private final String toSunThu;
-    private final String fromFri;
-    private final String toFri;
-    private final String maxHours;
+    private final RegularSignInfo regularSignInfo;
+    private final HoursLimitInfo hoursLimitInfo;
+    private final RegionalParkingSignInfo regionalParkingSignInfo;
+    private final UnloadingChargingInfo unloadingChargingInfo;
+    private final WeightLimitInfo weightLimitInfo;
 
-
-    /**
-     * Constructor for ResponseInfo instance.
-     * @param in
-     */
-    protected ResponseInfo(Parcel in) {
-        fromSunThu = in.readString();
-        toSunThu = in.readString();
-        fromFri = in.readString();
-        toFri = in.readString();
-        maxHours = in.readString();
-
-    }
-
-    public static final Creator<ResponseInfo> CREATOR = new Creator<ResponseInfo>() {
-        @Override
-        public ResponseInfo createFromParcel(Parcel in) {
-            return new ResponseInfo(in);
-        }
-
-        @Override
-        public ResponseInfo[] newArray(int size) {
-            return new ResponseInfo[size];
-        }
-    };
-
-    public String getFromSunThu() {
-        return fromSunThu;
-    }
-
-    public String getToSunThu() {
-        return toSunThu;
-    }
-
-    public String getFromFri() {
-        return fromFri;
-    }
-
-    public String getToFri() {
-        return toFri;
-    }
-
-    public String getMaxHours(){
-        return maxHours;
+    public ResponseInfo(RegularSignInfo regularSignInfo, HoursLimitInfo hoursLimitInfo, RegionalParkingSignInfo regionalParkingSignInfo, UnloadingChargingInfo unloadingChargingInfo, WeightLimitInfo weightLimitInfo) {
+        this.regularSignInfo = regularSignInfo;
+        this.hoursLimitInfo = hoursLimitInfo;
+        this.regionalParkingSignInfo = regionalParkingSignInfo;
+        this.unloadingChargingInfo = unloadingChargingInfo;
+        this.weightLimitInfo = weightLimitInfo;
     }
 
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public RegularSignInfo getRegularSignInfo() {
+        return regularSignInfo;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(fromSunThu);
-        dest.writeString(toSunThu);
-        dest.writeString(fromFri);
-        dest.writeString(toFri);
-        dest.writeString(maxHours);
+    public HoursLimitInfo getHoursLimitInfo() {
+        return hoursLimitInfo;
+    }
 
+    public RegionalParkingSignInfo getRegionalParkingSignInfo() {
+        return regionalParkingSignInfo;
+    }
+
+    public UnloadingChargingInfo getUnloadingChargingInfo() {
+        return unloadingChargingInfo;
+    }
+
+    public WeightLimitInfo getWeightLimitInfo() {
+        return weightLimitInfo;
     }
 }
