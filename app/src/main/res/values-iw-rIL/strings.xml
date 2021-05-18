@@ -87,4 +87,5 @@
     <string name="weight_limit">הגבלת משקל</string>
     <string name="ton">טון</string>
     <string name="empty_report_error">לא ניתן לשלוח דיווח ריק!</string>
+    <string name="version">גרסא 1.0</string>
 </resources>

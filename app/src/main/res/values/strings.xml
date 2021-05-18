@@ -86,4 +86,5 @@
     <string name="weight_limit">WEIGHT LIMIT</string>
     <string name="ton">ton</string>
     <string name="empty_report_error">Can not send empty report!</string>
+    <string name="version">Version 1.0</string>
 </resources>
