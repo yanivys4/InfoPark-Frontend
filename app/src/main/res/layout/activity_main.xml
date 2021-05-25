@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_activity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:backgroundTint="#0471B7"
+    tools:context=".activities.MainActivity"
+    tools:layout_editor_absoluteY="25dp">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="417dp"
+        android:layout_height="46dp"
+        android:layout_marginEnd="197dp"
+        android:background="#0471B7"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.014"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="403dp"
+        android:layout_height="44dp"
+        android:layout_alignParentTop="false"
+        android:layout_alignParentEnd="false"
+        android:layout_centerHorizontal="false"
+        android:layout_gravity="center"
+        android:layout_marginStart="8dp"
+
+        android:contentDescription="@string/toolbar_image"
+        android:orientation="vertical"
+        android:src="@drawable/infopark_logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="406dp"
+        android:layout_height="280dp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+        <fragment
+            android:id="@+id/map"
+            class="com.google.android.gms.maps.MapFragment"
+            android:layout_width="389dp"
+            android:layout_height="254dp"
+            tools:layout="@layout/fragment_layout" >
+
+        </fragment>
+
+
+
+    </FrameLayout>
+
+    <EditText
+        android:id="@+id/search_input"
+
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:textColor="@color/white"
+        android:autofillHints=""
+        android:hint="@string/type_to_search"
+        android:background="@drawable/button_yellow_background"
+        app:layout_constraintStart_toEndOf="@+id/search_button"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+    <TextView
+        android:id="@+id/search_button"
+
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:background="@drawable/search_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+
+    <ImageButton
+        android:id="@+id/back_button"
+        android:layout_width="105dp"
+        android:layout_height="224dp"
+        android:contentDescription="@string/back_button"
+        android:onClick="retrieveInfoOnClick"
+        android:src="@drawable/signpost"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/report_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
+
+    <TextView
+        android:layout_width="73dp"
+        android:layout_height="76dp"
+        app:layout_constraintBottom_toBottomOf="@+id/back_button"
+        app:layout_constraintEnd_toEndOf="@+id/back_button"
+        app:layout_constraintStart_toStartOf="@+id/back_button"
+        app:layout_constraintTop_toTopOf="@+id/back_button"
+        app:layout_constraintVertical_bias="0.77"
+        android:text="@string/click_for_info"
+        android:textColor="@color/black"
+        android:textSize="22sp"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:foregroundTint="#2B2B2B"
+        android:progressTint="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        app:layout_constraintEnd_toEndOf="@+id/save_my_location_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/toolbar" />
+    <Button
+        android:id="@+id/save_my_location_button"
+        android:layout_width="180dp"
+        android:layout_height="55dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/button_blue_background"
+        android:onClick="saveMyLocation"
+        android:text="@string/save_my_location"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/logout_login_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout"
+        app:layout_constraintVertical_bias="0.164" />
+
+    <Button
+        android:id="@+id/report_button"
+        android:layout_width="180dp"
+        android:layout_height="55dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/button_blue_background"
+        android:onClick="reportNewInfo"
+        android:text="@string/add_new_info"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/logout_login_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/save_my_location_button"
+        app:layout_constraintVertical_bias="0.455" />
+
+    <Button
+        android:id="@+id/logout_login_button"
+        android:layout_width="180dp"
+        android:layout_height="55dp"
+        android:layout_marginEnd="16dp"
+        android:onClick="logOutIn"
+        android:textColor="@color/red"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout"
+        app:layout_constraintVertical_bias="0.877" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

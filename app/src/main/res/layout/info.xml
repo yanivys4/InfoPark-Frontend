@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/info_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".activities.InfoActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="417dp"
+        android:layout_height="46dp"
+        android:layout_marginEnd="197dp"
+        android:background="#0471B7"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.014"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="157dp"
+        android:layout_height="42dp"
+        android:layout_alignParentTop="false"
+        android:layout_alignParentEnd="false"
+        android:layout_centerHorizontal="false"
+        android:layout_gravity="center"
+
+        android:contentDescription="@string/toolbar_image"
+        android:orientation="vertical"
+        android:src="@drawable/infopark_logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/back_button"
+        android:layout_width="85dp"
+        android:layout_height="34dp"
+        android:layout_marginBottom="4dp"
+        android:contentDescription="@string/back_button"
+        android:onClick="finishActivity"
+        android:text="@string/back"
+        android:background="@drawable/button_yellow_background"
+        android:textColor="@color/blue"
+        android:textStyle="bold"
+
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar"
+        app:layout_constraintEnd_toStartOf="@+id/imageView5"
+        app:layout_constraintHorizontal_bias="0.409"
+        app:layout_constraintStart_toStartOf="@+id/toolbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/signpost_yellow"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintVertical_bias="0.0">
+
+        <TableLayout
+            android:id="@+id/TableLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/signpost_yellow">
+
+
+            <TableLayout
+                android:id="@+id/regularTableLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_marginBottom="20dp"
+                android:background="@color/signpost_yellow"
+                android:paddingBottom="20dp"
+                android:stretchColumns="*"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TableRow
+                    android:id="@+id/title_row"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="10dip"
+                        android:text="@string/parking_info"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textSize="30sp"
+                        android:textStyle="bold" />
+
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/payment_row"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="10dip"
+                        android:text="@string/payment"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textSize="25sp"
+                        android:textStyle="bold" />
+
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/sun_thu_row"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="40dp"
+                        android:layout_weight="1"
+                        android:padding="10dip"
+                        android:text="@string/sun_thu"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/sun_thu_hours"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="10dip"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/fri_row"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="40dp"
+                        android:layout_weight="1"
+                        android:padding="10dip"
+                        android:text="@string/fri"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/fri_hours"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="10dip"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                </TableRow>
+
+
+            </TableLayout>
+
+            <TableLayout
+                android:id="@+id/maxHoursTable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:background="@color/signpost_yellow"
+                android:paddingBottom="20dp"
+                android:stretchColumns="*"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/regularTableLayout">
+                <TableRow
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="10dp"
+                    android:text="@string/hours_limit"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
+
+                </TableRow>
+                <TableRow
+                    android:id="@+id/max_row"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="40dp"
+                        android:layout_weight="1"
+                        android:padding="10dip"
+                        android:text="@string/max"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/max_hours"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="10dip"
+                        android:textColor="@color/red"
+                        android:textSize="25sp"
+                        android:textStyle="bold" />
+
+                </TableRow>
+            </TableLayout>
+            <TableLayout
+                android:id="@+id/regionalSignTable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:background="@color/signpost_yellow"
+                android:paddingBottom="20dp"
+                android:stretchColumns="*"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/maxHoursTable">
+                <TableRow
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="10dp"
+                        android:text="@string/regional_sign"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textSize="25sp"
+                        android:textStyle="bold" />
+
+                </TableRow>
+                <TableRow
+                    android:id="@+id/fromRegional_row"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/from_to_regional"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:padding="10dip"
+                        android:textColor="#000"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/parkingSignNumber_row"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="40dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:padding="10dip"
+                        android:text="@string/parking_sign_number"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/parking_sign_number"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:padding="10dip"
+                        android:textColor="@color/green"
+                        android:textSize="25sp"
+                        android:textStyle="bold" />
+                </TableRow>
+            </TableLayout>
+            <TableLayout
+                android:id="@+id/unloadingChargingTable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:background="@color/signpost_yellow"
+                android:paddingBottom="20dp"
+                android:stretchColumns="*"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/regularTableLayout">
+                <TableRow
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="10dp"
+                        android:text="@string/unloading_charging"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textSize="25sp"
+                        android:textStyle="bold" />
+
+                </TableRow>
+                <TableRow
+                    android:id="@+id/fromUnloadingCharging_row"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/from_to_unloading_charging"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:padding="10dip"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+                </TableRow>
+
+
+            </TableLayout>
+            <TableLayout
+                android:id="@+id/weightLimitTable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:background="@color/signpost_yellow"
+                android:paddingBottom="20dp"
+                android:stretchColumns="*"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/regularTableLayout">
+                <TableRow
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="10dp"
+                        android:text="@string/weight_limit"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textSize="25sp"
+                        android:textStyle="bold" />
+
+                </TableRow>
+                <TableRow
+                    android:id="@+id/weightLimit_row"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="40dp"
+                        android:layout_weight="1"
+                        android:padding="10dip"
+                        android:text="@string/max"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/weight_limit"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="10dip"
+                        android:textColor="@color/red"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                </TableRow>
+            </TableLayout>
+        </TableLayout>
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
