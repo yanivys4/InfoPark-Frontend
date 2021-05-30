@@ -40,20 +40,20 @@
 
     <Button
         android:id="@+id/back_button"
-        android:layout_width="85dp"
-        android:layout_height="34dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_marginBottom="4dp"
+        android:background="@drawable/ic_back_button"
         android:contentDescription="@string/back_button"
+
         android:onClick="finishActivity"
-        android:text="@string/back"
-        android:background="@drawable/button_yellow_background"
-        android:textColor="@color/blue"
+
         android:textStyle="bold"
 
         app:layout_constraintBottom_toBottomOf="@+id/toolbar"
         app:layout_constraintEnd_toStartOf="@+id/imageView5"
-        app:layout_constraintHorizontal_bias="0.409"
-        app:layout_constraintStart_toStartOf="@+id/toolbar" />
+        app:layout_constraintStart_toStartOf="@+id/toolbar"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/linearLayout"

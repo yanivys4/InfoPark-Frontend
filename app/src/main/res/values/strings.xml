@@ -2,7 +2,7 @@
     <string name="app_name">InfoPark</string>
     <string name="toolbar_image">toolbar_image</string>
     <string name="logo">logo</string>
-    <string name="back_button">back button</string>
+    <string name="skip_button">back button</string>
     <string name="back">Back</string>
     <string name="skip">Skip</string>
     <string name="email" ><font size="50">Email</font></string>
@@ -87,4 +87,6 @@
     <string name="ton">ton</string>
     <string name="empty_report_error">Can not send empty report!</string>
     <string name="version">Version 1.0</string>
+    <string name="back_button" translatable="false">back_button</string>
+    <string name="sign_in_google">sign in with google</string>
 </resources>

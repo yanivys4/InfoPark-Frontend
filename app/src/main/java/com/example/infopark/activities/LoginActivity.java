@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,6 +32,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Objects;
@@ -56,9 +58,12 @@ public class LoginActivity extends AppCompatActivity {
     // View members
     private TextInputLayout textInputEmailOrUsername;
     private TextInputLayout textInputPassword;
+    private TextInputEditText emailUserNameEditText;
+    private TextInputEditText passwordEditText;
     private Button loginButton;
     private ProgressBar progressBar;
-    private Button skipButton;
+    private TextView skipButton;
+    private Button signInGoogleButton;
 
     /**
      * Hook method called when a new instance of Activity is
@@ -97,12 +102,41 @@ public class LoginActivity extends AppCompatActivity {
      * Initialize the views.
      */
     private void initializeViews() {
-        textInputEmailOrUsername = findViewById(R.id.text_input_email_or_usernme);
+        textInputEmailOrUsername = findViewById(R.id.text_input_email_or_username);
         textInputPassword = findViewById(R.id.text_input_password);
+        emailUserNameEditText = findViewById(R.id.email_username_edit_text);
+        passwordEditText = findViewById(R.id.password_edit_text);
         loginButton = findViewById(R.id.login_button);
         progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(View.INVISIBLE);
         skipButton = findViewById(R.id.skip_button);
+        signInGoogleButton = findViewById(R.id.sign_in_google_button);
+
+        emailUserNameEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus || emailUserNameEditText.getText().length()!=0){
+                    textInputEmailOrUsername.setHint(null);
+                }else{
+                    textInputEmailOrUsername.setHint(getString(R.string.email_or_username));
+                }
+            }
+        });
+
+        passwordEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus || passwordEditText.getText().length()!=0){
+                    textInputPassword.setHint(null);
+                }else{
+                    textInputPassword.setHint(getString(R.string.password));
+                }
+            }
+        });
+
+
+
+
     }
     //============================================================================================
 

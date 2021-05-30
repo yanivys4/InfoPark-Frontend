@@ -131,7 +131,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
         super.onCreate(savedInstanceState);
 
-        //loadLocale();
+
         context = MainActivity.this;
 
         setContentView(R.layout.activity_main);
@@ -162,6 +162,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
      * Initialize the views.
      */
     private void initializeViews() {
+
         saveLocationButton = findViewById(R.id.save_my_location_button);
         reportButton = findViewById(R.id.report_button);
         searchInput = findViewById(R.id.search_input);
@@ -338,8 +339,8 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         if (getIsLoggedIn()) {
             getSavedLocation();
         }
-        // Get the current location of the device and set the position on the map.
-        getDeviceLocation(false, false);
+
+
     }
     //============================================================================================
 
@@ -354,6 +355,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
      *                     before retrieve info according to current location.
      */
     private void getDeviceLocation(boolean saveLocation, boolean retrieveInfo) {
+
         /*
          * Get the best and most recent location of the device, which may be null in rare
          * cases when a location is not available.
@@ -384,10 +386,12 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                             if (retrieveInfo) {
                                 retrieveInfo(currentLocation);
                             }
-                            map.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                                    new LatLng(lastKnownLocation.getLatitude(),
-                                            lastKnownLocation.getLongitude()), DEFAULT_ZOOM));
+
+
                         }
+                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                                new LatLng(lastKnownLocation.getLatitude(),
+                                        lastKnownLocation.getLongitude()), DEFAULT_ZOOM));
                     } else {
                         Log.d(TAG, "Current location is null. Using defaults.");
                         Log.e(TAG, "Exception: %s", task.getException());
@@ -418,11 +422,13 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             locationPermissionGranted = true;
+
         } else {
             ActivityCompat.requestPermissions(this,
                     new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
                     PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
         }
+
     }
     //============================================================================================
 
@@ -433,6 +439,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         locationPermissionGranted = false;
         if (requestCode == PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION) {// If request is cancelled, the result arrays are empty.
             if (grantResults.length > 0
@@ -460,6 +467,8 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 map.getUiSettings().setMyLocationButtonEnabled(true);
                 if (!searchMode && getIsLoggedIn())
                     changeButtonsColor(true);
+                // Get the current location of the device and set the position on the map.
+                getDeviceLocation(false,false);
             } else {
                 map.setMyLocationEnabled(false);
                 map.getUiSettings().setMyLocationButtonEnabled(false);

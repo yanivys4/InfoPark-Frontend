@@ -59,6 +59,13 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".activities.TestActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.ACTION_TEST_ACTIVITY"/>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
     </application>
 
 

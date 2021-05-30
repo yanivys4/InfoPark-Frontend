@@ -3,7 +3,7 @@
     <string name="app_name">InfoPark</string>
     <string name="toolbar_image">toolbar_image</string>
     <string name="logo">logo</string>
-    <string name="back_button">back button</string>
+    <string name="skip_button">back button</string>
     <string name="back">חזור</string>
     <string name="skip">דלג</string>
     <string name="email" ><font size="50">מייל</font></string>
@@ -88,4 +88,5 @@
     <string name="ton">טון</string>
     <string name="empty_report_error">לא ניתן לשלוח דיווח ריק!</string>
     <string name="version">גרסא 1.0</string>
+    <string name="sign_in_google">התחבר עם חשבון גוגל</string>
 </resources>

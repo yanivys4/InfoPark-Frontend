@@ -247,9 +247,11 @@ public class RegisterActivity extends AppCompatActivity {
                             message = getString(R.string.email_already_exist);
                             break;
                     }
-                    Utils.showToast(context, message);
                     progressBar.setVisibility(View.INVISIBLE);
+                    Utils.showToast(context, message);
+
                 } else {
+                    progressBar.setVisibility(View.INVISIBLE);
                     // registration have succeeded.
                     showDialog(registerForm.getGoogleUser());
                 }
