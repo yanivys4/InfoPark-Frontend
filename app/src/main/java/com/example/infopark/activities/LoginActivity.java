@@ -115,7 +115,7 @@ public class LoginActivity extends AppCompatActivity {
         emailUserNameEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus || emailUserNameEditText.getText().length()!=0){
+                if(hasFocus || Objects.requireNonNull(emailUserNameEditText.getText()).length()!=0){
                     textInputEmailOrUsername.setHint(null);
                 }else{
                     textInputEmailOrUsername.setHint(getString(R.string.email_or_username));
@@ -126,7 +126,7 @@ public class LoginActivity extends AppCompatActivity {
         passwordEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus || passwordEditText.getText().length()!=0){
+                if(hasFocus || Objects.requireNonNull(passwordEditText.getText()).length()!=0){
                     textInputPassword.setHint(null);
                 }else{
                     textInputPassword.setHint(getString(R.string.password));

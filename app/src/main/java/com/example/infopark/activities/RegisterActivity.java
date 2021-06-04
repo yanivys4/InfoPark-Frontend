@@ -38,6 +38,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 
@@ -67,8 +68,12 @@ public class RegisterActivity extends AppCompatActivity {
     private TextInputLayout textInputEmail;
     private TextInputLayout textInputUserName;
     private TextInputLayout textInputPassword;
+    private TextInputEditText emailEditText;
+    private TextInputEditText userNameEditText;
+    private TextInputEditText passwordEditText;
     private ProgressBar progressBar;
     private Context context;
+    private TextView backButton;
 
 
     /**
@@ -106,9 +111,48 @@ public class RegisterActivity extends AppCompatActivity {
         textInputEmail = findViewById(R.id.text_input_email);
         textInputUserName = findViewById(R.id.text_input_userName);
         textInputPassword = findViewById(R.id.text_input_password);
+        emailEditText = findViewById(R.id.email_edit_text);
+        userNameEditText = findViewById(R.id.user_name_edit_text);
+        passwordEditText = findViewById(R.id.password_edit_text);
         ConstraintLayout register_layout = findViewById(R.id.register_layout);
         progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(View.INVISIBLE);
+        backButton = findViewById(R.id.back_button);
+
+        emailEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus || Objects.requireNonNull(emailEditText.getText()).length()!=0){
+                    textInputEmail.setHint(null);
+                }else{
+                    textInputEmail.setHint(getString(R.string.email));
+                }
+            }
+        });
+
+        userNameEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus || Objects.requireNonNull(userNameEditText.getText()).length()!=0){
+                    textInputUserName.setHint(null);
+                }else{
+                    textInputUserName.setHint(getString(R.string.username));
+                }
+            }
+        });
+
+        passwordEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus || Objects.requireNonNull(passwordEditText.getText()).length()!=0){
+                    textInputPassword.setHint(null);
+                }else{
+                    textInputPassword.setHint(getString(R.string.password));
+                }
+            }
+        });
+
+
     }
     //============================================================================================
 
@@ -372,7 +416,8 @@ public class RegisterActivity extends AppCompatActivity {
      * @param view the view
      */
     public void finishActivity(View view) {
-        this.finish();
+
+        finish();
     }
     //============================================================================================
 }
