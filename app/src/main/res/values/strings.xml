@@ -2,9 +2,9 @@
     <string name="app_name">InfoPark</string>
     <string name="toolbar_image">toolbar_image</string>
     <string name="logo">logo</string>
-    <string name="skip_button">back button</string>
+    <string name="skip_button">skip button</string>
     <string name="back">Back</string>
-    <string name="skip">Skip</string>
+    <string name="skip">SKIP</string>
     <string name="email" ><font size="50">Email</font></string>
     <string name="username"><font size="50">UserName</font></string>
     <string name="email_or_username"><font size="50">Email/Username</font></string>
@@ -89,4 +89,5 @@
     <string name="version">Version 1.0</string>
     <string name="back_button" translatable="false">back_button</string>
     <string name="sign_in_google">sign in with google</string>
+    <string name="register_with_google">register with google</string>
 </resources>

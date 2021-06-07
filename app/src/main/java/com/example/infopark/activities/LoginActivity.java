@@ -112,6 +112,9 @@ public class LoginActivity extends AppCompatActivity {
         skipButton = findViewById(R.id.skip_button);
         signInGoogleButton = findViewById(R.id.sign_in_google_button);
 
+        textInputEmailOrUsername.setHint(getString(R.string.email_or_username));
+        textInputPassword.setHint(getString(R.string.password));
+
         emailUserNameEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -119,6 +122,7 @@ public class LoginActivity extends AppCompatActivity {
                     textInputEmailOrUsername.setHint(null);
                 }else{
                     textInputEmailOrUsername.setHint(getString(R.string.email_or_username));
+
                 }
             }
         });

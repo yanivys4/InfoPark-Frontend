@@ -53,6 +53,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.gson.internal.$Gson$Preconditions;
 
 import org.json.JSONObject;
 
@@ -149,6 +150,8 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         if (m_mapFragment != null) {
             m_mapFragment.getMapAsync(this);
         }
+
+
 
         sharedPref = context.getSharedPreferences(
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
@@ -254,7 +257,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             } else {
                 searchLocation.setLocation(addressLatitude, addressLongitude);
             }
-            setSearchLocationMarker();
+            setSearchLocationMarker(true);
             return true;
         } else {
             Utils.showToast(MainActivity.this, getString(R.string.address_not_exist));
@@ -327,6 +330,9 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 changeButtonsColor(true);
             }
             searchMode = false;
+            if (searchLocationMarker != null) {
+                searchLocationMarker.remove();
+            }
             return false;
         });
         // Prompt the user for permission.
@@ -340,6 +346,19 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             getSavedLocation();
         }
 
+        map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(@NonNull LatLng latLng) {
+                searchMode = true;
+                if (searchLocation == null) {
+                    searchLocation = new LatitudeLongitude(latLng.latitude, latLng.longitude);
+                } else {
+                    searchLocation.setLocation(latLng.latitude, latLng.longitude);
+                }
+                setSearchLocationMarker(false);
+                changeButtonsColor(false);
+            }
+        });
 
     }
     //============================================================================================
@@ -386,12 +405,13 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                             if (retrieveInfo) {
                                 retrieveInfo(currentLocation);
                             }
-
+                            map.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                                    new LatLng(lastKnownLocation.getLatitude(),
+                                            lastKnownLocation.getLongitude()), DEFAULT_ZOOM));
 
                         }
-                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                                new LatLng(lastKnownLocation.getLatitude(),
-                                        lastKnownLocation.getLongitude()), DEFAULT_ZOOM));
+
+
                     } else {
                         Log.d(TAG, "Current location is null. Using defaults.");
                         Log.e(TAG, "Exception: %s", task.getException());
@@ -674,7 +694,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     /**
      * This function sets the marker of the searched location.
      */
-    private void setSearchLocationMarker() {
+    private void setSearchLocationMarker(boolean default_zoom) {
         if (searchLocationMarker != null) {
             searchLocationMarker.remove();
         }
@@ -683,9 +703,14 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 new MarkerOptions()
                         .position(searchLocationLatLng)
                         .title("searched location")
-                        .alpha(0.7f));
+                        .alpha(0.7f)
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.search_marker)));
+        float zoom = map.getCameraPosition().zoom;
+        if(default_zoom){
+            zoom = DEFAULT_ZOOM;
+        }
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                searchLocationLatLng, DEFAULT_ZOOM));
+                searchLocationLatLng, zoom));
     }
     //============================================================================================
 

@@ -118,6 +118,9 @@ public class RegisterActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(View.INVISIBLE);
         backButton = findViewById(R.id.back_button);
+        textInputEmail.setHint(getString(R.string.email));
+        textInputUserName.setHint(getString(R.string.username));
+        textInputPassword.setHint(getString(R.string.password));
 
         emailEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -148,6 +151,7 @@ public class RegisterActivity extends AppCompatActivity {
                     textInputPassword.setHint(null);
                 }else{
                     textInputPassword.setHint(getString(R.string.password));
+
                 }
             }
         });

@@ -70,7 +70,7 @@
     <string name="address_not_exist">כתובת לא קיימת</string>
     <string name="already_report">כבר דיווחת למיקום זה!</string>
     <string name="cant_get_saved_location">לא ניתן לחלץ מיקום שמור</string>
-    <string name="choose_language">בחר שפה...</string>
+    <string name="choose_language">בחר שפה…</string>
     <string name="add_fields">הוסף שדות</string>
     <string name="regular_sign">שלט רגיל</string>
     <string name="max_hours">מקסימום שעות</string>
@@ -89,4 +89,5 @@
     <string name="empty_report_error">לא ניתן לשלוח דיווח ריק!</string>
     <string name="version">גרסא 1.0</string>
     <string name="sign_in_google">התחבר עם חשבון גוגל</string>
+    <string name="register_with_google">הרשם עם חשבון גוגל</string>
 </resources>

@@ -99,7 +99,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:background="@drawable/button_blue_dark_background"
-                    android:hint="@string/email"
                     android:inputType="textEmailAddress"
                     android:paddingStart="5dip"
                     android:paddingEnd="5dip"
@@ -126,8 +125,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:background="@drawable/button_blue_dark_background"
-                    android:hint="@string/username"
-                    android:inputType="textEmailAddress"
+                    android:inputType="text"
                     android:paddingStart="5dip"
                     android:paddingEnd="5dip"
                     android:textColor="@color/white"
@@ -151,11 +149,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:background="@drawable/button_blue_dark_background"
-                    android:hint="@string/password"
                     android:inputType="textPassword"
                     android:paddingStart="5dip"
                     android:paddingEnd="5dip"
-
                     android:textColor="@color/white"
                     android:textSize="17sp" />
 
