@@ -20,6 +20,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -108,6 +109,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private SharedPreferences sharedPref;
 
     private GoogleMap map;
+    private SupportMapFragment m_mapFragment;
     // The entry point to the Fused Location Provider.
     private FusedLocationProviderClient fusedLocationProviderClient;
     // A default location (Sydney, Australia) and default zoom to use when location permission is
@@ -159,7 +161,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         // Construct a FusedLocationProviderClient.
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
-        SupportMapFragment m_mapFragment = (SupportMapFragment) getSupportFragmentManager()
+        m_mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         if (m_mapFragment != null) {
             m_mapFragment.getMapAsync(this);
@@ -381,6 +383,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onMapReady(GoogleMap map) {
 
         this.map = map;
+
+        ImageView imageView = ((ImageView)m_mapFragment.getView().findViewWithTag("GoogleMapMyLocationButton"));
+        imageView.setImageDrawable(AppCompatResources.getDrawable(context,R.drawable.my_location_button));
+        imageView.requestLayout();
+        imageView.getLayoutParams().height = 150;
+        imageView.getLayoutParams().width = 150;
 
         //add location button click listener
         map.setOnMyLocationButtonClickListener(() -> {
