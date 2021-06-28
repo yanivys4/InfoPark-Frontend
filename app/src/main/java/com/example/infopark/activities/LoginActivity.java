@@ -108,6 +108,8 @@ public class LoginActivity extends AppCompatActivity {
         passwordEditText = findViewById(R.id.password_edit_text);
         loginButton = findViewById(R.id.login_button);
         progressBar = findViewById(R.id.progressBar);
+        progressBar.getIndeterminateDrawable().setColorFilter(getBaseContext().getColor(R.color.yellow), android.graphics.PorterDuff.Mode.MULTIPLY);
+
         progressBar.setVisibility(View.INVISIBLE);
         skipButton = findViewById(R.id.skip_button);
         signInGoogleButton = findViewById(R.id.sign_in_google_button);

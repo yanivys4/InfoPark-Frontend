@@ -15,6 +15,7 @@ import android.location.Location;
 import android.media.VolumeShaper;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,9 +26,14 @@ import android.widget.TextView;
 import com.example.infopark.R;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentActivity;
 
 import com.example.infopark.RESTApi.LatitudeLongitude;
@@ -45,6 +51,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
@@ -53,6 +60,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
+import com.google.android.material.navigation.NavigationView;
 import com.google.gson.internal.$Gson$Preconditions;
 
 import org.json.JSONObject;
@@ -71,7 +81,7 @@ import retrofit2.Retrofit;
 /**
  * This activity is the main activity of the app.
  */
-public class MainActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     /**
      * Name of the Intent Action that wills start this Activity.
@@ -88,6 +98,11 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     private boolean searchMode;
     private int searchTag = 0;
     private ProgressBar progressBar;
+
+    private NavigationView sideNavigationView;
+    private BottomNavigationView bottomNavigationView;
+    private DrawerLayout drawerLayout;
+    private ActionBarDrawerToggle actionBarDrawerToggle;
 
     private Context context;
     private SharedPreferences sharedPref;
@@ -132,7 +147,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
         super.onCreate(savedInstanceState);
 
-
         context = MainActivity.this;
 
         setContentView(R.layout.activity_main);
@@ -145,7 +159,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         // Construct a FusedLocationProviderClient.
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
-        MapFragment m_mapFragment = (MapFragment) getFragmentManager()
+        SupportMapFragment m_mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         if (m_mapFragment != null) {
             m_mapFragment.getMapAsync(this);
@@ -159,18 +173,71 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     }
     //============================================================================================
 
+    @Override
+    public void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        actionBarDrawerToggle.syncState();
+    }
+    //============================================================================================
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    //============================================================================================
     /**
      * Initialize the views.
      */
     private void initializeViews() {
 
-        saveLocationButton = findViewById(R.id.save_my_location_button);
-        reportButton = findViewById(R.id.report_button);
+
         searchInput = findViewById(R.id.search_input);
         searchButton = findViewById(R.id.search_button);
-        logOutInButton = findViewById(R.id.logout_login_button);
         progressBar = findViewById(R.id.progressBar);
+        progressBar.getIndeterminateDrawable().setColorFilter(getBaseContext().getColor(R.color.yellow), android.graphics.PorterDuff.Mode.MULTIPLY);
         progressBar.setVisibility(View.INVISIBLE);
+        androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        drawerLayout = findViewById(R.id.drawer_layout);
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.drawer_open,R.string.drawer_close);
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        sideNavigationView = findViewById(R.id.side_navigation_view);
+        bottomNavigationView = findViewById(R.id.bottom_bar);
+        bottomNavigationView.setItemTextAppearanceActive(R.style.bottom_selected_text);
+        bottomNavigationView.setItemTextAppearanceInactive(R.style.bottom_normal_text);
+        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener(){
+
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                if (item.getItemId() == R.id.save_my_location_button) {
+                    saveMyLocation();
+                }
+                if (item.getItemId() == R.id.get_info_button) {
+                    retrieveInfo();
+                }
+                if (item.getItemId() == R.id.report_button) {
+                    reportNewInfo();
+                }
+                return true;
+            }
+        });
+        sideNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int itemId = item.getItemId();
+                if(itemId == R.id.login_logout){
+                    logOutIn();
+                }
+                else if(itemId == R.id.help){
+                    Utils.showToast(context,"help");
+                }
+                return true;
+            }
+        });
+
     }
     //============================================================================================
 
@@ -207,7 +274,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                     // make buttons gray
                     if (geoLocate()) {
                         searchMode = true;
-                        changeButtonsColor(false);
+                        //changeButtonsColor(false);
                     }
                     searchInput.setVisibility(View.GONE);
                     searchInput.setText("");
@@ -272,15 +339,12 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         boolean isLoggedIn = getIsLoggedIn();
 
         if (isLoggedIn) {
-            logOutInButton.setTag(1); // 1 means logout button appears
-            logOutInButton.setText(getString(R.string.log_out));
 
+            sideNavigationView.getMenu().getItem(0).setTitle(getBaseContext().getString(R.string.log_out));
+            sideNavigationView.getMenu().getItem(0).setIcon(AppCompatResources.getDrawable(getBaseContext(),R.drawable.ic_logout));
         } else {
-            logOutInButton.setTag(0); // 0 means login buttons appears
-            logOutInButton.setTextColor(getColor(R.color.green));
-            logOutInButton.setText(getString(R.string.log_in));
-            // valid false means the color to change to is gray
-            changeButtonsColor(false);
+            sideNavigationView.getMenu().getItem(0).setTitle(getBaseContext().getString(R.string.log_in));
+            sideNavigationView.getMenu().getItem(0).setIcon(AppCompatResources.getDrawable(getBaseContext(),R.drawable.ic_login));
         }
     }
     //============================================================================================
@@ -300,10 +364,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             resourceId = context.getResources().getIdentifier("button_gray_background",
                     "drawable", context.getPackageName());
         }
-        saveLocationButton.setBackground(ResourcesCompat.getDrawable(context.getResources(),
-                resourceId, null));
-        reportButton.setBackground(ResourcesCompat.getDrawable(context.getResources(),
-                resourceId, null));
+
     }
     //============================================================================================
 
@@ -511,14 +572,12 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     //============================================================================================
 
     /**
-     * on click function that sets the is logged in status of the user to false if the button is
+     * this function sets the is logged in status of the user to false if the button is
      * on "log out" mode, start the login activity and finish this activity.
-     *
-     * @param view the view
      */
-    public void logOutIn(View view) {
-        // the button is in log out mode
-        if ((Integer) logOutInButton.getTag() == 1) {
+    private void logOutIn() {
+        // the user is logged in and wants to log out
+        if ((getIsLoggedIn())){
             // update log out status
             setIsLoggedInFalse();
         }
@@ -529,11 +588,11 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     //============================================================================================
 
     /**
-     * on click function of the save my location button.
+     * save my location function
      *
-     * @param view the view.
+
      */
-    public void saveMyLocation(View view) {
+    private void saveMyLocation() {
 
         if (searchMode) {
             Utils.showToast(MainActivity.this, getString(R.string.cant_save_searched_location));
@@ -550,11 +609,10 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     //============================================================================================
 
     /**
-     * on click function of the add new info(report) button.
+     * add new info function (report)
      *
-     * @param view
      */
-    public void reportNewInfo(View view) {
+    private void reportNewInfo() {
         if (searchMode) {
             Utils.showToast(MainActivity.this, getString(R.string.go_back_to_live));
         } else if (!getIsLoggedIn()) {
@@ -794,13 +852,11 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     /**
-     * on click function of the get info button.
+     *
      * the function retrieve the relevant info from the backend according to the current location
      * or the searched location if in search mode.
-     *
-     * @param view
      */
-    public void retrieveInfoOnClick(View view) {
+    private void retrieveInfo() {
 
         if (searchMode) {
             retrieveInfo(searchLocation);

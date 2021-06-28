@@ -4,11 +4,11 @@
         <layer-list>
             <item>
                 <shape android:shape="oval">
-                    <solid android:color="@color/yellow"/>
+                    <solid android:color="@color/white"/>
                 </shape>
             </item>
 
-            <item android:drawable="@drawable/ic_done_white">
+            <item android:drawable="@drawable/ic_done">
             </item>
         </layer-list>
     </item>

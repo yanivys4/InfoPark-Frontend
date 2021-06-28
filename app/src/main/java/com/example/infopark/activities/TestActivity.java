@@ -40,7 +40,6 @@ public class TestActivity extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawer_layout);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.drawer_open,R.string.drawer_close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
-        drawerLayout.setBackgroundColor(getColor(R.color.blue));
         bottomNavigationView = findViewById(R.id.bottom_bar);
         bottomNavigationView.setItemTextAppearanceActive(R.style.bottom_selected_text);
         bottomNavigationView.setItemTextAppearanceInactive(R.style.bottom_normal_text);

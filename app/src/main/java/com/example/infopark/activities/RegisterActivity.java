@@ -116,6 +116,8 @@ public class RegisterActivity extends AppCompatActivity {
         passwordEditText = findViewById(R.id.password_edit_text);
         ConstraintLayout register_layout = findViewById(R.id.register_layout);
         progressBar = findViewById(R.id.progressBar);
+        progressBar.getIndeterminateDrawable().setColorFilter(getBaseContext().getColor(R.color.yellow), android.graphics.PorterDuff.Mode.MULTIPLY);
+
         progressBar.setVisibility(View.INVISIBLE);
         backButton = findViewById(R.id.back_button);
         textInputEmail.setHint(getString(R.string.email));
