@@ -151,8 +151,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             m_mapFragment.getMapAsync(this);
         }
 
-
-
         sharedPref = context.getSharedPreferences(
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
 
@@ -194,7 +192,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
      * method for search.
      */
     private void handleSearch() {
-        searchInput.setVisibility(View.GONE);
+        searchInput.setVisibility(View.INVISIBLE);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -406,8 +404,8 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                                 retrieveInfo(currentLocation);
                             }
                             map.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                                    new LatLng(lastKnownLocation.getLatitude(),
-                                            lastKnownLocation.getLongitude()), DEFAULT_ZOOM));
+                                    new LatLng(currentLocation.getLatitude(),
+                                            currentLocation.getLongitude()), DEFAULT_ZOOM));
 
                         }
 

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/blue"
+    android:background="@drawable/blue_background"
     tools:context=".activities.LoginActivity">
 
     <TextView
@@ -52,7 +52,7 @@
             android:layout_marginTop="10dp"
 
             android:textColorHint="@color/white"
-
+            app:errorTextColor="@color/yellow"
             app:errorEnabled="true"
             app:hintAnimationEnabled="false">
 

@@ -9,6 +9,16 @@
         <item name="cornerSize">16dp</item>
         <item name="boxBackgroundColor">@color/blue</item>
     </style>
+    <!--No style selected -->
+    <style name="bottom_normal_text">
+
+        <item name="android:textSize">12sp</item>
+    </style>
+    <!--Selected style -->
+    <style name="bottom_selected_text">
+
+        <item name="android:textSize">12sp</item>
+    </style>
 
 
 </resources>

@@ -90,4 +90,5 @@
     <string name="version">גרסא 1.0</string>
     <string name="sign_in_google">התחבר עם חשבון גוגל</string>
     <string name="register_with_google">הרשם עם חשבון גוגל</string>
+    <string name="help">עזרה</string>
 </resources>

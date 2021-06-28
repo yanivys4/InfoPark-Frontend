@@ -1,4 +1,5 @@
 <resources>
+
     <string name="app_name">InfoPark</string>
     <string name="toolbar_image">toolbar_image</string>
     <string name="logo">logo</string>
@@ -22,8 +23,8 @@
     <string name="log_out">Log out</string>
     <string name="log_in">Log in</string>
     <string name="register">Register</string>
-    <string name="save_my_location">save my location</string>
-    <string name="add_new_info">add new info</string>
+    <string name="save_my_location">Save location</string>
+    <string name="add_new_info">Add new info</string>
     <string name="title_activity_maps">Current Place Details</string>
     <string name="default_info_title">Default Location</string>
     <string name="default_info_snippet">No places found, because location permission is disabled.</string>
@@ -90,4 +91,9 @@
     <string name="back_button" translatable="false">back_button</string>
     <string name="sign_in_google">sign in with google</string>
     <string name="register_with_google">register with google</string>
+    <string name="drawer_open" translatable="false">drawer open</string>
+    <string name="drawer_close" translatable="false">drawer close</string>
+    <string name="app_mail" translatable="false">infoparkapp4@gmail.com</string>
+    <string name="app_web_url" translatable="false">https://www.infoparknow.com</string>
+    <string name="help">help</string>
 </resources>
