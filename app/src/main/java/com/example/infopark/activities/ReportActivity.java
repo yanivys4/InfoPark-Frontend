@@ -47,7 +47,7 @@ public class ReportActivity extends AppCompatActivity {
     private static final String ACTION_REPORT_ACTIVITY =
             "android.intent.action.ACTION_REPORT_ACTIVITY";
     private static final String TAG = ReportActivity.class.getSimpleName();
-    private Button backButton;
+
     private Spinner fromSunThuSpinner;
     private Spinner fromFriSpinner;
     private Spinner fromRegionalSignSpinner;
@@ -99,7 +99,7 @@ public class ReportActivity extends AppCompatActivity {
      * Initialize the views.
      */
     private void initializeViews() {
-        backButton = findViewById(R.id.back_button);
+
         fromSunThuSpinner = findViewById(R.id.fromSunThuSpinner);
         fromFriSpinner = findViewById(R.id.fromFriSpinner);
         fromRegionalSignSpinner = findViewById(R.id.fromRegionalSignSpinner);

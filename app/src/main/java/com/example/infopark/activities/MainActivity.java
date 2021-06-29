@@ -387,8 +387,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         ImageView imageView = ((ImageView)m_mapFragment.getView().findViewWithTag("GoogleMapMyLocationButton"));
         imageView.setImageDrawable(AppCompatResources.getDrawable(context,R.drawable.my_location_button));
         imageView.requestLayout();
-        imageView.getLayoutParams().height = 150;
-        imageView.getLayoutParams().width = 150;
+        imageView.getLayoutParams().height = 100;
+        imageView.getLayoutParams().width = 100;
 
         //add location button click listener
         map.setOnMyLocationButtonClickListener(() -> {

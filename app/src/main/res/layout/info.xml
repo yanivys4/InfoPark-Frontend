@@ -5,20 +5,36 @@
     android:id="@+id/info_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".activities.InfoActivity">
+    tools:context=".activities.InfoActivity"
+    android:background="@color/signpost_yellow">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="417dp"
         android:layout_height="46dp"
         android:layout_marginEnd="197dp"
-        android:background="#0471B7"
+        android:background="@drawable/blue_background"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.014"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+        <Button
+            android:id="@+id/back_button"
+            android:layout_width="50dp"
+            android:layout_height="25dp"
+            android:background="@color/trans"
+            android:layout_marginStart="15dp"
+            android:contentDescription="@string/back"
+            android:layout_marginTop="15dp"
+            android:onClick="finishActivity"
+            android:text="@string/back"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            />
+    </androidx.appcompat.widget.Toolbar>
 
     <ImageView
         android:id="@+id/imageView5"
@@ -36,27 +52,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/back_button"
-        android:layout_width="85dp"
-        android:layout_height="34dp"
-        android:layout_marginBottom="4dp"
-        android:contentDescription="@string/back_button"
-        android:onClick="finishActivity"
-        android:text="@string/back"
-        android:background="@drawable/button_yellow_background"
-        android:textColor="@color/blue"
-        android:textStyle="bold"
 
-        app:layout_constraintBottom_toBottomOf="@+id/toolbar"
-        app:layout_constraintEnd_toStartOf="@+id/imageView5"
-        app:layout_constraintHorizontal_bias="0.409"
-        app:layout_constraintStart_toStartOf="@+id/toolbar" />
 
     <ScrollView
+        android:id="@+id/scroll_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/signpost_yellow"
+        android:layout_height="660dp"
+        android:background="@drawable/signpost_background"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -69,7 +71,7 @@
             android:id="@+id/TableLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/signpost_yellow">
+            >
 
 
             <TableLayout
@@ -78,7 +80,7 @@
                 android:layout_height="wrap_content"
 
                 android:layout_marginBottom="20dp"
-                android:background="@color/signpost_yellow"
+
                 android:paddingBottom="20dp"
                 android:stretchColumns="*"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -185,7 +187,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
-                android:background="@color/signpost_yellow"
+
                 android:paddingBottom="20dp"
                 android:stretchColumns="*"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -241,7 +243,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
-                android:background="@color/signpost_yellow"
+
                 android:paddingBottom="20dp"
                 android:stretchColumns="*"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -315,7 +317,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
-                android:background="@color/signpost_yellow"
+
                 android:paddingBottom="20dp"
                 android:stretchColumns="*"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -362,7 +364,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
-                android:background="@color/signpost_yellow"
+
                 android:paddingBottom="20dp"
                 android:stretchColumns="*"
                 app:layout_constraintEnd_toEndOf="parent"
