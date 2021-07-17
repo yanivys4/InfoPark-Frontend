@@ -7,6 +7,603 @@
     android:background="@color/signpost_yellow"
     tools:context=".activities.ReportActivity">
 
+
+
+
+    <ScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TableLayout
+            android:id="@+id/tableLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="46dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/signpost_yellow"
+            android:stretchColumns="*"
+            app:layout_constraintBottom_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TableLayout
+                android:id="@+id/regularFormTable"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:background="@color/signpost_yellow"
+                android:stretchColumns="*"
+                app:layout_constraintBottom_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TableRow
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="10dp"
+                        android:text="@string/payment"
+                        android:textAlignment="center"
+                        android:textColor="#000"
+                        android:textSize="30dp"
+                        android:textStyle="bold" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="10dp"
+                        android:text="@string/sunday"
+                        android:textAlignment="viewEnd"
+                        android:textColor="#000"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="10dp"
+                        android:text="-"
+                        android:textAlignment="center"
+                        android:textColor="#000"
+                        android:textSize="25dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="10dp"
+                        android:text="@string/thursday"
+                        android:textColor="#000"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:stretchColumns="*">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="10dp"
+                        android:text="@string/from"
+                        android:textAlignment="center"
+                        android:textColor="#000"
+                        android:textSize="20dp" />
+
+                    <Spinner
+                        android:id="@+id/fromSunThuSpinner"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@android:drawable/btn_dropdown"
+                        android:spinnerMode="dropdown" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:stretchColumns="*">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="10dp"
+                        android:text="@string/to"
+                        android:textAlignment="center"
+                        android:textColor="#000"
+                        android:textSize="20sp" />
+
+                    <Spinner
+                        android:id="@+id/toSunThuSpinner"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@android:drawable/btn_dropdown"
+                        android:spinnerMode="dropdown" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:stretchColumns="*">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="10dip"
+                        android:text="@string/fri"
+                        android:textAlignment="center"
+                        android:textColor="#000"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:stretchColumns="*">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="10dp"
+                        android:text="@string/from"
+                        android:textAlignment="center"
+                        android:textColor="#000"
+                        android:textSize="20sp" />
+
+                    <Spinner
+                        android:id="@+id/fromFriSpinner"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@android:drawable/btn_dropdown"
+                        android:spinnerMode="dropdown" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:stretchColumns="*">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="10dp"
+                        android:text="@string/to"
+                        android:textAlignment="center"
+                        android:textColor="#000"
+                        android:textSize="20sp" />
+
+                    <Spinner
+                        android:id="@+id/toFriSpinner"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@android:drawable/btn_dropdown"
+                        android:spinnerMode="dropdown" />
+
+                </TableRow>
+
+            </TableLayout>
+
+            <TableLayout
+                android:id="@+id/maxHoursTable"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@color/signpost_yellow"
+                android:stretchColumns="*"
+                app:layout_constraintBottom_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TableRow
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="10dp"
+                        android:text="@string/hours_limit"
+                        android:textAlignment="center"
+                        android:textColor="#000"
+                        android:textSize="30dp"
+                        android:textStyle="bold" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:paddingTop="15dp"
+                    android:stretchColumns="*">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="10dp"
+                        android:text="@string/max"
+                        android:textAlignment="viewEnd"
+                        android:textColor="#000"
+                        android:textSize="20dp" />
+
+                    <Spinner
+                        android:id="@+id/maxHoursSpinner"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@android:drawable/btn_dropdown"
+                        android:spinnerMode="dropdown" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="10dp"
+                        android:text="@string/hours"
+                        android:textColor="#000"
+                        android:textSize="20dp" />
+
+                </TableRow>
+
+            </TableLayout>
+
+            <TableLayout
+                android:id="@+id/regionalSignTable"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@color/signpost_yellow"
+                android:stretchColumns="*"
+                app:layout_constraintBottom_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TableRow
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="10dp"
+                        android:text="@string/regional_sign"
+                        android:textAlignment="center"
+                        android:textColor="#000"
+                        android:textSize="30dp"
+                        android:textStyle="bold" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:stretchColumns="*">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="10dp"
+                        android:text="@string/from"
+                        android:textAlignment="center"
+                        android:textColor="#000"
+                        android:textSize="20dp" />
+
+                    <Spinner
+                        android:id="@+id/fromRegionalSignSpinner"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@android:drawable/btn_dropdown"
+                        android:spinnerMode="dropdown" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:stretchColumns="*">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="10dp"
+                        android:text="@string/to"
+                        android:textAlignment="center"
+                        android:textColor="#000"
+                        android:textSize="20sp" />
+
+                    <Spinner
+                        android:id="@+id/toRegionalSignSpinner"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@android:drawable/btn_dropdown"
+                        android:spinnerMode="dropdown" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:stretchColumns="*">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="10dp"
+                        android:text="@string/parking_sign_number"
+                        android:textAlignment="center"
+                        android:textColor="#000"
+                        android:textSize="20dp" />
+
+                    <Spinner
+                        android:id="@+id/parkingSignNumberSpinner"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@android:drawable/btn_dropdown"
+                        android:spinnerMode="dropdown" />
+
+                </TableRow>
+
+            </TableLayout>
+
+            <TableLayout
+                android:id="@+id/unloadingChargingTable"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@color/signpost_yellow"
+                android:stretchColumns="*"
+                app:layout_constraintBottom_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TableRow
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="10dp"
+                        android:text="@string/unloading_charging"
+                        android:textAlignment="center"
+                        android:textColor="#000"
+                        android:textSize="30sp"
+                        android:textStyle="bold" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:stretchColumns="*">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="10dp"
+                        android:text="@string/from"
+                        android:textAlignment="center"
+                        android:textColor="#000"
+                        android:textSize="20sp" />
+
+                    <Spinner
+                        android:id="@+id/fromUnloadingChargingSpinner"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@android:drawable/btn_dropdown"
+                        android:spinnerMode="dropdown" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:stretchColumns="*">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="10dp"
+                        android:text="@string/to"
+                        android:textAlignment="center"
+                        android:textColor="#000"
+                        android:textSize="20dp" />
+
+                    <Spinner
+                        android:id="@+id/toUnloadingChargingSpinner"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@android:drawable/btn_dropdown"
+                        android:spinnerMode="dropdown" />
+
+                </TableRow>
+
+            </TableLayout>
+
+            <TableLayout
+                android:id="@+id/weightLimitTable"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@color/signpost_yellow"
+                android:stretchColumns="*"
+                app:layout_constraintBottom_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TableRow
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="10dp"
+                        android:text="@string/weight_limit"
+                        android:textAlignment="center"
+                        android:textColor="#000"
+                        android:textSize="30dp"
+                        android:textStyle="bold" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:paddingTop="15dp"
+                    android:stretchColumns="*">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="10dp"
+                        android:text="@string/max"
+                        android:textAlignment="viewEnd"
+                        android:textColor="#000"
+                        android:textSize="20dp" />
+
+                    <Spinner
+                        android:id="@+id/maxWeightSpinner"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@android:drawable/btn_dropdown"
+                        android:spinnerMode="dropdown" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="10dp"
+                        android:text="@string/ton"
+                        android:textColor="#000"
+                        android:textSize="20dp" />
+
+                </TableRow>
+
+            </TableLayout>
+
+            <TableLayout
+                android:id="@+id/addFieldsTable"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="30dp"
+                android:background="@color/signpost_yellow"
+                android:stretchColumns="*"
+                app:layout_constraintBottom_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TableRow
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="30dp"
+                    android:stretchColumns="*">
+
+                    <Button
+                        android:id="@+id/add_fields_button"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/button_white_background"
+                        android:contentDescription="@string/back_button"
+                        android:text="@string/add_fields"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="30dp"
+                    android:stretchColumns="*">
+
+                    <Button
+                        android:id="@+id/reportButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:layout_marginBottom="10dp"
+                        android:background="@color/blue"
+                        android:onClick="reportClick"
+                        android:text="@string/send"
+                        android:textColor="#F4F0F0"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                </TableRow>
+
+
+            </TableLayout>
+
+        </TableLayout>
+
+    </ScrollView>
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="417dp"
@@ -51,610 +648,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-
-
-        <ScrollView
-            android:id="@+id/scroll_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar"
-            app:layout_constraintVertical_bias="0.0">
-
-            <TableLayout
-                android:id="@+id/tableLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="46dp"
-                android:layout_marginBottom="10dp"
-                android:background="@color/signpost_yellow"
-                android:stretchColumns="*"
-                app:layout_constraintBottom_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <TableLayout
-                    android:id="@+id/regularFormTable"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/signpost_yellow"
-                    android:stretchColumns="*"
-                    app:layout_constraintBottom_toTopOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <TableRow
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:padding="10dp"
-                            android:text="@string/payment"
-                            android:textAlignment="center"
-                            android:textColor="#000"
-                            android:textSize="30dp"
-                            android:textStyle="bold" />
-
-                    </TableRow>
-
-                    <TableRow
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:padding="10dp"
-                            android:text="@string/sunday"
-                            android:textAlignment="viewEnd"
-                            android:textColor="#000"
-                            android:textSize="20dp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:padding="10dp"
-                            android:text="-"
-                            android:textAlignment="center"
-                            android:textColor="#000"
-                            android:textSize="25dp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:padding="10dp"
-                            android:text="@string/thursday"
-                            android:textColor="#000"
-                            android:textSize="20dp"
-                            android:textStyle="bold" />
-
-                    </TableRow>
-
-                    <TableRow
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:stretchColumns="*">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:padding="10dp"
-                            android:text="@string/from"
-                            android:textAlignment="center"
-                            android:textColor="#000"
-                            android:textSize="20dp" />
-
-                        <Spinner
-                            android:id="@+id/fromSunThuSpinner"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@android:drawable/btn_dropdown"
-                            android:spinnerMode="dropdown" />
-
-                    </TableRow>
-
-                    <TableRow
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:stretchColumns="*">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:padding="10dp"
-                            android:text="@string/to"
-                            android:textAlignment="center"
-                            android:textColor="#000"
-                            android:textSize="20sp" />
-
-                        <Spinner
-                            android:id="@+id/toSunThuSpinner"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@android:drawable/btn_dropdown"
-                            android:spinnerMode="dropdown" />
-
-                    </TableRow>
-
-                    <TableRow
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:stretchColumns="*">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:padding="10dip"
-                            android:text="@string/fri"
-                            android:textAlignment="center"
-                            android:textColor="#000"
-                            android:textSize="20sp"
-                            android:textStyle="bold" />
-
-                    </TableRow>
-
-                    <TableRow
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:stretchColumns="*">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:padding="10dp"
-                            android:text="@string/from"
-                            android:textAlignment="center"
-                            android:textColor="#000"
-                            android:textSize="20sp" />
-
-                        <Spinner
-                            android:id="@+id/fromFriSpinner"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@android:drawable/btn_dropdown"
-                            android:spinnerMode="dropdown" />
-
-                    </TableRow>
-
-                    <TableRow
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:stretchColumns="*">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:padding="10dp"
-                            android:text="@string/to"
-                            android:textAlignment="center"
-                            android:textColor="#000"
-                            android:textSize="20sp" />
-
-                        <Spinner
-                            android:id="@+id/toFriSpinner"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@android:drawable/btn_dropdown"
-                            android:spinnerMode="dropdown" />
-
-                    </TableRow>
-
-                </TableLayout>
-
-                <TableLayout
-                    android:id="@+id/maxHoursTable"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="@color/signpost_yellow"
-                    android:stretchColumns="*"
-                    app:layout_constraintBottom_toTopOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <TableRow
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:padding="10dp"
-                            android:text="@string/hours_limit"
-                            android:textAlignment="center"
-                            android:textColor="#000"
-                            android:textSize="30dp"
-                            android:textStyle="bold" />
-
-                    </TableRow>
-
-                    <TableRow
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:paddingTop="15dp"
-                        android:stretchColumns="*">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:padding="10dp"
-                            android:text="@string/max"
-                            android:textAlignment="viewEnd"
-                            android:textColor="#000"
-                            android:textSize="20dp" />
-
-                        <Spinner
-                            android:id="@+id/maxHoursSpinner"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@android:drawable/btn_dropdown"
-                            android:spinnerMode="dropdown" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:padding="10dp"
-                            android:text="@string/hours"
-                            android:textColor="#000"
-                            android:textSize="20dp" />
-
-                    </TableRow>
-
-                </TableLayout>
-
-                <TableLayout
-                    android:id="@+id/regionalSignTable"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="@color/signpost_yellow"
-                    android:stretchColumns="*"
-                    app:layout_constraintBottom_toTopOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <TableRow
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:padding="10dp"
-                            android:text="@string/regional_sign"
-                            android:textAlignment="center"
-                            android:textColor="#000"
-                            android:textSize="30dp"
-                            android:textStyle="bold" />
-
-                    </TableRow>
-
-                    <TableRow
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:stretchColumns="*">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:padding="10dp"
-                            android:text="@string/from"
-                            android:textAlignment="center"
-                            android:textColor="#000"
-                            android:textSize="20dp" />
-
-                        <Spinner
-                            android:id="@+id/fromRegionalSignSpinner"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@android:drawable/btn_dropdown"
-                            android:spinnerMode="dropdown" />
-
-                    </TableRow>
-
-                    <TableRow
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:stretchColumns="*">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:padding="10dp"
-                            android:text="@string/to"
-                            android:textAlignment="center"
-                            android:textColor="#000"
-                            android:textSize="20sp" />
-
-                        <Spinner
-                            android:id="@+id/toRegionalSignSpinner"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@android:drawable/btn_dropdown"
-                            android:spinnerMode="dropdown" />
-
-                    </TableRow>
-
-                    <TableRow
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:stretchColumns="*">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:padding="10dp"
-                            android:text="@string/parking_sign_number"
-                            android:textAlignment="center"
-                            android:textColor="#000"
-                            android:textSize="20dp" />
-
-                        <Spinner
-                            android:id="@+id/parkingSignNumberSpinner"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@android:drawable/btn_dropdown"
-                            android:spinnerMode="dropdown" />
-
-                    </TableRow>
-
-                </TableLayout>
-
-                <TableLayout
-                    android:id="@+id/unloadingChargingTable"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="@color/signpost_yellow"
-                    android:stretchColumns="*"
-                    app:layout_constraintBottom_toTopOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <TableRow
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:padding="10dp"
-                            android:text="@string/unloading_charging"
-                            android:textAlignment="center"
-                            android:textColor="#000"
-                            android:textSize="30sp"
-                            android:textStyle="bold" />
-
-                    </TableRow>
-
-                    <TableRow
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:stretchColumns="*">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:padding="10dp"
-                            android:text="@string/from"
-                            android:textAlignment="center"
-                            android:textColor="#000"
-                            android:textSize="20sp" />
-
-                        <Spinner
-                            android:id="@+id/fromUnloadingChargingSpinner"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@android:drawable/btn_dropdown"
-                            android:spinnerMode="dropdown" />
-
-                    </TableRow>
-
-                    <TableRow
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:stretchColumns="*">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:padding="10dp"
-                            android:text="@string/to"
-                            android:textAlignment="center"
-                            android:textColor="#000"
-                            android:textSize="20dp" />
-
-                        <Spinner
-                            android:id="@+id/toUnloadingChargingSpinner"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@android:drawable/btn_dropdown"
-                            android:spinnerMode="dropdown" />
-
-                    </TableRow>
-
-                </TableLayout>
-
-                <TableLayout
-                    android:id="@+id/weightLimitTable"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="@color/signpost_yellow"
-                    android:stretchColumns="*"
-                    app:layout_constraintBottom_toTopOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <TableRow
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:padding="10dp"
-                            android:text="@string/weight_limit"
-                            android:textAlignment="center"
-                            android:textColor="#000"
-                            android:textSize="30dp"
-                            android:textStyle="bold" />
-
-                    </TableRow>
-
-                    <TableRow
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:paddingTop="15dp"
-                        android:stretchColumns="*">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:padding="10dp"
-                            android:text="@string/max"
-                            android:textAlignment="viewEnd"
-                            android:textColor="#000"
-                            android:textSize="20dp" />
-
-                        <Spinner
-                            android:id="@+id/maxWeightSpinner"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@android:drawable/btn_dropdown"
-                            android:spinnerMode="dropdown" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:padding="10dp"
-                            android:text="@string/ton"
-                            android:textColor="#000"
-                            android:textSize="20dp" />
-
-                    </TableRow>
-
-                </TableLayout>
-
-                <TableLayout
-                    android:id="@+id/addFieldsTable"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="30dp"
-                    android:background="@color/signpost_yellow"
-                    android:stretchColumns="*"
-                    app:layout_constraintBottom_toTopOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <TableRow
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:paddingTop="15dp"
-                        android:paddingBottom="30dp"
-                        android:stretchColumns="*">
-
-                        <Button
-                            android:id="@+id/add_fields_button"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@drawable/button_white_background"
-                            android:contentDescription="@string/back_button"
-                            android:text="@string/add_fields"
-                            android:textColor="@color/black"
-                            android:textStyle="bold" />
-
-                    </TableRow>
-
-                    <TableRow
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:paddingTop="15dp"
-                        android:paddingBottom="30dp"
-                        android:stretchColumns="*">
-
-                        <Button
-                            android:id="@+id/reportButton"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-
-                            android:layout_marginBottom="10dp"
-                            android:background="@color/blue"
-                            android:onClick="reportClick"
-                            android:text="@string/send"
-                            android:textColor="#F4F0F0"
-                            android:textSize="18sp"
-                            android:textStyle="bold"
-                            />
-
-                    </TableRow>
-
-
-
-
-
-                </TableLayout>
-
-            </TableLayout>
-
-        </ScrollView>
-
-
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="100dp"
