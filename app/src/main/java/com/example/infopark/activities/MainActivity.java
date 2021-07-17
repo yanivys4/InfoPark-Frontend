@@ -305,7 +305,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         String searchString = searchInput.getText().toString();
 
-        Geocoder geocoder = new Geocoder(MainActivity.this);
+        Geocoder geocoder = new Geocoder(context);
         List<Address> list = new ArrayList<>();
         try {
             list = geocoder.getFromLocationName(searchString, 1);
@@ -387,8 +387,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         ImageView imageView = ((ImageView)m_mapFragment.getView().findViewWithTag("GoogleMapMyLocationButton"));
         imageView.setImageDrawable(AppCompatResources.getDrawable(context,R.drawable.my_location_button));
         imageView.requestLayout();
-        imageView.getLayoutParams().height = 100;
-        imageView.getLayoutParams().width = 100;
+        imageView.getLayoutParams().height = 140;
+        imageView.getLayoutParams().width = 140;
 
         //add location button click listener
         map.setOnMyLocationButtonClickListener(() -> {
@@ -748,7 +748,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 new MarkerOptions()
                         .position(new LatLng(savedLocation.getLatitude(),
                                 savedLocation.getLongitude()))
-                        .title("saved location")
+                        .title(getString(R.string.saved_location))
                         .alpha(0.7f)
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.little_car)));
 
@@ -766,7 +766,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         searchLocationMarker = map.addMarker(
                 new MarkerOptions()
                         .position(searchLocationLatLng)
-                        .title("searched location")
+                        .title(getString(R.string.searched_location))
                         .alpha(0.7f)
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.search_marker)));
         float zoom = map.getCameraPosition().zoom;
