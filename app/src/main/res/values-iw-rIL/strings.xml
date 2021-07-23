@@ -87,8 +87,19 @@
     <string name="weight_limit">הגבלת משקל</string>
     <string name="ton">טון</string>
     <string name="empty_report_error">לא ניתן לשלוח דיווח ריק!</string>
-    <string name="version">גרסא 1.0</string>
+    <string name="version">גרסה 2.0</string>
     <string name="sign_in_google">התחבר עם חשבון גוגל</string>
     <string name="register_with_google">הרשם עם חשבון גוגל</string>
     <string name="help">עזרה</string>
+    <string name="searched_location">מיקום לפי חיפוש</string>
+    <string name="saved_location">המיקום של הרכב שנשמר</string>
+    <string name="next">הבא</string>
+    <string name="welcome"> ברוכים הבאים!</string>
+    <string name="get_started">צא לדרך</string>
+
+
+    <string name="get_info_description">לחץ כדי לקבל מידע בכל עת</string>
+    <string name="save_location_description">שמור את מיקום החנייה של הרכב</string>
+    <string name="report_description">הוסף/עדכן מידע על הוראות חנייה</string>
+
 </resources>

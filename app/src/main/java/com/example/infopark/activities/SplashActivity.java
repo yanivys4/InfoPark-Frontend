@@ -57,7 +57,15 @@ public class SplashActivity extends Activity {
         return sharedPref.getBoolean(getString(R.string.loggedIn), false);
     }
     //============================================================================================
-
+    /**
+     * This function get the isLoggedIn shared pref variable
+     * @return boolean
+     * The isLoggedIn variable
+     */
+    private boolean getIntroOpened(){
+        return sharedPref.getBoolean(getString(R.string.introOpened), false);
+    }
+    //============================================================================================
     /**
      * This function set the isLoggedIn shared pref variable to false
      */
@@ -75,11 +83,17 @@ public class SplashActivity extends Activity {
      *
      */
     private void startNextActivity(boolean isLoggedIn){
+
+        boolean introOpened = getIntroOpened();
         Handler handler = new Handler();
         handler.postDelayed(() -> {
             Intent intent;
+            // intro wast opened yet -> then open it (first time use)
+            if(!introOpened){
+                intent = IntroActivity.makeIntent();
+            }
             // if the user is not logged in send it to login activity
-            if (!isLoggedIn) {
+            else if (!isLoggedIn) {
                 intent = LoginActivity.makeIntent();
                 // otherwise send it directly to main activity
             } else {

@@ -66,6 +66,13 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".activities.IntroActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.ACTION_INTRO_ACTIVITY"/>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
     </application>
 
 

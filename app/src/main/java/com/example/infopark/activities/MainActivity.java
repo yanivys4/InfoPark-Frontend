@@ -194,7 +194,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
      */
     private void initializeViews() {
 
-
         searchInput = findViewById(R.id.search_input);
         searchButton = findViewById(R.id.search_button);
         progressBar = findViewById(R.id.progressBar);
@@ -234,7 +233,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     logOutIn();
                 }
                 else if(itemId == R.id.help){
-                    Utils.showToast(context,"help");
+                    Intent startIntro = IntroActivity.makeIntent();
+                    startActivity(startIntro);
                 }
                 return true;
             }

@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:id="@+id/save_my_location_button"
-        android:icon="@drawable/little_car"
+        android:icon="@drawable/ic_save"
         android:title="@string/save_my_location"
         
         />

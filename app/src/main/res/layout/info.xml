@@ -53,13 +53,16 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-
     <ScrollView
         android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="660dp"
-        android:background="@drawable/signpost_background"
+        android:layout_marginStart="8dp"
 
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/signpost_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -70,8 +73,7 @@
         <TableLayout
             android:id="@+id/TableLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
+            android:layout_height="wrap_content">
 
 
             <TableLayout
@@ -193,23 +195,24 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/regularTableLayout">
+
                 <TableRow
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    >
+                    android:layout_height="match_parent">
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:padding="10dp"
-                    android:text="@string/hours_limit"
-                    android:textAlignment="center"
-                    android:textColor="@color/black"
-                    android:textSize="25sp"
-                    android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="10dp"
+                        android:text="@string/hours_limit"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textSize="25sp"
+                        android:textStyle="bold" />
 
                 </TableRow>
+
                 <TableRow
                     android:id="@+id/max_row"
                     android:layout_width="0dp"
@@ -238,6 +241,7 @@
 
                 </TableRow>
             </TableLayout>
+
             <TableLayout
                 android:id="@+id/regionalSignTable"
                 android:layout_width="match_parent"
@@ -249,10 +253,10 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/maxHoursTable">
+
                 <TableRow
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    >
+                    android:layout_height="match_parent">
 
                     <TextView
                         android:layout_width="0dp"
@@ -266,6 +270,7 @@
                         android:textStyle="bold" />
 
                 </TableRow>
+
                 <TableRow
                     android:id="@+id/fromRegional_row"
                     android:layout_width="0dp"
@@ -275,8 +280,8 @@
                         android:id="@+id/from_to_regional"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
                         android:layout_weight="1"
+                        android:gravity="center"
                         android:padding="10dip"
                         android:textColor="#000"
                         android:textSize="20sp"
@@ -312,6 +317,7 @@
                         android:textStyle="bold" />
                 </TableRow>
             </TableLayout>
+
             <TableLayout
                 android:id="@+id/unloadingChargingTable"
                 android:layout_width="match_parent"
@@ -323,10 +329,10 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/regularTableLayout">
+
                 <TableRow
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    >
+                    android:layout_height="match_parent">
 
                     <TextView
                         android:layout_width="0dp"
@@ -340,6 +346,7 @@
                         android:textStyle="bold" />
 
                 </TableRow>
+
                 <TableRow
                     android:id="@+id/fromUnloadingCharging_row"
                     android:layout_width="0dp"
@@ -359,6 +366,7 @@
 
 
             </TableLayout>
+
             <TableLayout
                 android:id="@+id/weightLimitTable"
                 android:layout_width="match_parent"
@@ -370,10 +378,10 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/regularTableLayout">
+
                 <TableRow
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    >
+                    android:layout_height="match_parent">
 
                     <TextView
                         android:layout_width="0dp"
@@ -387,6 +395,7 @@
                         android:textStyle="bold" />
 
                 </TableRow>
+
                 <TableRow
                     android:id="@+id/weightLimit_row"
                     android:layout_width="0dp"

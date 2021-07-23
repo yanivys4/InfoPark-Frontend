@@ -87,7 +87,7 @@
     <string name="weight_limit">WEIGHT LIMIT</string>
     <string name="ton">ton</string>
     <string name="empty_report_error">Can not send empty report!</string>
-    <string name="version">Version 1.0</string>
+    <string name="version">Version 2.0</string>
     <string name="back_button" translatable="false">back_button</string>
     <string name="sign_in_google">sign in with google</string>
     <string name="register_with_google">register with google</string>
@@ -96,4 +96,14 @@
     <string name="app_mail" translatable="false">infoparkapp4@gmail.com</string>
     <string name="app_web_url" translatable="false">https://www.infoparknow.com</string>
     <string name="help">help</string>
+    <string name="searched_location">searched location</string>
+    <string name="saved_location">saved location</string>
+    <string name="next">NEXT</string>
+    <string name="welcome">Welcome!</string>
+    <string name="get_started">Get Started</string>
+    <string name="introOpened" translatable="false">introOpened</string>
+    <string name="get_info_description">click for info instructions at any time</string>
+    <string name="save_location_description">save your car parking location</string>
+    <string name="report_description">add/update info about parking instructions</string>
+
 </resources>
