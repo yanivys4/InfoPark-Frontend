@@ -31,7 +31,7 @@ public final class Utils {
         Toast toast = Toast.makeText(context, message, Toast.LENGTH_SHORT);
         View view = toast.getView();
         //Gets the actual oval background of the Toast then sets the colour filter
-        view.getBackground().setColorFilter(context.getResources().getColor(R.color.blue), PorterDuff.Mode.SRC_IN);
+        view.getBackground().setColorFilter(context.getResources().getColor(R.color.yellow), PorterDuff.Mode.SRC_IN);
 
         //Gets the TextView from the Toast so it can be edited
         TextView text = view.findViewById(android.R.id.message);
