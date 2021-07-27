@@ -39,12 +39,16 @@ public class SplashActivity extends Activity {
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
 
         boolean isLoggedIn = getIsLoggedIn();
-
+        boolean introOpened = getIntroOpened();
         // if loggedIn is true don't change it
         if (!isLoggedIn) {
             setIsLoggedInFalse();
         }
-       startNextActivity(isLoggedIn);
+        // if loggedIn is true don't change it
+        if(!introOpened){
+            setIntroOpenedFalse();
+        }
+       startNextActivity(isLoggedIn,introOpened);
     }
     //============================================================================================
 
@@ -75,16 +79,22 @@ public class SplashActivity extends Activity {
         editor.apply();
     }
     //============================================================================================
-
+    /**
+     * This function set the isLoggedIn shared pref variable to false
+     */
+    private void setIntroOpenedFalse(){
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putBoolean(getString(R.string.introOpened), false);
+        editor.apply();
+    }
+    //============================================================================================
     /**
      * This function is wrapped by a handler that make sure it will execute after 3000 m/s.
      * the function gets the status of isLoggedIn and accordingly starts the right next activity.
      * @param isLoggedIn boolean the isLoggedIn status.
      *
      */
-    private void startNextActivity(boolean isLoggedIn){
-
-        boolean introOpened = getIntroOpened();
+    private void startNextActivity(boolean isLoggedIn,boolean introOpened){
         Handler handler = new Handler();
         handler.postDelayed(() -> {
             Intent intent;
